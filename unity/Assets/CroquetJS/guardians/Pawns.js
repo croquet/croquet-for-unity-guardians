@@ -53,9 +53,12 @@ import power_tower from "../assets/tower.glb";
 
 import bollard_ from "../assets/bollard.glb";
 
-import tank_tracks from "../assets/tank_tracks.glb";
-import tank_turret from "../assets/tank_turret.glb";
-import tank_body from "../assets/tank_body.glb";
+//import tank_tracks from "../assets/tank_tracks.glb";
+//import tank_turret from "../assets/tank_turret.glb";
+//import tank_body from "../assets/tank_body.glb";
+
+import tank_tracks from "../assets/newtank_treads.glb";
+import tank_body from "../assets/newtank.glb";
 
 import fireballTexture from "../assets/explosion.png";
 import * as fireballFragmentShader from "../assets/fireball.frag.js";
@@ -63,6 +66,7 @@ import * as fireballVertexShader from "../assets/fireball.vert.js";
 
 const numbers = [];
 const skyscrapers = [];
+export const tank = [];
 
 export const UserColors = [
     rgb(64, 206, 64),          // green
@@ -288,7 +292,6 @@ export class TowerPawn extends mix(Pawn).with(PM_Spatial, PM_ThreeVisible) {
         this.radius = actor._radius;
         this.index = actor._index;
         this.height = actor.translation[1];
-        console.log("XXXXX", this.height, actor.rotation, actor.translation)
         if (this.radius) this.service("CollisionManager").colliders.add(this);
         //if (this.index<0) this.index=6;
         if (this.index>=0) this.future(100).setup();
@@ -574,11 +577,11 @@ export class MyViewRoot extends ViewRoot {
         //
         const gltfLoader = new GLTFLoader();
 
-        let [bollard, powerTower, tankTracks, tankTurret, tankBody, n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, centerTower, s1, s2, s3, s4] = await Promise.all( [
+        let [bollard, powerTower, tankTracks, tankBody, n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, centerTower, s1, s2, s3, s4] = await Promise.all( [
             gltfLoader.loadAsync( bollard_ ),
             gltfLoader.loadAsync( power_tower ),
             gltfLoader.loadAsync( tank_tracks ),
-            gltfLoader.loadAsync( tank_turret ),
+//            gltfLoader.loadAsync( tank_turret ),
             gltfLoader.loadAsync( tank_body ),
             gltfLoader.loadAsync( n_0 ),
             gltfLoader.loadAsync( n_1 ),
@@ -602,26 +605,27 @@ export class MyViewRoot extends ViewRoot {
         bollardim.castShadow = true;
         bollardim.receiveShadow = true;
 
-        tankBody = tankBody.scene.children[0].geometry;
-        tankTracks = tankTracks.scene.children[0].geometry;
-        tankTurret = tankTurret.scene.children[0].geometry;
-        tankBody.rotateY(toRad(-90));
-        tankTracks.rotateY(toRad(-90));
-        tankTurret.rotateY(toRad(-90));
-        im.addGeometry("tankBody", tankBody);
-        im.addGeometry("tankTurret", tankTurret);
-        im.addGeometry("tankTracks", tankTracks);
+        tank[0] = tankTracks.scene;
+        tank[1] = tankBody.scene;
 
-        const tankBodyim = im.addMesh("tankBody","tankBody", "gray");
-        const tankTurretim = im.addMesh("tankTurret", "tankTurret","gray");
-        const tankTracksim = im.addMesh("tankTracks", "tankTracks", "gray");
+        //tankTurret = tankTurret.scene.children[0].geometry;
+        //tankBody.rotateY(toRad(-90));
+        //tankTracks.rotateY(toRad(-90));
+        //tankTurret.rotateY(toRad(-90));
+        //im.addGeometry("tankBody", tankBody);
+        //im.addGeometry("tankTurret", tankTurret);
+        //im.addGeometry("tankTracks", tankTracks);
 
-        tankBodyim.castShadow = true;
-        tankBodyim.receiveShadow = true;
-        tankTurretim.castShadow = true;
-        tankTurretim.receiveShadow = true;
-        tankTracksim.castShadow = true;
-        tankTracksim.receiveShadow = true;
+        //const tankBodyim = im.addMesh("tankBody","tankBody", "gray");
+        //const tankTurretim = im.addMesh("tankTurret", "tankTurret","gray");
+        //const tankTracksim = im.addMesh("tankTracks", "tankTracks", "gray");
+
+        //tankBodyim.castShadow = true;
+        //tankBodyim.receiveShadow = true;
+        //tankTurretim.castShadow = true;
+        //tankTurretim.receiveShadow = true;
+        //tankTracksim.castShadow = true;
+        //tankTracksim.receiveShadow = true;
 
         const numberMat = new THREE.MeshStandardMaterial( {color: new THREE.Color(1,1,1), metalness:0.5, roughness:0.5} );
         this.setNumber(0, n0, numberMat);

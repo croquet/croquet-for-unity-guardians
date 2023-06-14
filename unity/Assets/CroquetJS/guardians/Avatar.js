@@ -7,7 +7,7 @@ import { Pawn, mix, PM_ThreeVisible, PM_ThreeInstanced, PM_Avatar, PM_Smoothed, 
     q_yaw, q_axisAngle, q_eulerYXZ, q_slerp} from "@croquet/worldcore";
 
 import paper from "../assets/paper.jpg";
-import { sunLight, sunBase, perlin2D } from "./Pawns";
+import { sunLight, sunBase, perlin2D, tank, UserColors } from "./Pawns";
 const cameraOffset = [0,12,20];
 
 const v_dist2Sqr = function (a,b) {
@@ -36,6 +36,7 @@ export class AvatarPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_
     constructor(actor) {
         console.log("CONSTRUCT AVATAR")
         super(actor);
+        this.developerMode=0;
         this.yaw = q_yaw(this.rotation);
         this.pitch = 0;
         this.roll = 0;
@@ -46,31 +47,62 @@ export class AvatarPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_
         this.lastShootTime = -10000;
         this.waitShootTime = 100;
         this.godMode = false;
+        this.color = UserColors[actor.userColor];
         this.service("CollisionManager").colliders.add(this);
-        this.loadInstance(actor._instanceName, [0.35, 0.35, 0.35]);
         this.listen("goHome", this.goHome);
+        this.loadTank();
+        /*
         this.paperTexture = new THREE.TextureLoader().load( paper );
         this.paperTexture.wrapS = THREE.RepeatWrapping;
         this.paperTexture.wrapT = THREE.RepeatWrapping;
         this.paperTexture.repeat.set( 1, 1 );
+        */
     }
 
-    loadInstance(name, color) {
-        const im = this.service("ThreeInstanceManager");
-        const geometry = im.geometry(name);
-        if (geometry) {
-            this.material = new THREE.MeshStandardMaterial( {color: new THREE.Color(...color), map:this.paperTexture} );
-            this.mesh = new THREE.Mesh( geometry, this.material );
-            this.mesh.castShadow = true;
-            this.mesh.receiveShadow = true;
-            if (this.isMyAvatar) sunLight.target = this.mesh; //this.instance; // sunLight is a global
-            this.setRenderObject(this.mesh);
-        } else this.future(100).loadInstance(name, color);
+    loadTank() {
+
+        if (tank[0]) {
+            this.tank = new THREE.Group();
+            this.tankTreads = tank[0].clone(true);
+            this.tankTreads.rotation.set(0, Math.PI/2, 0);
+            this.tankTreads.traverse(obj=> {
+                if (obj.geometry) {
+                    obj.castShadow=true;
+                    obj.receiveShadow=true;
+                }
+            });
+            this.tankBody = tank[1].clone(true);
+            this.tankBody.rotation.set(0, Math.PI/2, 0);
+            this.tankBody.traverse(obj=> {
+                if (obj.geometry) {
+                    obj.material = obj.material.clone();
+                    obj.material.color.setRGB(...this.color);
+                    obj.castShadow=true;
+                    obj.receiveShadow=true;
+                }
+            });
+            this.tank.add(this.tankTreads);
+            this.tank.add(this.tankBody);
+            if (this.isMyAvatar) sunLight.target = this.tank; //this.instance; // sunLight is a global
+            this.setRenderObject(this.tank);
+
+        } else this.future(100).loadTank();
     }
 
     destroy() {
+        this.destroy3D( this.tankTreads );
+        this.destroy3D( this.tankBody );
         super.destroy();
         this.service("CollisionManager").colliders.delete(this);
+    }
+
+    destroy3D( obj3D ) {
+        obj3D.traverse( obj => {
+            if (obj.geometry) {
+                obj.geometry.dispose();
+                obj.material.dispose();
+            }
+        });
     }
 
     // If this is YOUR avatar, the AvatarPawn automatically calls this.drive() in the constructor.
@@ -115,6 +147,16 @@ export class AvatarPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_
 
     keyDown(e) {
         switch (e.key) {
+            case 'x': case 'X':
+                if (this.developerMode === 0) this.developerMode++;
+                break;
+            case 'y': case 'Y':
+                if (this.developerMode === 1 || this.developerMode === 4 ) this.developerMode++;
+                if (this.developerMode === 5) console.log( "Entered developer mode.");
+                break;
+            case 'z': case 'Z':
+                if (this.developerMode === 2 || this.developerMode === 3 ) this.developerMode++;
+                break;
             case "ArrowUp": case "W": case "w":
                 this.gas = 1; break;
             case "ArrowDown": case "S": case "s":
@@ -124,9 +166,9 @@ export class AvatarPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_
             case "ArrowRight": case "D": case "d":
                 this.turn = -1; break;
             case "M": case "m":
-                this.auto = !this.auto; break;
+                if (this.developerMode === 5) this.auto = !this.auto; break;
             case "H": case "h":
-                this.goHome(); break;
+                if (this.developerMode === 5) this.goHome(); break;
             case "Shift":
                 console.log("shiftKey Down");
                 this.highGear = 1.5; break;
@@ -134,48 +176,49 @@ export class AvatarPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_
                 this.shoot();
                 break;
             case "I": case "i":
-                console.log("translation:", this.translation,
+                if (this.developerMode === 5) console.log(
+                    "translation:", this.translation,
                     "roll:", this.roll,
                     "pitch:", this.pitch,
                     "yaw:", this.yaw);
                 break;
             case "g":
                 // switch to god mode camera
-                this.godMode = !this.godMode;
+                if (this.developerMode === 5) this.godMode = !this.godMode;
                 break;
             case "G":
                 // everyone switch to go mode camera
-                this.publish("all", "godMode", !this.godMode);
+                if (this.developerMode === 5) this.publish("all", "godMode", !this.godMode);
                 break;
             case "R": case "r":
-                this.publish("game", "resetGame");
+                if (this.developerMode === 5) this.publish("game", "resetGame");
                 break;
             case "B": case "b": //
-                this.publish("game", "bots", 500);
+                if (this.developerMode === 5) this.publish("game", "bots", 500);
                 break;
             case "U": case "u": // make the tower immortal/undying
-                this.publish("game", "undying");
+                if (this.developerMode === 5) this.publish("game", "undying");
                 break;
             case 'F': case 'f': // pause bots and missiles
-                this.publish("game", "freeze");
+                if (this.developerMode === 5) this.publish("game", "freeze");
                 break;
             case '1':
-                this.publish("game", "bots", 10);
+                if (this.developerMode === 5) this.publish("game", "bots", 10);
                 break;
             case '2':
-                this.publish("game", "bots", 25);
+                if (this.developerMode === 5) this.publish("game", "bots", 25);
                 break;
             case '3':
-                this.publish("game", "bots", 50);
+                if (this.developerMode === 5) this.publish("game", "bots", 50);
                 break;
             case '4':
-                this.publish("game", "bots", 100);
+                if (this.developerMode === 5) this.publish("game", "bots", 100);
                 break;
             case '5':
-                this.publish("game", "bots", 250);
+                if (this.developerMode === 5) this.publish("game", "bots", 250);
                 break;
             case '6':
-                this.publish("game", "bots", 500);
+                if (this.developerMode === 5) this.publish("game", "bots", 500);
                 break;
             default:
         }

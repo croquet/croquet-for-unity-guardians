@@ -191,7 +191,6 @@ class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
     }
 
     resetGame() {
-        console.log("destroy the missile");
         this.destroy();
     }
 
@@ -344,12 +343,12 @@ class MyUser extends User {
             pawn: "AvatarPawn",
             parent: base,
             driver: this.userId,
-            instanceName: 'tankTracks',
+            //instanceName: 'tankTracks',
             tags: ["avatar", "block"],
             ...props
         });
-        SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, userColor: props.userColor, instanceName:'tankBody'});
-        SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, userColor: props.userColor, instanceName:'tankTurret'});
+    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, userColor: props.userColor, instanceName:'tankBody'});
+    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, userColor: props.userColor, instanceName:'tankTurret'});
     }
 
     saveProps() {
@@ -419,10 +418,10 @@ export class MyModelRoot extends ModelRoot {
         const d = 290;
         // the main tower
         this.makeSkyscraper( 0, -1.2, 0, -0.533, 0);
-        this.makeSkyscraper( 0, 0,  d, Math.PI/2, 1, 0);
-        this.makeSkyscraper( 0, 0, -d, 0, 2, 0);
-        this.makeSkyscraper( d, 0,  0, 0, 3, 0);
-        this.makeSkyscraper(-d-10, -2,  -8, Math.PI+2.5, 4, 0);
+        this.makeSkyscraper( 0, -1,  d, Math.PI/2, 1, 0);
+        this.makeSkyscraper( 0, -1, -d, 0, 2, 0);
+        this.makeSkyscraper( d, -1,  0, 0, 3, 0);
+        this.makeSkyscraper(-d-10, -3,  -8, Math.PI+2.5, 4, 0);
         this.startGame();
     }
 
@@ -500,7 +499,6 @@ export class MyModelRoot extends ModelRoot {
     }
 
     makeSkyscraper(x, y, z, r, index, radius) {
-        console.log("makeSkyscraper", r, q_axisAngle([0,1,0],r));
         GridActor.create( {pawn: "TowerPawn", tags: ["block"], parent: this.base, index, obstacle: true,
             radius, translation:[x, y, z], height:y, rotation:q_axisAngle([0,1,0],r)} );
     }
