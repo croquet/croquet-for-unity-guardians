@@ -11,11 +11,15 @@ public class moveAround : MonoBehaviour
     private Terrain _terrain;
     private float boostSpeed;
     private float computedSpeed;
+    private string croquetHandle;
+    
     void Start()
     {
         _terrain = FindObjectOfType<Terrain>();
         boostSpeed = boostSpeedFactor * speed;
         computedSpeed = speed;
+
+        croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
     }
 
   
@@ -40,5 +44,8 @@ public class moveAround : MonoBehaviour
 
         var slopeRotation = Quaternion.FromToRotation(transform.up, _terrain.terrainData.GetInterpolatedNormal(transform.position.x/(_terrain.terrainData.size.x), transform.position.z/(_terrain.terrainData.size.z)));
         transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation * transform.rotation, 10.0f* Time.deltaTime);
+        
+        CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
+        CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, transform.position, transform.rotation);
     }
 }
