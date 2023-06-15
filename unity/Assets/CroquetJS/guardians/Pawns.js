@@ -256,31 +256,30 @@ FireballPawn.register("FireballPawn");
 // 3D models are loaded async, so may not yet exist when your avatar is being constructed.
 // We check to see if there is an instance for this yet, and try again later if not.
 //------------------------------------------------------------------------------------------
-export class GeometryPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_ThreeInstanced) {
+// export class GeometryPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_ThreeInstanced) {
 
-    constructor(actor) {
-        super(actor);
-        this.paperTexture = new THREE.TextureLoader().load( paper );
-        this.paperTexture.wrapS = THREE.RepeatWrapping;
-        this.paperTexture.wrapT = THREE.RepeatWrapping;
-        this.paperTexture.repeat.set( 1, 1 );
-        this.loadGeometry(actor._instanceName, UserColors[actor.userColor]);
-    }
+//     constructor(actor) {
+//         super(actor);
+//         this.paperTexture = new THREE.TextureLoader().load( paper );
+//         this.paperTexture.wrapS = THREE.RepeatWrapping;
+//         this.paperTexture.wrapT = THREE.RepeatWrapping;
+//         this.paperTexture.repeat.set( 1, 1 );
+//         this.loadGeometry(actor._instanceName, UserColors[actor.userColor]);
+//     }
 
-    loadGeometry(name, color) {
-        const im = this.service("ThreeInstanceManager");
-        const geometry = im.geometry(name);
-        if (geometry) {
-            this.material = new THREE.MeshStandardMaterial( {color: new THREE.Color(...color), metalness:0.25, roughness:0.5, map:this.paperTexture} );
-            this.mesh = new THREE.Mesh( geometry, this.material );
-            this.mesh.castShadow = true;
-            this.mesh.receiveShadow = true;
-            this.setRenderObject(this.mesh);
-        } else this.future(100).loadGeometry(name, color);
-    }
-}
-
-GeometryPawn.register("GeometryPawn");
+//     loadGeometry(name, color) {
+//         const im = this.service("ThreeInstanceManager");
+//         const geometry = im.geometry(name);
+//         if (geometry) {
+//             this.material = new THREE.MeshStandardMaterial( {color: new THREE.Color(...color), metalness:0.25, roughness:0.5, map:this.paperTexture} );
+//             this.mesh = new THREE.Mesh( geometry, this.material );
+//             this.mesh.castShadow = true;
+//             this.mesh.receiveShadow = true;
+//             this.setRenderObject(this.mesh);
+//         } else this.future(100).loadGeometry(name, color);
+//     }
+// }
+// GeometryPawn.register("GeometryPawn");
 
 //------------------------------------------------------------------------------------------
 // TowerPawn -----------------------------------------------------------------------------
