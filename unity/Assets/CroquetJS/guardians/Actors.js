@@ -25,9 +25,11 @@ class BaseActor extends mix(Actor).with(AM_Spatial, AM_Grid) {
 
     get pawn() {return "BasePawn"}
 
-    init(options) {
-        super.init(options);
-    }
+    get pawnMixins() { return [] } // don't build a connected pawn for Unity
+
+    // init(options) {
+    //     super.init(options);
+    // }
 }
 BaseActor.register('BaseActor');
 
@@ -37,6 +39,12 @@ BaseActor.register('BaseActor');
 //------------------------------------------------------------------------------------------
 
 class HealthCoinActor extends mix(Actor).with(AM_Spatial) {
+
+    get pawnMixins() { return ['Spatial'] }
+    get pawnInitializationArgs() { return { type: 'healthcoin' }}
+    get pawnListeners() { return [] }
+    get pawnPropertyListeners() { return [] }
+
     init(...args) {
         super.init(...args);
         this.angle = 0;
@@ -52,7 +60,6 @@ class HealthCoinActor extends mix(Actor).with(AM_Spatial) {
 
     get pawn() {return "HealthCoinPawn"}
 }
-
 HealthCoinActor.register('HealthCoinActor');
 
 //------------------------------------------------------------------------------------------
@@ -61,6 +68,12 @@ HealthCoinActor.register('HealthCoinActor');
 //------------------------------------------------------------------------------------------
 
 class FireballActor extends mix(Actor).with(AM_Spatial) {
+
+    get pawnMixins() { return ['Spatial'] }
+    get pawnInitializationArgs() { return { type: 'fireball' }}
+    get pawnListeners() { return [] }
+    get pawnPropertyListeners() { return ['onTarget'] }
+
     init(...args) {
         super.init(...args);
         this.timeScale = 0.00025 + Math.random()*0.00002;
@@ -76,6 +89,11 @@ FireballActor.register('FireballActor');
 // The bad guys - they try to get to the tower to blow it up
 //------------------------------------------------------------------------------------------
 class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
+
+    get pawnMixins() { return ['Smoothed'] }
+    get pawnInitializationArgs() { return { type: 'bot' }}
+    get pawnListeners() { return [] }
+    get pawnPropertyListeners() { return [] }
 
     get index() {return this._index || 0}
 
@@ -151,28 +169,51 @@ BotActor.register("BotActor");
 // All purpose actor for adding bits to other, smarter actors
 //------------------------------------------------------------------------------------------
 
-class SimpleActor extends mix(Actor).with(AM_Spatial) {
+// class SimpleActor extends mix(Actor).with(AM_Spatial) {
 
-    init(options) {
-        super.init(options);
-    }
-    get userColor() { return this._userColor }
+//     init(options) {
+//         super.init(options);
+//     }
+//     get colorIndex() { return this._colorIndex }
 
-}
-SimpleActor.register('SimpleActor');
+// }
+// SimpleActor.register('SimpleActor');
 
 //------------------------------------------------------------------------------------------
-//--GridActor ------------------------------------------------------------------------------
+//--BollardActor, TowerActor ---------------------------------------------------------------
 // Actors that place themselves on the grid so other actors can avoid them
 //------------------------------------------------------------------------------------------
 
-class GridActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
+class BollardActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
 
-    init(options) {
-        super.init(options);
-    }
+    get pawnMixins() { return ['Spatial'] }
+    get pawnInitializationArgs() { return { type: 'bollard' }}
+    get pawnListeners() { return [] }
+    get pawnPropertyListeners() { return ['radius'] }
+
+    get radius() { return this._radius }
+
+    // init(options) {
+    //     super.init(options);
+    // }
 }
-GridActor.register('GridActor');
+BollardActor.register('BollardActor');
+
+class TowerActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
+
+    get pawnMixins() { return ['Spatial'] }
+    get pawnInitializationArgs() { return { type: 'tower' }}
+    get pawnListeners() { return [] }
+    get pawnPropertyListeners() { return ['radius', 'index'] }
+
+    get radius() { return this._radius }
+    get index() { return this._index }
+
+    // init(options) {
+    //     super.init(options);
+    // }
+}
+TowerActor.register('TowerActor');
 
 //------------------------------------------------------------------------------------------
 //--MissileActor ---------------------------------------------------------------------------
@@ -181,6 +222,11 @@ GridActor.register('GridActor');
 const missileSpeed = 75;
 
 class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+
+    get pawnMixins() { return ['Spatial'] }
+    get pawnInitializationArgs() { return { type: 'missile' }}
+    get pawnListeners() { return [] }
+    get pawnPropertyListeners() { return [] }
 
     init(options) {
         super.init(options);
@@ -194,7 +240,7 @@ class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
         this.destroy();
     }
 
-    get userColor() { return this._userColor }
+    get colorIndex() { return this._colorIndex }
 
     tick() {
         this.test();
@@ -258,6 +304,12 @@ MissileActor.register('MissileActor');
 //------------------------------------------------------------------------------------------
 
 class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
+
+    get pawnMixins() { return ['Spatial', 'Avatar'] }
+    get pawnInitializationArgs() { return { type: 'tank' }}
+    get pawnListeners() { return ['goHome', 'doGodMode'] }
+    get pawnPropertyListeners() { return ['colorIndex'] }
+
     init(options) {
         super.init(options);
         this.isAvatar = true;
@@ -265,8 +317,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
         this.subscribe("all", "godMode", this.doGodMode);
     }
 
-    get userColor() { return this._userColor }
-    get color() { return this._color || [0.5,0.5,0.5]}
+    get colorIndex() { return this._colorIndex }
 
     doGodMode(gm) {
         this.say("doGodMode", gm);
@@ -275,7 +326,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
     doShoot(where) {
         const aim = v3_rotate([0,0,-1], q_axisAngle([0,1,0], where[1])); //
         const translation = v3_add(this.translation, v3_scale(aim, 5));
-        const missile = MissileActor.create({parent: this.parent, pawn: "MissilePawn", translation, userColor: this.userColor, color: [...this.color]});
+        const missile = MissileActor.create({parent: this.parent, pawn: "MissilePawn", translation, colorIndex: this.colorIndex});
         missile.go = missile.behavior.start({name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20});
     }
 
@@ -334,7 +385,7 @@ class MyUser extends User {
         const base = this.wellKnownModel("ModelRoot").base;
 
         const props = options.savedProps || {
-            userColor: options.userNumber%24,
+            colorIndex: options.userNumber%24,
             translation: [this.random() * 10-5, 0, this.random()*10-5],
             rotation: q_axisAngle([0,1,0], Math.PI/2),
         }
@@ -347,13 +398,13 @@ class MyUser extends User {
             tags: ["avatar", "block"],
             ...props
         });
-    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, userColor: props.userColor, instanceName:'tankBody'});
-    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, userColor: props.userColor, instanceName:'tankTurret'});
+    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, colorIndex: props.colorIndex, instanceName:'tankBody'});
+    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, colorIndex: props.colorIndex, instanceName:'tankTurret'});
     }
 
     saveProps() {
-        const { color, userColor, translation, rotation } = this.avatar;
-        return { color, userColor, translation, rotation };
+        const { color, colorIndex, translation, rotation } = this.avatar;
+        return { color, colorIndex, translation, rotation };
     }
 
     destroy() {
@@ -494,18 +545,18 @@ export class MyModelRoot extends ModelRoot {
     }
 
     makeBollard(x, z) {
-        GridActor.create( {pawn: "InstancePawn", tags: ["block"], instanceName:'bollard', parent: this.base,
+        BollardActor.create( {pawn: "InstancePawn", tags: ["block"], instanceName:'bollard', parent: this.base,
             obstacle:true, viewObstacle:true, perlin: true, radius:1.5, translation:[x, 0, z]} );
     }
 
     makeSkyscraper(x, y, z, r, index, radius) {
-        GridActor.create( {pawn: "TowerPawn", tags: ["block"], parent: this.base, index, obstacle: true,
+        TowerActor.create( {pawn: "TowerPawn", tags: ["block"], parent: this.base, index, obstacle: true,
             radius, translation:[x, y, z], height:y, rotation:q_axisAngle([0,1,0],r)} );
     }
 
     makeBot(x, z, index) {
         const bot = BotActor.create({parent: this.base, tags:["block", "bot"], pawn:"BotPawn", index, radius: 2, translation:[x, 0.5, z]});
-        const eye = SimpleActor.create({parent: bot, pawn:"BotEyePawn"});
+        // const eye = SimpleActor.create({parent: bot, pawn:"BotEyePawn"});
         return bot;
     }
 }
