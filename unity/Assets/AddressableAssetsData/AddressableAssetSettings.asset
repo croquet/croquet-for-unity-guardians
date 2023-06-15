@@ -84,16 +84,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
-    - fountain
-    - demolition
-    - tutorial5
-    - tutorial6
-    - tutorial7
-    - tutorial8
-    - tutorial9
     - Guardians
-    - Guardians2
-    - Guardians3
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 2e2c9bdcc4dbd4fe1b46554d72be675b, type: 2}
