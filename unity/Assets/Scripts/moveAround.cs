@@ -25,6 +25,11 @@ public class moveAround : MonoBehaviour
   
     void Update()
     {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        if (horizontal == 0 && vertical == 0) return;
+        
         if (Input.GetKey(KeyCode.LeftShift))
         {
             computedSpeed = boostSpeed;
@@ -34,13 +39,13 @@ public class moveAround : MonoBehaviour
             computedSpeed = speed;
         }
         
-        transform.Translate(transform.forward * (computedSpeed * Time.deltaTime * Input.GetAxis("Vertical")), Space.World);
+        transform.Translate(transform.forward * (computedSpeed * Time.deltaTime * vertical), Space.World);
         transform.position = new Vector3(transform.position.x,
             _terrain.terrainData.GetInterpolatedHeight(transform.position.x/(_terrain.terrainData.size.x), transform.position.z/(_terrain.terrainData.size.z)),
             transform.position.z);
         
         
-        transform.Rotate(Vector3.up, rotationSpeed*Time.deltaTime*Input.GetAxis("Horizontal"));
+        transform.Rotate(Vector3.up, rotationSpeed*Time.deltaTime*horizontal);
 
         var slopeRotation = Quaternion.FromToRotation(transform.up, _terrain.terrainData.GetInterpolatedNormal(transform.position.x/(_terrain.terrainData.size.x), transform.position.z/(_terrain.terrainData.size.z)));
         transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation * transform.rotation, 10.0f* Time.deltaTime);
