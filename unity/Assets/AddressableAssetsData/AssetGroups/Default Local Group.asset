@@ -16,7 +16,47 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 3ffac8b43b7044398bfa119d7aecca3a
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 044e8f0fa214f40f4b92b5405c23eefe
+    m_Address: missile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
+  - m_GUID: 698bad6b35f73495aaae6d8d32c65b56
+    m_Address: tank
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
+  - m_GUID: 9599165df10ca42f097d70ad62995c0e
+    m_Address: tower1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
+  - m_GUID: fccf58472cf8548b6b013426790ab9bc
+    m_Address: tower2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
+  - m_GUID: e97bbc90d46834495a46748dc97c5fda
+    m_Address: tower3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
+  - m_GUID: 137d786f292be4d5ebc857335aa181a7
+    m_Address: tower0
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
+  - m_GUID: 6dbea482217a347379d0f5b30656cd46
+    m_Address: bollard
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
+  - m_GUID: 7ca2ea579d75b4e3a991bdd70762a180
+    m_Address: bot
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Guardians
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1398c81f484a44649a064676c86f132e, type: 2}
   m_SchemaSet:
