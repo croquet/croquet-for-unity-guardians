@@ -637,7 +637,7 @@ PrefabInstance:
     - target: {fileID: 2449006538143125633, guid: 044e8f0fa214f40f4b92b5405c23eefe,
         type: 3}
       propertyPath: m_Name
-      value: bullet
+      value: missile
       objectReference: {fileID: 0}
     - target: {fileID: 2449006538143125634, guid: 044e8f0fa214f40f4b92b5405c23eefe,
         type: 3}
