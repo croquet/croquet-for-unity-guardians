@@ -40,7 +40,7 @@ BaseActor.register('BaseActor');
 
 class HealthCoinActor extends mix(Actor).with(AM_Spatial) {
 
-    get pawnMixins() { return ['Spatial'] }
+    get pawnMixins() { return ['Smoothed'] }
     get pawnInitializationArgs() { return { type: 'healthcoin' }}
     get pawnListeners() { return [] }
     get pawnPropertyListeners() { return [] }
@@ -69,7 +69,7 @@ HealthCoinActor.register('HealthCoinActor');
 
 class FireballActor extends mix(Actor).with(AM_Spatial) {
 
-    get pawnMixins() { return ['Spatial'] }
+    get pawnMixins() { return ['Smoothed'] }
     get pawnInitializationArgs() { return { type: 'fireball' }}
     get pawnListeners() { return [] }
     get pawnPropertyListeners() { return ['onTarget'] }
@@ -223,7 +223,7 @@ const missileSpeed = 75;
 
 class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
 
-    get pawnMixins() { return ['Spatial'] }
+    get pawnMixins() { return ['Smoothed'] }
     get pawnInitializationArgs() { return { type: 'missile' }}
     get pawnListeners() { return [] }
     get pawnPropertyListeners() { return [] }
@@ -305,7 +305,7 @@ MissileActor.register('MissileActor');
 
 class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
 
-    get pawnMixins() { return ['Spatial', 'Avatar'] }
+    get pawnMixins() { return ['Smoothed', 'Avatar'] }
     get pawnInitializationArgs() { return { type: 'tank' }}
     get pawnListeners() { return ['goHome', 'doGodMode'] }
     get pawnPropertyListeners() { return ['colorIndex'] }
