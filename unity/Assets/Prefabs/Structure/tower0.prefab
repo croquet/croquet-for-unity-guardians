@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3505379764743690006}
   m_Layer: 0
-  m_Name: centralship
+  m_Name: tower0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

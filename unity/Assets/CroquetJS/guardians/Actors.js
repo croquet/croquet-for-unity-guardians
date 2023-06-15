@@ -201,13 +201,12 @@ BollardActor.register('BollardActor');
 
 class TowerActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
 
-    get pawnMixins() { return ['Spatial'] }
-    get pawnInitializationArgs() { return { type: 'tower' }}
+    get pawnMixins() { return this._index >= 0 ? ['Spatial'] : [] }
+    get pawnInitializationArgs() { return { type: `tower${this._index}` }}
     get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return ['radius', 'index'] }
+    get pawnPropertyListeners() { return ['radius'] }
 
     get radius() { return this._radius }
-    get index() { return this._index }
 
     // init(options) {
     //     super.init(options);
