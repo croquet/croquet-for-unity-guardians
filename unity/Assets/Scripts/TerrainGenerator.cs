@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    public int depth = 20;// Yaxis
+    public float depth = 27.5f;// Yaxis
     
-    public int width = 256;
-    public int height = 256;
+    public int width = 512;
+    public int height = 512;
 
     private Terrain terrain;
 
-    public float scale = 20.0f;
+    public float scale = 2.5f;
     void Start()
     {
         terrain = GetComponent<Terrain>(); 
@@ -21,26 +19,26 @@ public class TerrainGenerator : MonoBehaviour
 
     void Update()
     {
-        terrain.terrainData = GenerateTerrain(terrain.terrainData);
-
+    //    terrain.terrainData = GenerateTerrain(terrain.terrainData);
     }
 
     TerrainData GenerateTerrain(TerrainData terrainData)
     {
         terrainData.heightmapResolution = width + 1;
-        terrainData.size = new Vector3(width, depth, height);
+        terrainData.size = new Vector3(width*scale, depth, height*scale);
         terrainData.SetHeights(0,0, GenerateHeights());
         return terrainData;
     }
 
     float[,] GenerateHeights()
     {
+        Vector3 tPos = terrain.gameObject.transform.position;
         float[,] heights = new float[width, height];
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                heights[x, y] = CalculateHeight(x, y); // Perlin Noise
+                heights[x, y] = CalculateHeight(x+(int)tPos.x, y+(int)tPos.z); // Perlin Noise
             }
         }
 
@@ -49,8 +47,8 @@ public class TerrainGenerator : MonoBehaviour
 
     float CalculateHeight(int x, int y)
     {
-        float xCoord = (float)x / width * scale;
-        float yCoord = (float)y / height * scale;
+        float xCoord = (float)x * scale * .02f;
+        float yCoord = (float)y * scale * .02f;
         return Mathf.PerlinNoise(xCoord, yCoord);
     }
 
