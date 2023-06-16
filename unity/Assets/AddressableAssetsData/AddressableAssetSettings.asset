@@ -84,7 +84,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
-    - Guardians
+    - guardians
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 2e2c9bdcc4dbd4fe1b46554d72be675b, type: 2}
