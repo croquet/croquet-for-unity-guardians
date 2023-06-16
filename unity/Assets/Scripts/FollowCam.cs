@@ -12,6 +12,8 @@ public class FollowCam : MonoBehaviour
     public float translationalLerpSpeed = 1.0f;
     public float rotationalSlerpSpeed = 1.0f;
 
+    public bool noCameraRoll = true;
+
     void LateUpdate()
     {
         if (target)
@@ -21,8 +23,18 @@ public class FollowCam : MonoBehaviour
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, translationalLerpSpeed);
             transform.position = smoothedPosition;
 
-            Quaternion desiredRotation = targetRot * Quaternion.Euler(rotationOffset);
-            Quaternion smoothedRotation = Quaternion.Lerp(transform.rotation, desiredRotation, rotationalSlerpSpeed);
+            //if (noCameraRoll) transform.LookAt(target, Vector3.up);
+
+            Quaternion desiredRotation;
+            if (noCameraRoll)
+            {
+                desiredRotation = Quaternion.LookRotation((target.transform.position-transform.position).normalized, Vector3.up) * Quaternion.Euler(rotationOffset);
+            }
+            else
+            {
+                desiredRotation = targetRot * Quaternion.Euler(rotationOffset);
+            }
+            Quaternion smoothedRotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationalSlerpSpeed);
             transform.rotation = smoothedRotation;
         }
     }
