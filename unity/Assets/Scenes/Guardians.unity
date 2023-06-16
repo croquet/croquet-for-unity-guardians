@@ -308,10 +308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c62b905e9a0375d449c8e097198c4a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 12
-  width: 256
-  height: 256
-  scale: 6
+  depth: 27.5
+  width: 512
+  height: 512
+  scale: 2.5
 --- !u!1 &615882980
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c98cc1d7bc374101816379b2a2ac02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitForUserLaunch: 1
+  waitForUserLaunch: 0
   localReflector: 
   showWebview: 0
 --- !u!114 &1003224084
