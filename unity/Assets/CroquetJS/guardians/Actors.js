@@ -25,11 +25,6 @@ class BaseActor extends mix(Actor).with(AM_Spatial, AM_Grid) {
 
     get pawn() {return "BasePawn"}
 
-    get pawnMixins() { return [] } // don't build a connected pawn for Unity
-
-    // init(options) {
-    //     super.init(options);
-    // }
 }
 BaseActor.register('BaseActor');
 
@@ -40,10 +35,7 @@ BaseActor.register('BaseActor');
 
 class HealthCoinActor extends mix(Actor).with(AM_Spatial) {
 
-    get pawnMixins() { return ['Smoothed'] }
     get pawnInitializationArgs() { return { type: 'healthcoin' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return [] }
 
     init(...args) {
         super.init(...args);
@@ -69,10 +61,7 @@ HealthCoinActor.register('HealthCoinActor');
 
 class FireballActor extends mix(Actor).with(AM_Spatial) {
 
-    get pawnMixins() { return ['Smoothed'] }
     get pawnInitializationArgs() { return { type: 'fireball' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return ['onTarget'] }
 
     init(...args) {
         super.init(...args);
@@ -90,12 +79,7 @@ FireballActor.register('FireballActor');
 //------------------------------------------------------------------------------------------
 class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
 
-    get pawnMixins() { return ['Smoothed'] }
     get pawnInitializationArgs() { return { type: 'bot' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return [] }
-
-    get index() {return this._index || 0}
 
     init(options) {
         super.init(options);
@@ -186,10 +170,7 @@ BotActor.register("BotActor");
 
 class BollardActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
 
-    get pawnMixins() { return ['Spatial'] }
     get pawnInitializationArgs() { return { type: 'bollard' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return ['radius'] }
 
     get radius() { return this._radius }
 
@@ -201,10 +182,7 @@ BollardActor.register('BollardActor');
 
 class TowerActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
 
-    get pawnMixins() { return this._index >= 0 ? ['Spatial'] : [] }
-    get pawnInitializationArgs() { return { type: `tower${this._index}` }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return ['radius'] }
+    get pawnInitializationArgs() { return { type: this._index >= 0 ? `tower${this._index}` : ''}}
 
     get radius() { return this._radius }
 
@@ -222,10 +200,7 @@ const missileSpeed = 75;
 
 class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
 
-    get pawnMixins() { return ['Smoothed'] }
     get pawnInitializationArgs() { return { type: 'missile' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return [] }
 
     init(options) {
         super.init(options);
@@ -304,10 +279,7 @@ MissileActor.register('MissileActor');
 
 class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
 
-    get pawnMixins() { return ['Smoothed', 'Avatar'] }
-    get pawnInitializationArgs() { return { type: 'tank' }}
-    get pawnListeners() { return ['goHome', 'doGodMode'] }
-    get pawnPropertyListeners() { return ['colorIndex'] }
+    get pawnInitializationArgs() { return { type: 'tank' } }
 
     init(options) {
         super.init(options);
@@ -523,9 +495,8 @@ export class MyModelRoot extends ModelRoot {
             const rr = r+100*Math.random();
             const x = Math.sin(aa)*rr;
             const y = Math.cos(aa)*rr;
-            const index = Math.floor(20*Math.random());
             // stagger when the bots get created
-            this.future(Math.floor(Math.random()*200)).makeBot(x, y, index);
+            this.future(Math.floor(Math.random()*200)).makeBot(x, y);
         }
         if (wave>0) this.future(30000).makeWave(wave+1, Math.floor(numBots*1.2));
     }
@@ -553,8 +524,8 @@ export class MyModelRoot extends ModelRoot {
             radius, translation:[x, y, z], height:y, rotation:q_axisAngle([0,1,0],r)} );
     }
 
-    makeBot(x, z, index) {
-        const bot = BotActor.create({parent: this.base, tags:["block", "bot"], pawn:"BotPawn", index, radius: 2, translation:[x, 0.5, z]});
+    makeBot(x, z) {
+        const bot = BotActor.create({parent: this.base, tags:["block", "bot"], pawn:"BotPawn", radius: 2, translation:[x, 0.5, z]});
         // const eye = SimpleActor.create({parent: bot, pawn:"BotEyePawn"});
         return bot;
     }

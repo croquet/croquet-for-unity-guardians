@@ -52,13 +52,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - guardians
-  - m_GUID: 7ca2ea579d75b4e3a991bdd70762a180
+  - m_GUID: f52e7c23fb16448928add805d180c296
     m_Address: bot
     m_ReadOnly: 0
     m_SerializedLabels:
     - guardians
-  - m_GUID: fc852fc773a6d41798f22de3690416f0
+  - m_GUID: 790fa015d47d14418ab3ab790a83b28f
     m_Address: tower5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - guardians
+  - m_GUID: d4e5f622cc968497581435fbdb582057
+    m_Address: tower6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - guardians
+  - m_GUID: df8e3f60934794afcaa410427accd006
+    m_Address: fireball
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - guardians
+  - m_GUID: 49579c3442383461fb85592b5f1db775
+    m_Address: healthcoin
     m_ReadOnly: 0
     m_SerializedLabels:
     - guardians

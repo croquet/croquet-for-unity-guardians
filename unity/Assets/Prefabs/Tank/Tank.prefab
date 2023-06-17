@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 8057081661495829244}
   - component: {fileID: 8057081661495829245}
   - component: {fileID: 8057081661495829233}
+  - component: {fileID: -6064770270627014686}
   m_Layer: 0
-  m_Name: Tank
+  m_Name: tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,6 +104,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 0
   interactableLayers: []
+--- !u!114 &-6064770270627014686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057081661495829246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixins:
+  - Smoothed
+  - Avatar
+  staticProperties:
+  - colorIndex
+  watchedProperties: []
 --- !u!1 &8057081662260750645
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1764961019249307540}
+  - component: {fileID: -9034053905152311580}
+  - component: {fileID: 3950718077343847628}
   m_Layer: 0
   m_Name: tower3
   m_TagString: Untagged
@@ -32,6 +34,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-9034053905152311580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764961019249307541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc6e6892b21b45988fca19c61afc814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raiseToTerrainHeight: 1
+  additionalRaise: 0
+  raiseSpreadStrength: 0
+  objectIsStatic: 1
+  alignToTerrain: 1
+  alignmentStrengthNorm: 1
+--- !u!114 &3950718077343847628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764961019249307541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixins:
+  - Spatial
+  staticProperties:
+  - radius
+  watchedProperties: []
 --- !u!1001 &1764961019643291512
 PrefabInstance:
   m_ObjectHideFlags: 0

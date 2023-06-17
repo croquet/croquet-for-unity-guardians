@@ -46,7 +46,7 @@ public class moveAround : MonoBehaviour
         
         transform.Rotate(Vector3.up, rotationSpeed*Time.deltaTime*horizontal);
 
-        var slopeRotation = Quaternion.FromToRotation(transform.up, _terrain.terrainData.GetInterpolatedNormal((transform.position.x+640)/(_terrain.terrainData.size.x), (transform.position.z+640)/(_terrain.terrainData.size.z)));
+        var slopeRotation = Quaternion.FromToRotation(transform.up, _terrain.terrainData.GetInterpolatedNormal((transform.position.x-tPos.x)/(_terrain.terrainData.size.x), (transform.position.z-tPos.z)/(_terrain.terrainData.size.z)));
         transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation * transform.rotation, 10.0f* Time.deltaTime);
         
         CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
