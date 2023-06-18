@@ -6,36 +6,24 @@ using UnityEngine;
 public class FollowCam : MonoBehaviour
 {
     public Transform target;
-
-    public Vector3 followOffset = new Vector3(0.0f, 5.0f, -10f);
-    public Vector3 rotationOffset = new Vector3();
-    public float translationalLerpSpeed = 1.0f;
-    public float rotationalSlerpSpeed = 1.0f;
-
-    public bool noCameraRoll = true;
+    public Vector3 followOffset = new Vector3(0.0f, 8.0f, -20f);
+    public Vector3 rotationOffset = new Vector3(10, 0, 0);
+    public float translationalLerpSpeed = 0.2f;
+    public float rotationalSlerpSpeed = 0.2f;
+    //public bool noCameraRoll = true;
 
     void LateUpdate()
     {
         if (target)
         {
-            Quaternion targetRot = target.rotation;
-            Vector3 desiredPosition = target.position + targetRot * followOffset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, translationalLerpSpeed);
-            transform.position = smoothedPosition;
+            float tTug = translationalLerpSpeed * Time.deltaTime*1000/15;
+            float rTug = rotationalSlerpSpeed * Time.deltaTime*1000/15;
 
-            //if (noCameraRoll) transform.LookAt(target, Vector3.up);
+            Quaternion desiredRotation = Quaternion.Euler(rotationOffset.x, target.eulerAngles.y, 0);
+            Vector3 desiredPosition = target.position + desiredRotation * followOffset;
 
-            Quaternion desiredRotation;
-            if (noCameraRoll)
-            {
-                desiredRotation = Quaternion.LookRotation((target.transform.position-transform.position).normalized, Vector3.up) * Quaternion.Euler(rotationOffset);
-            }
-            else
-            {
-                desiredRotation = targetRot * Quaternion.Euler(rotationOffset);
-            }
-            Quaternion smoothedRotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationalSlerpSpeed);
-            transform.rotation = smoothedRotation;
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, tTug);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rTug);
         }
     }
 }
