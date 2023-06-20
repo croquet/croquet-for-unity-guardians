@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raiseToTerrainHeight: 1
-  additionalRaise: 0
-  raiseSpreadStrength: 0
+  fixedExtraRaise: 0
+  randomRaiseLower: 0
   objectIsStatic: 1
-  alignToTerrain: 1
+  alignToTerrain: 0
   alignmentStrengthNorm: 1
 --- !u!114 &-2592508247162628411
 MonoBehaviour:

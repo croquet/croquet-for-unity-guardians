@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -7763733572561798485}
   - component: {fileID: -1310751588361529295}
   m_Layer: 0
-  m_Name: tower6
+  m_Name: tower4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raiseToTerrainHeight: 1
-  additionalRaise: 0
-  raiseSpreadStrength: 0
+  fixedExtraRaise: 0
+  randomRaiseLower: 0
   objectIsStatic: 1
-  alignToTerrain: 1
+  alignToTerrain: 0
   alignmentStrengthNorm: 1
 --- !u!114 &-1310751588361529295
 MonoBehaviour:

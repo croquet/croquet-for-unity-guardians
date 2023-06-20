@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7645929061130991704}
   - component: {fileID: -59819041751453181}
   - component: {fileID: 2431330510511371868}
+  - component: {fileID: -7099353523287823182}
   m_Layer: 0
   m_Name: bot
   m_TagString: Untagged
@@ -47,9 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raiseToTerrainHeight: 1
-  additionalRaise: 0.1
-  raiseSpreadStrength: 0.05
-  alignToTerrain: 1
+  fixedExtraRaise: 2
+  randomRaiseLower: 0
+  objectIsStatic: 0
+  alignToTerrain: 0
   alignmentStrengthNorm: 1
 --- !u!114 &2431330510511371868
 MonoBehaviour:
@@ -67,6 +69,30 @@ MonoBehaviour:
   - Smoothed
   staticProperties: []
   watchedProperties: []
+--- !u!114 &-7099353523287823182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537576448583027885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d8c949960f5442e9e066e26035fb1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBeenMoved: 0
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 1}
+  scale: {x: 1, y: 1, z: 1}
+  initializeWithSceneTransform: 0
+  positionDeltaEpsilon: 0.01
+  rotationDeltaEpsilon: 0.01
+  scaleDeltaEpsilon: 0.01
+  linearInterpolation: 0
+  positionLerpFactor: 0.2
+  rotationLerpFactor: 0.2
+  scaleLerpFactor: 0.2
 --- !u!1001 &4497165549328396546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,7 +123,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: eba2320e7cf0d41de83cdd6c329b271f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eba2320e7cf0d41de83cdd6c329b271f,
         type: 3}
@@ -107,7 +133,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: eba2320e7cf0d41de83cdd6c329b271f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eba2320e7cf0d41de83cdd6c329b271f,
         type: 3}
@@ -122,7 +148,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: eba2320e7cf0d41de83cdd6c329b271f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eba2320e7cf0d41de83cdd6c329b271f,
         type: 3}

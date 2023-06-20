@@ -25,15 +25,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3505379764743690005}
-  m_LocalRotation: {x: 0.04448684, y: -0.01013855, z: -0.072064765, w: 0.9963558}
-  m_LocalPosition: {x: 91.02569, y: -0.52, z: 103.77}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3976437883138396631}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 5.002, y: -1.531, z: -8.341}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1031849565828527246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raiseToTerrainHeight: 1
-  additionalRaise: 0
-  raiseSpreadStrength: 0
+  fixedExtraRaise: 0
+  randomRaiseLower: 0
   objectIsStatic: 1
-  alignToTerrain: 1
+  alignToTerrain: 0
   alignmentStrengthNorm: 1
 --- !u!114 &2449929699454741355
 MonoBehaviour:

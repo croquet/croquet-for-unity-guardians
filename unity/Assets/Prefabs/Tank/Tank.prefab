@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 8057081661495829235}
   - component: {fileID: 8057081661495829244}
   - component: {fileID: 8057081661495829245}
-  - component: {fileID: 8057081661495829233}
   - component: {fileID: -6064770270627014686}
   m_Layer: 0
-  m_Name: tank
+  m_Name: Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,20 +89,6 @@ MonoBehaviour:
   speed: 20
   boostSpeedFactor: 2
   rotationSpeed: 60
---- !u!114 &8057081661495829233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8057081661495829246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 645445b11275e4e3382e8650847c35da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactable: 0
-  interactableLayers: []
 --- !u!114 &-6064770270627014686
 MonoBehaviour:
   m_ObjectHideFlags: 0
