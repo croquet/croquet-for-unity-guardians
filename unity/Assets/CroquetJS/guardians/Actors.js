@@ -5,7 +5,7 @@
 // driving and collisions are computed in 2D.
 
 import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, v3_scale,
-    UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore";
+    UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel";
 
 const v_dist2Sqr = function (a,b) {
     const dx = a[0] - b[0];
