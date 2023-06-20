@@ -140,7 +140,7 @@ export class AvatarPawn extends mix(Pawn).with(PM_Smoothed, PM_ThreeVisible, PM_
     shoot() {
         if (this.now()-this.lastShootTime > this.waitShootTime) {
             this.lastShootTime = this.now();
-            this.say("shoot", [this.translation, this.yaw]);
+            this.say("shoot", this.yaw); // [this.translation, this.yaw]);
             //console.log("Shoot");
         }
     }

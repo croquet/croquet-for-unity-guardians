@@ -15,7 +15,8 @@ const v_dist2Sqr = function (a,b) {
 
 const v_mag2Sqr = function (a) {
     return a[0]*a[0]+a[2]*a[2];
-}
+};
+
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
 // This is the ground plane.
@@ -24,8 +25,7 @@ const v_mag2Sqr = function (a) {
 class BaseActor extends mix(Actor).with(AM_Spatial, AM_Grid) {
 
     get pawn() {return "BasePawn"}
-
-    get pawnMixins() { return [] } // don't build a connected pawn for Unity
+    get gamePawnType() { return "" } // don't build a connected pawn for Unity
 
     // init(options) {
     //     super.init(options);
@@ -39,11 +39,8 @@ BaseActor.register('BaseActor');
 //------------------------------------------------------------------------------------------
 
 class HealthCoinActor extends mix(Actor).with(AM_Spatial) {
-
-    get pawnMixins() { return ['Smoothed'] }
-    get pawnInitializationArgs() { return { type: 'healthcoin' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return [] }
+    get pawn() { return "HealthCoinPawn" }
+    get gamePawnType() { return "healthcoin" }
 
     init(...args) {
         super.init(...args);
@@ -58,7 +55,6 @@ class HealthCoinActor extends mix(Actor).with(AM_Spatial) {
         this.future(100).spin();
     }
 
-    get pawn() {return "HealthCoinPawn"}
 }
 HealthCoinActor.register('HealthCoinActor');
 
@@ -68,11 +64,10 @@ HealthCoinActor.register('HealthCoinActor');
 //------------------------------------------------------------------------------------------
 
 class FireballActor extends mix(Actor).with(AM_Spatial) {
+    get pawn() { return "FireballPawn" }
+    get gamePawnType() { return "fireball" }
 
-    get pawnMixins() { return ['Smoothed'] }
-    get pawnInitializationArgs() { return { type: 'fireball' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return ['onTarget'] }
+    get onTarget() { return this._onTarget }
 
     init(...args) {
         super.init(...args);
@@ -80,7 +75,6 @@ class FireballActor extends mix(Actor).with(AM_Spatial) {
         this.future(200).destroy();
     }
 
-    get pawn() {return "FireballPawn"}
 }
 FireballActor.register('FireballActor');
 
@@ -89,11 +83,8 @@ FireballActor.register('FireballActor');
 // The bad guys - they try to get to the tower to blow it up
 //------------------------------------------------------------------------------------------
 class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
-
-    get pawnMixins() { return ['Smoothed'] }
-    get pawnInitializationArgs() { return { type: 'bot' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return [] }
+    get pawn() { return "BotPawn" }
+    get gamePawnType() { return "bot" }
 
     get index() {return this._index || 0}
 
@@ -185,11 +176,8 @@ BotActor.register("BotActor");
 //------------------------------------------------------------------------------------------
 
 class BollardActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
-
-    get pawnMixins() { return ['Spatial'] }
-    get pawnInitializationArgs() { return { type: 'bollard' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return ['radius'] }
+    get pawn() { return "InstanceActor" }
+    get gamePawnType() { return "bollard" }
 
     get radius() { return this._radius }
 
@@ -200,13 +188,10 @@ class BollardActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
 BollardActor.register('BollardActor');
 
 class TowerActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
+    get pawn() { return  "TowerPawn"}
+    get gamePawnType() { return this._index >= 0 ? `tower${this._index}` : "" } // tower "-1" has no pawn; actor collisions only
 
-    get pawnMixins() { return this._index >= 0 ? ['Spatial'] : [] }
-    get pawnInitializationArgs() { return { type: `tower${this._index}` }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return ['radius'] }
-
-    get radius() { return this._radius }
+    get radius() { return this._radius || 0 } // central tower isn't even assigned a radius
 
     // init(options) {
     //     super.init(options);
@@ -221,11 +206,8 @@ TowerActor.register('TowerActor');
 const missileSpeed = 75;
 
 class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
-
-    get pawnMixins() { return ['Smoothed'] }
-    get pawnInitializationArgs() { return { type: 'missile' }}
-    get pawnListeners() { return [] }
-    get pawnPropertyListeners() { return [] }
+    get pawn() { return "MissilePawn" }
+    get gamePawnType() { return "missile" }
 
     init(options) {
         super.init(options);
@@ -303,11 +285,8 @@ MissileActor.register('MissileActor');
 //------------------------------------------------------------------------------------------
 
 class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
-
-    get pawnMixins() { return ['Smoothed', 'Avatar'] }
-    get pawnInitializationArgs() { return { type: 'tank' }}
-    get pawnListeners() { return ['goHome', 'doGodMode'] }
-    get pawnPropertyListeners() { return ['colorIndex'] }
+    get pawn() { return "AvatarPawn" }
+    get gamePawnType() { return "tank" }
 
     init(options) {
         super.init(options);
@@ -322,10 +301,10 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
         this.say("doGodMode", gm);
     }
 
-    doShoot(where) {
-        const aim = v3_rotate([0,0,-1], q_axisAngle([0,1,0], where[1])); //
+    doShoot(yaw) {
+        const aim = v3_rotate([0,0,1], q_axisAngle([0,1,0], yaw)); //
         const translation = v3_add(this.translation, v3_scale(aim, 5));
-        const missile = MissileActor.create({parent: this.parent, pawn: "MissilePawn", translation, colorIndex: this.colorIndex});
+        const missile = MissileActor.create({parent: this.parent, translation, colorIndex: this.colorIndex});
         missile.go = missile.behavior.start({name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20});
     }
 
@@ -359,9 +338,9 @@ class MyUserManager extends UserManager {
         }
         // delete old saved props
         const expired = this.now() - this.propsTimeout;
-        for (const [userId, {lastSeen}] of this.props) {
+        for (const [uid, {lastSeen}] of this.props) {
             if (lastSeen < expired) {
-                this.props.delete(userId);
+                this.props.delete(uid);
             }
         }
         return super.createUser(options);
@@ -387,10 +366,9 @@ class MyUser extends User {
             colorIndex: options.userNumber%24,
             translation: [this.random() * 10-5, 0, this.random()*10-5],
             rotation: q_axisAngle([0,1,0], Math.PI/2),
-        }
+        };
 
         this.avatar = AvatarActor.create({
-            pawn: "AvatarPawn",
             parent: base,
             driver: this.userId,
             //instanceName: 'tankTracks',
@@ -467,7 +445,7 @@ export class MyModelRoot extends ModelRoot {
         }
         const d = 290;
         // the main tower
-        this.makeSkyscraper( 0, -1.2, 0, -0.533, 0);
+        this.makeSkyscraper( 0, -1.2, 0, -0.533, 0); // no radius on central tower
         this.makeSkyscraper( 0, -1,  d, Math.PI/2, 1, 0);
         this.makeSkyscraper( 0, -1, -d, 0, 2, 0);
         this.makeSkyscraper( d, -1,  0, 0, 3, 0);
@@ -544,17 +522,17 @@ export class MyModelRoot extends ModelRoot {
     }
 
     makeBollard(x, z) {
-        BollardActor.create( {pawn: "InstancePawn", tags: ["block"], instanceName:'bollard', parent: this.base,
+        BollardActor.create( { tags: ["block"], instanceName:'bollard', parent: this.base,
             obstacle:true, viewObstacle:true, perlin: true, radius:1.5, translation:[x, 0, z]} );
     }
 
     makeSkyscraper(x, y, z, r, index, radius) {
-        TowerActor.create( {pawn: "TowerPawn", tags: ["block"], parent: this.base, index, obstacle: true,
+        TowerActor.create( { tags: ["block"], parent: this.base, index, obstacle: true,
             radius, translation:[x, y, z], height:y, rotation:q_axisAngle([0,1,0],r)} );
     }
 
     makeBot(x, z, index) {
-        const bot = BotActor.create({parent: this.base, tags:["block", "bot"], pawn:"BotPawn", index, radius: 2, translation:[x, 0.5, z]});
+        const bot = BotActor.create({parent: this.base, tags:["block", "bot"], index, radius: 2, translation:[x, 0.5, z]});
         // const eye = SimpleActor.create({parent: bot, pawn:"BotEyePawn"});
         return bot;
     }
