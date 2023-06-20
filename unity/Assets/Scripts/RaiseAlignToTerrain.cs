@@ -42,7 +42,9 @@ public class RaiseAlignToTerrain : MonoBehaviour
                 return;
             }
 
-            radius = 1.5f; // $$$ Croquet.ReadActorFloat(gameObject, "radius");
+            radius = objectIsStatic
+                ? Croquet.ReadActorFloat(gameObject, "radius")
+                : 0;
         }
         
         if (sc.hasBeenMoved)
@@ -88,8 +90,11 @@ public class RaiseAlignToTerrain : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation * transform.rotation,
                 alignmentStrengthNorm);
         }
-        
-        string croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
-        CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
+
+        if (objectIsStatic)
+        {
+            string croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
+            CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
+        }
     }
 }

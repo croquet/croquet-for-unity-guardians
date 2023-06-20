@@ -23,6 +23,13 @@ public class moveAround : MonoBehaviour
   
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Quaternion q = transform.rotation;
+            float yaw = Mathf.Atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * q.y * q.y - 2 * q.z * q.z);
+            Croquet.Say(gameObject, "shoot", yaw);
+        }
+        
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
