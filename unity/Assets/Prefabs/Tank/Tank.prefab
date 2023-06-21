@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8057081661495829244}
   - component: {fileID: 8057081661495829245}
   - component: {fileID: -6064770270627014686}
+  - component: {fileID: -3773017376682265891}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -107,6 +108,19 @@ MonoBehaviour:
   staticProperties:
   - colorIndex
   watchedProperties: []
+--- !u!135 &-3773017376682265891
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057081661495829246}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &8057081662260750645
 GameObject:
   m_ObjectHideFlags: 0

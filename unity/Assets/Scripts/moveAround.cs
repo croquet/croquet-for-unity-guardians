@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class moveAround : MonoBehaviour
@@ -23,7 +24,7 @@ public class moveAround : MonoBehaviour
   
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             Quaternion q = transform.rotation;
             float yaw = Mathf.Atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * q.y * q.y - 2 * q.z * q.z);
@@ -58,5 +59,12 @@ public class moveAround : MonoBehaviour
         
         CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
         CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, transform.position, transform.rotation);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        {
+            transform.Translate((transform.position-other.transform.position).normalized*1.52f, Space.World);
+        }
     }
 }
