@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2449006538143125634}
   - component: {fileID: 2449006538143125635}
+  - component: {fileID: 5516058596892037429}
   - component: {fileID: 4854606031193437668}
   - component: {fileID: 5709942563287161881}
   m_Layer: 0
@@ -143,6 +144,30 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 1
   m_Emitting: 1
+--- !u!114 &5516058596892037429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2449006538143125633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d8c949960f5442e9e066e26035fb1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBeenMoved: 0
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 1}
+  scale: {x: 1, y: 1, z: 1}
+  initializeWithSceneTransform: 0
+  positionDeltaEpsilon: 0.01
+  rotationDeltaEpsilon: 0.01
+  scaleDeltaEpsilon: 0.01
+  linearInterpolation: 0
+  positionLerpFactor: 0.05
+  rotationLerpFactor: 0.2
+  scaleLerpFactor: 0.2
 --- !u!114 &4854606031193437668
 MonoBehaviour:
   m_ObjectHideFlags: 0
