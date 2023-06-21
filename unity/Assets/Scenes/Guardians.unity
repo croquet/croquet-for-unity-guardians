@@ -413,8 +413,8 @@ MonoBehaviour:
   target: {fileID: 0}
   followOffset: {x: 0, y: 8, z: -20}
   rotationOffset: {x: 10, y: 0, z: 0}
-  translationalLerpSpeed: 0.2
-  rotationalSlerpSpeed: 0.2
+  translationalLerpSpeed: 5
+  rotationalSlerpSpeed: 5
 --- !u!114 &615882985
 MonoBehaviour:
   m_ObjectHideFlags: 0
