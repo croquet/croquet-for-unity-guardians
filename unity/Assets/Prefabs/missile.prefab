@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2449006538143125634}
   - component: {fileID: 2449006538143125635}
+  - component: {fileID: 248739733628763320}
   - component: {fileID: 5516058596892037429}
   - component: {fileID: 4854606031193437668}
   - component: {fileID: 5709942563287161881}
@@ -135,6 +136,20 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &248739733628763320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2449006538143125633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ba7f904bbc740cd8ca66afc5eb26ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  croquetActorId: 
+  croquetHandle: 
 --- !u!114 &5516058596892037429
 MonoBehaviour:
   m_ObjectHideFlags: 0
