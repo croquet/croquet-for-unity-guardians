@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class HUDController : MonoBehaviour
 {
-    // placeholder for all the things the HUD needs to listen to
-    
+    public TMP_Text waveText;
+    public TMP_Text healthText;
+    public TMP_Text botCountText;
+    public GameObject gameOverPanel;
+
     void Start()
     {
         Croquet.Subscribe("game", "gameStarted", GameStart);
@@ -26,27 +31,26 @@ public class HUDController : MonoBehaviour
 
     void GameStart()
     {
-        Debug.Log($"HUD: game started");
+        gameOverPanel.SetActive(false);
     }
 
-    void SetWave(float wave)
+    void SetWave(float wave) // TODO: Needs to happen if someone joins midwave too
     {
-        Debug.Log($"HUD: wave {wave}");
+        waveText.text = $"Wave: {wave}";
     }
 
     void SetHealth(float health)
     {
-        Debug.Log($"HUD: health {health}");
+        healthText.text = $"Health: {health}";
     }
 
     void SetBots(float bots)
     {
-        Debug.Log($"HUD: bots {bots}");
+        botCountText.text = $"Bots: {bots}";
     }
-
-
+    
     void Finish()
     {
-        Debug.Log("HUD: finish");
+        gameOverPanel.SetActive(true);
     }
 }
