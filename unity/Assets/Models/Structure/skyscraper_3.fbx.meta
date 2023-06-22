@@ -8,17 +8,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Brass.004
-    second: {fileID: 2100000, guid: ec3f6439beda14654a9e09f674e876b4, type: 2}
+    second: {fileID: 2100000, guid: 91a2652e300b14477925761787cee999, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Metal.005
-    second: {fileID: 2100000, guid: ff5f0c6e0675d48fcb71a8338b276cab, type: 2}
+    second: {fileID: 2100000, guid: 58ce328dc4df24c4682b7884e3a31fd0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Metal.006
-    second: {fileID: 2100000, guid: 2afab159853b14fb0a21f8fe2a9a25f9, type: 2}
+    second: {fileID: 2100000, guid: d957cd63b4d32482a98bd5755cefa0c3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -71,7 +71,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
-    optimizeBones: 1
+    optimizeBones: 0
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

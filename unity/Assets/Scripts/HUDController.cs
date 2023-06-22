@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HUDStuff : MonoBehaviour
+public class HUDController : MonoBehaviour
 {
     // placeholder for all the things the HUD needs to listen to
     

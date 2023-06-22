@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Metal
-    second: {fileID: 2100000, guid: 65dc117d8de754f0fa9b7a480c367d05, type: 2}
+    second: {fileID: 2100000, guid: edc2d6a1d4ad1409291ea411a42f4831, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -61,7 +61,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
-    optimizeBones: 1
+    optimizeBones: 0
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
