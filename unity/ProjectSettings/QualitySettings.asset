@@ -129,7 +129,7 @@ QualitySettings:
     skinWeights: 2
     textureQuality: 0
     anisotropicTextures: 1
-    antiAliasing: 0
+    antiAliasing: 4
     softParticles: 0
     softVegetation: 1
     realtimeReflectionProbes: 1
@@ -228,7 +228,7 @@ QualitySettings:
     GLES Emulation: 3
     PS3: 3
     Server: 0
-    Standalone: 3
+    Standalone: 4
     Web: 3
     WebGL: 0
     Wii: 3
