@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.46626216, g: 0.34896353, b: 0.31440383, a: 1}
+  m_IndirectSpecularColor: {r: 0.46628237, g: 0.34896398, b: 0.31449074, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -209,14 +209,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62598109}
-  m_LocalRotation: {x: 0.6330222, y: -0.1330223, z: 0.111618936, w: 0.7544066}
+  m_LocalRotation: {x: 0.1406252, y: -0.054264244, z: 0.16495234, w: 0.9747157}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 80, y: -20, z: 0}
+  m_LocalEulerAnglesHint: {x: 16.98, y: -3.56, z: 18.679}
 --- !u!1 &183265246
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,8 +526,8 @@ MonoBehaviour:
   target: {fileID: 0}
   followOffset: {x: 0, y: 7, z: -13}
   rotationOffset: {x: 6, y: 0, z: 0}
-  translationalLerpSpeed: 20
-  rotationalSlerpSpeed: 10
+  translationalLerpSpeed: 18
+  rotationalSlerpSpeed: 8
 --- !u!114 &615882985
 MonoBehaviour:
   m_ObjectHideFlags: 0

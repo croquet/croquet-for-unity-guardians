@@ -7,18 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Brass
-    second: {fileID: 2100000, guid: 2f4a4fd4bf048474f88e4c1ad1342f6b, type: 2}
+      name: Brass.002
+    second: {fileID: 2100000, guid: 7d11f4ef7b98473408f1cc56fe63131e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal
-    second: {fileID: 2100000, guid: f3050002981764eadb976cb5083cc0db, type: 2}
+      name: Metal.003
+    second: {fileID: 2100000, guid: 8306d21d49abbac47b2546747059dc7d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal.002
-    second: {fileID: 2100000, guid: 57f6e7cb4def24086888fcdaaaae5adf, type: 2}
+      name: Metal.004
+    second: {fileID: 2100000, guid: ee6b30d35d886cc429f879a74a4cff71, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

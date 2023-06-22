@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6528068991331518710}
   - component: {fileID: -7713337159353512830}
   - component: {fileID: -2592508247162628411}
+  - component: {fileID: 1787183955}
+  - component: {fileID: 1787183954}
   m_Layer: 0
   m_Name: tower5
   m_TagString: Untagged
@@ -46,12 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc6e6892b21b45988fca19c61afc814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raiseToTerrainHeight: 1
-  fixedExtraRaise: 0
-  randomRaiseLower: 0
   objectIsStatic: 1
+  raiseToTerrainHeight: 1
+  fixedExtraRaise: -3
+  randomRaiseLower: 2
   alignToTerrain: 0
-  alignmentStrengthNorm: 1
+  alignmentStrengthNorm: 0
 --- !u!114 &-2592508247162628411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +71,36 @@ MonoBehaviour:
   staticProperties:
   - radius
   watchedProperties: []
+--- !u!54 &1787183955
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7536674543770279007}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &1787183954
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7536674543770279007}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.5
+  m_Height: 10
+  m_Direction: 1
+  m_Center: {x: 0, y: 5, z: -0.28}
 --- !u!1001 &4005376750501912263
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,12 +7,14 @@ using UnityEngine;
 /// </summary>
 public class RaiseAlignToTerrain : MonoBehaviour
 {
+    
+    public bool objectIsStatic = false;
+
     [HeaderAttribute("Raising")]
     public bool raiseToTerrainHeight = true;
     public float fixedExtraRaise = 0.0f;
     public float randomRaiseLower = 0.0f;
-    public bool objectIsStatic = false;
-
+    
     [HeaderAttribute("Alignment")] 
     public bool alignToTerrain = true;
     public float alignmentStrengthNorm = 1.0f;
