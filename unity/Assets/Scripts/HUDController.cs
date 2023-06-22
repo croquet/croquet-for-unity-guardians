@@ -10,7 +10,10 @@ public class HUDController : MonoBehaviour
     public TMP_Text healthText;
     public TMP_Text botCountText;
     public GameObject gameOverPanel;
+    public GameObject gameStartObject;
 
+    public float logoSustain = 5.0f;
+    
     void Start()
     {
         Croquet.Subscribe("game", "gameStarted", GameStart);
@@ -32,6 +35,7 @@ public class HUDController : MonoBehaviour
     void GameStart()
     {
         gameOverPanel.SetActive(false);
+        StartCoroutine(ShowThenFade());
     }
 
     void SetWave(float wave) // TODO: Needs to happen if someone joins midwave too
@@ -52,5 +56,12 @@ public class HUDController : MonoBehaviour
     void Finish()
     {
         gameOverPanel.SetActive(true);
+    }
+
+    IEnumerator ShowThenFade()
+    {
+        gameStartObject.SetActive(true);
+        yield return new WaitForSeconds(logoSustain);
+        gameStartObject.SetActive(false);
     }
 }
