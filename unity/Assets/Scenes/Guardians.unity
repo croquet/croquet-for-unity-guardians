@@ -701,6 +701,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc0b605237c3ee4ba49d9b5dd967f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &778256238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778256239}
+  - component: {fileID: 778256240}
+  m_Layer: 0
+  m_Name: City
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &778256239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778256238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 666.29456, y: 442.31418, z: -7.9799695}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &778256240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778256238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 780db5d0351567f4eaff8f6e0217fa53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structures:
+  - {fileID: 8987888347461422806, guid: 9599165df10ca42f097d70ad62995c0e, type: 3}
+  - {fileID: 64186725941720227, guid: fccf58472cf8548b6b013426790ab9bc, type: 3}
+  - {fileID: 1764961019249307541, guid: e97bbc90d46834495a46748dc97c5fda, type: 3}
+  - {fileID: 4607274565682157197, guid: d4e5f622cc968497581435fbdb582057, type: 3}
+  - {fileID: 7176760054047772328, guid: 41457868d225c4602a674efe8a8fcf83, type: 3}
+  numStructures: 100
+  innerDeadZoneDistance: 20
+  outerDeadZoneDistance: 600
 --- !u!1 &846061637
 GameObject:
   m_ObjectHideFlags: 0
