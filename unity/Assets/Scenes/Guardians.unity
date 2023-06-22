@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.46588725, g: 0.35013884, b: 0.31550294, a: 1}
+  m_IndirectSpecularColor: {r: 0.46588588, g: 0.3501358, b: 0.31550083, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
   appName: guardians
-  useNodeJS: 1
+  useNodeJS: 0
   croquetSessionRunning: 0
   croquetViewId: 
   loadingInProgress: 0
