@@ -77,6 +77,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - guardians
+  - m_GUID: be9449ea322d545e8a2e1eca85b34ad7
+    m_Address: gamestate
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - guardians
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1398c81f484a44649a064676c86f132e, type: 2}
   m_SchemaSet:

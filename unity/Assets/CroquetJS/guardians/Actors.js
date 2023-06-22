@@ -4,8 +4,7 @@
 // The flat world is placed on a Perlin noise generated surface in the view, but all interactions including
 // driving and collisions are computed in 2D.
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, v3_scale,
-    UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel";
+import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, v3_scale, UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
 
 const v_dist2Sqr = function (a,b) {
     const dx = a[0] - b[0];
@@ -108,7 +107,7 @@ class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
 
     killMe(s=0.3, onTarget) {
         FireballActor.create({translation:this.translation, scale:[s,s,s], onTarget});
-        this.publish("bots","destroyedBot", onTarget);
+        this.publish("bots", "destroyedBot", onTarget);
         this.destroy();
     }
 
@@ -392,8 +391,76 @@ class MyUser extends User {
 MyUser.register('MyUser');
 
 //------------------------------------------------------------------------------------------
+//-- GameStateActor ------------------------------------------------------------------------
+// Manage global game state.
+//------------------------------------------------------------------------------------------
+
+class GameStateActor extends Actor {
+    // get pawn() { return "GameStatePawn" } // if needed
+    get gamePawnType() { return "gamestate" }
+
+    get gameEnded() { return this._gameEnded }
+    get wave() { return this._wave }
+    get totalBots() { return this._totalBots }
+    get health() { return this._health }
+
+    init(options) {
+        super.init(options);
+
+        this.subscribe("game", "gameStarted", this.gameStarted); // from ModelRoot.startGame
+        this.subscribe("bots", "madeWave", this.madeBotWave); // from ModelRoot.makeWave
+        this.subscribe("bots", "destroyedBot", this.destroyedBot); // from BotActor.killMe
+
+        this.subscribe("stats", "update", this.updateStats); // from BotHUD (forcing stats to be published, as an alternative to just reading them)
+    }
+
+    gameStarted() {
+        this.set({
+            wave: 0,
+            totalBots: 0,
+            health: 100,
+            gameEnded: false,
+        });
+        this.updateStats();
+    }
+
+    madeBotWave({ wave, addedBots }) {
+        this.set({
+            wave,
+            totalBots: this.totalBots + addedBots
+        });
+        this.updateStats();
+    }
+
+    destroyedBot(onTarget) {
+        this.set({ totalBots: this.totalBots - 1 });
+        if (onTarget && !this.demoMode) {
+            this.set({ health: this.health - 1 });
+            this.publish("stats", "health", this.health);
+            if (this.health === 0) {
+                console.log("publish the endGame");
+                this.set({ gameEnded: true });
+                this.publish("game", "endGame");
+            }
+        }
+        this.publish("stats", "bots", this.totalBots);
+    }
+
+    updateStats() {
+        // legacy code for THREE version
+        this.publish("stats", "wave", this.wave);
+        this.publish("stats", "bots", this.totalBots);
+        this.publish("stats", "health", this.health);
+
+        if (this.gameEnded) this.publish("user", "endGame");
+    }
+
+}
+GameStateActor.register('GameStateActor');
+
+
+//------------------------------------------------------------------------------------------
 //-- MyModelRoot ---------------------------------------------------------------------------
-// Construct the world, manage global game state.
 //------------------------------------------------------------------------------------------
 
 export class MyModelRoot extends ModelRoot {
@@ -404,12 +471,13 @@ export class MyModelRoot extends ModelRoot {
 
     init(options) {
         super.init(options);
-        this.subscribe("stats", "update", this.updateStats);
-        this.subscribe("bots","destroyedBot", this.destroyedBot);
-        this.subscribe("game", "endGame", this.endGame);
-        this.subscribe("game", "startGame", this.startGame);
-        this.subscribe("game", "bots", this.demoBots);
-        this.subscribe("game", "undying", this.undying);
+
+        this.gameState = GameStateActor.create({});
+
+        this.subscribe("game", "endGame", this.endGame); // from GameState.destroyedBot
+        this.subscribe("game", "startGame", this.startGame); // from BotHUD button
+        this.subscribe("game", "bots", this.demoBots); // from user input
+        this.subscribe("game", "undying", this.undying); // from user input
         this.demoMode = false;
 
         const bollardScale = 3; // size of the bollard
@@ -418,8 +486,6 @@ export class MyModelRoot extends ModelRoot {
         this.base = BaseActor.create({gridScale: bollardScale});
         this.maxBots = 1000;
         this.spawnRadius = 400;
-        this.totalBots = 0;
-        this.health = 100;
         let v = [-10,0,0];
 
         // place the fins for collisions
@@ -450,6 +516,7 @@ export class MyModelRoot extends ModelRoot {
         this.makeSkyscraper( 0, -1, -d, 0, 2, 0);
         this.makeSkyscraper( d, -1,  0, 0, 3, 0);
         this.makeSkyscraper(-d-10, -3,  -8, Math.PI+2.5, 4, 0);
+
         this.startGame();
     }
 
@@ -460,18 +527,12 @@ export class MyModelRoot extends ModelRoot {
 
     startGame() {
         console.log("Start Game");
-        this.wave = 0;
-        this.totalBots = 0;
-        this.health = 100;
-        this.gameEnded = false;
-        this.updateStats();
         this.publish("game", "gameStarted"); // alert the users to remove the start button
         this.makeWave(1,10);
     }
 
     endGame() {
         console.log("End Game");
-        this.gameEnded = true;
         this.service('ActorManager').actors.forEach( value => {if (value.resetGame) value.future(0).resetGame();});
     }
 
@@ -479,21 +540,13 @@ export class MyModelRoot extends ModelRoot {
         this.makeWave(0, numBots);
     }
 
-    updateStats() {
-        this.publish("stats", "wave", this.wave);
-        this.publish("stats", "bots", this.totalBots);
-        this.publish("stats", "health", this.health);
-        if (this.gameEnded) this.publish("user", "endGame");
-    }
-
     makeWave( wave, numBots ) {
-        if (this.gameEnded) return;
+        if (this.gameState.gameEnded) return;
+
+        const { totalBots } = this.gameState;
         let actualBots = Math.min(this.maxBots, numBots);
-        if ( this.totalBots + actualBots > this.maxBots) actualBots = this.maxBots-this.totalBots;
-        this.totalBots += actualBots;
-        this.wave = wave;
-        this.publish("stats", "wave", wave);
-        this.publish("stats", "bots", this.totalBots);
+        if ( totalBots + actualBots > this.maxBots) actualBots = this.maxBots-totalBots;
+
         const r = this.spawnRadius; // radius of spawn
         const a = Math.PI*2*Math.random(); // come from random direction
         for (let n = 0; n<actualBots; n++) {
@@ -506,20 +559,9 @@ export class MyModelRoot extends ModelRoot {
             this.future(Math.floor(Math.random()*200)).makeBot(x, y, index);
         }
         if (wave>0) this.future(30000).makeWave(wave+1, Math.floor(numBots*1.2));
-    }
 
-    destroyedBot( onTarget ) {
-        this.totalBots--;
-        if (onTarget && !this.demoMode) {
-            this.health--;
-            this.publish("stats", "health", this.health);
-            if (this.health === 0 ) {
-                console.log("publish the endGame");
-                this.publish("game", "endGame");
-            }
-        }
-        this.publish("stats", "bots", this.totalBots);
-    }
+        this.publish("bots", "madeWave", { wave, addedBots: actualBots });
+   }
 
     makeBollard(x, z) {
         BollardActor.create( { tags: ["block"], instanceName:'bollard', parent: this.base,
