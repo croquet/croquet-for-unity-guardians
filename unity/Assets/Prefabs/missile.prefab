@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIsStatic: 0
   raiseToTerrainHeight: 1
-  fixedExtraRaise: 2
+  fixedExtraRaise: 1.5
   randomRaiseLower: 0
   alignToTerrain: 0
   alignmentStrengthNorm: 1
