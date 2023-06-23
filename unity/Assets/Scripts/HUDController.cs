@@ -16,12 +16,12 @@ public class HUDController : MonoBehaviour
     
     void Start()
     {
-        Croquet.Subscribe("game", "gameStarted", GameStart);
-        Croquet.Subscribe("game", "endGame", Finish);
-        Croquet.Subscribe("user", "endGame", Finish);
-        Croquet.Subscribe("stats", "wave", SetWave);
-        Croquet.Subscribe("stats", "health", SetHealth);
-        Croquet.Subscribe("stats", "bots", SetBots);
+        // Croquet.Subscribe("game", "gameStarted", GameStart);
+        // Croquet.Subscribe("game", "endGame", Finish);
+        // Croquet.Subscribe("user", "endGame", Finish);
+        // Croquet.Subscribe("stats", "wave", SetWave);
+        // Croquet.Subscribe("stats", "health", SetHealth);
+        // Croquet.Subscribe("stats", "bots", SetBots);
     }
 
     void Update()

@@ -10,7 +10,7 @@ public class HealthCoinController : MonoBehaviour
     
     void Start()
     {
-        Croquet.Subscribe("stats", "health", SetHealth);
+        // Croquet.Subscribe("stats", "health", SetHealth);
     }
     
     void SetHealth(float health)
