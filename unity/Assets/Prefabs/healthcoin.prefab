@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 1444116237}
   - component: {fileID: -2252561724143228203}
   - component: {fileID: 4222625663510761493}
+  - component: {fileID: 3572632441193092942}
   m_Layer: 0
   m_Name: healthcoin
   m_TagString: Untagged
@@ -468,6 +469,20 @@ MonoBehaviour:
   - Smoothed
   staticProperties: []
   watchedProperties: []
+--- !u!114 &3572632441193092942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121019097537406372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c763a68e63f224eb5837ad01a082e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: {fileID: 0}
+  rendererToSetColor: {fileID: 7454075816301814625}
 --- !u!1001 &8121019099063877605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -537,6 +552,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40b1dfd62a5bf463fbabc7dae420cb0c, type: 3}
+--- !u!23 &7454075816301814625 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 40b1dfd62a5bf463fbabc7dae420cb0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8121019099063877605}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8590931482017536014 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 40b1dfd62a5bf463fbabc7dae420cb0c,
