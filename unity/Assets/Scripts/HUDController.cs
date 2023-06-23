@@ -40,17 +40,17 @@ public class HUDController : MonoBehaviour
 
     void SetWave(float wave) // TODO: Needs to happen if someone joins midwave too
     {
-        waveText.text = $"Wave: {wave}";
+        waveText.text = $"{wave}";
     }
 
     void SetHealth(float health)
     {
-        healthText.text = $"Health: {health}";
+        healthText.text = $"{health}";
     }
 
     void SetBots(float bots)
     {
-        botCountText.text = $"Bots: {bots}";
+        botCountText.text = $"{bots}";
     }
     
     void Finish()
