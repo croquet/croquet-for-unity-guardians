@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameState : MonoBehaviour
+public class GameState : MonoBehaviour, ICroquetDriven
 {
     void Awake()
     {
@@ -12,7 +12,15 @@ public class GameState : MonoBehaviour
         Croquet.Listen(gameObject, "healthSet", HealthSet);
     }
 
-    void GameEndedSet(string gameEnded)
+    public void CroquetInitializationComplete()
+    {
+        GameEndedSet(Croquet.ReadActorBool(gameObject, "gameEnded"));
+        WaveSet(Croquet.ReadActorFloat(gameObject, "wave"));
+        TotalBotsSet(Croquet.ReadActorFloat(gameObject, "totalBots"));
+        HealthSet(Croquet.ReadActorFloat(gameObject, "health"));
+    }
+    
+    void GameEndedSet(bool gameEnded)
     {
         Debug.Log($"GameEndedSet: {gameEnded}");
     }

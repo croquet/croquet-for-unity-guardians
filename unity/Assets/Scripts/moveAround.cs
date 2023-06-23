@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class moveAround : MonoBehaviour
+public class moveAround : MonoBehaviour, ICroquetDriven
 {
     public float speed = 1.0f;
     public float boostSpeedFactor = 2.0f;
@@ -11,30 +11,37 @@ public class moveAround : MonoBehaviour
     private Terrain _terrain;
     private float boostSpeed;
     private float computedSpeed;
+    
     private string croquetHandle;
     private CroquetAvatarComponent avatarComponent;
-    
+
     void Start()
     {
         _terrain = FindObjectOfType<Terrain>();
         boostSpeed = boostSpeedFactor * speed;
         computedSpeed = speed;
-
+    }
+    
+    public void CroquetInitializationComplete() {
         croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
         avatarComponent = gameObject.GetComponent<CroquetAvatarComponent>();
     }
-
-
+    
     void Update()
     {
-        if (avatarComponent.isActiveAvatar)
+        if (avatarComponent == null) return;
+        
+        if (CroquetAvatarSystem.Instance.GetActiveAvatarComponent() == avatarComponent)
         {
             CheckForMissileLaunch();
 
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
-            if (positionHasBeenInitialized && Mathf.Abs(horizontal) < 0.01 && Mathf.Abs(vertical) < 0.01) return;
+            if (positionHasBeenInitialized && Mathf.Abs(horizontal) < 0.01 && Mathf.Abs(vertical) < 0.01)
+            {
+                return;
+            }
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -84,8 +91,6 @@ public class moveAround : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        {
-            transform.Translate((transform.position-other.transform.position).normalized*1.52f, Space.World);
-        }
+        transform.Translate((transform.position-other.transform.position).normalized*1.52f, Space.World);
     }
 }
