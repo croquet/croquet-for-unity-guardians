@@ -13,7 +13,7 @@ public class HUDController : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject gameStartObject;
 
-    public float logoSustain = 5.0f;
+    // public float logoSustain = 5.0f;
     
     
     private GameState gameState;
@@ -37,23 +37,34 @@ public class HUDController : MonoBehaviour
         
         if (gameState == null)
         {
-            gameState = GameObject.FindWithTag("GameController").GetComponent<GameState>();
+            GameObject gameStateGO = GameObject.FindWithTag("GameController");
+            if (gameStateGO != null)
+            {
+                gameState = gameStateGO.GetComponent<GameState>();
+            }
+            
             if (gameState == null)
             {
                 return;
             }
         }
-        
+
         SetHealth(gameState.health);
+        SetBots(gameState.totalBots);
+        SetWave(gameState.wave);
+        
+        if (gameState.gameEnded)
+        {
+            GameEnded();
+        }
+        else
+        {
+            gameOverPanel.SetActive(false);
+        }
     }
 
-    void GameStart()
-    {
-        gameOverPanel.SetActive(false);
-        StartCoroutine(ShowThenFade());
-    }
 
-    void SetWave(float wave) // TODO: Needs to happen if someone joins midwave too
+    void SetWave(float wave)
     {
         waveText.text = $"{wave}";
     }
@@ -68,15 +79,23 @@ public class HUDController : MonoBehaviour
         botCountText.text = $"{bots}";
     }
     
-    void Finish()
+    void GameEnded()
     {
         gameOverPanel.SetActive(true);
     }
 
-    IEnumerator ShowThenFade()
+    // IEnumerator ShowThenFade()
+    // {
+    //     gameStartObject.SetActive(true);
+    //     yield return new WaitForSeconds(logoSustain);
+    //     gameStartObject.SetActive(false);
+    // }
+
+    public void StartANewGame()
     {
-        gameStartObject.SetActive(true);
-        yield return new WaitForSeconds(logoSustain);
-        gameStartObject.SetActive(false);
+        if(gameState != null)
+        {
+            gameState.StartGame();
+        }
     }
 }

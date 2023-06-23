@@ -5,6 +5,9 @@ using UnityEngine;
 public class GameState : MonoBehaviour, ICroquetDriven
 {
     public float health;
+    public bool gameEnded;
+    public int totalBots;
+    public int wave;
     
     void Awake()
     {
@@ -21,19 +24,27 @@ public class GameState : MonoBehaviour, ICroquetDriven
         TotalBotsSet(Croquet.ReadActorFloat(gameObject, "totalBots"));
         HealthSet(Croquet.ReadActorFloat(gameObject, "health"));
     }
-    
-    void GameEndedSet(bool gameEnded)
+
+    public void StartGame()
     {
+        Croquet.Publish("game", "startGame");
+    }
+    
+    public void GameEndedSet(bool gameEnded)
+    {
+        this.gameEnded = gameEnded;
         Debug.Log($"GameEndedSet: {gameEnded}");
     }
 
     void WaveSet(float wave)
     {
+        this.wave = (int)wave;
         Debug.Log($"WaveSet: {wave}");
     }
     
     void TotalBotsSet(float bots)
     {
+        this.totalBots = (int)bots;
         Debug.Log($"TotalBotsSet: {bots}");
     }
     

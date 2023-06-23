@@ -89,7 +89,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         transform.Translate((transform.position-other.transform.position).normalized*1.52f, Space.World);
     }
