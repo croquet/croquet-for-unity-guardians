@@ -486,8 +486,6 @@ export class MyModelRoot extends ModelRoot {
             v = v3_rotate( v, q_axisAngle([0,1,0], p3) );
         }
 
-        HealthCoinActor.create({pawn: "HealthCoinPawn", parent: this.base, instanceName:'healthCoin', translation:[0,20,0]} );
-
         let corner = 12;
         [[-corner,-corner, Math.PI/2-Math.PI/4], [-corner, corner, Math.PI/2+Math.PI/4], [corner, corner, Math.PI/2+Math.PI-Math.PI/4], [corner,-corner, Math.PI/2+Math.PI+Math.PI/4]].forEach( xy => {
             this.makeSkyscraper(bollardDistance*xy[0]+1.5, 0, bollardDistance*xy[1]+1.5,xy[2], 5, 1.5);
@@ -502,11 +500,13 @@ export class MyModelRoot extends ModelRoot {
         }
         const d = 290;
         // the main tower
-        this.makeSkyscraper( 0, -1.2, 0, -0.533, 0); // no radius on central tower
+        const tower0 = this.makeSkyscraper( 0, -1.2, 0, -0.533, 0); // no radius on central tower
         this.makeSkyscraper( 0, -1,  d, Math.PI/2, 1, 0);
         this.makeSkyscraper( 0, -1, -d, 0, 2, 0);
         this.makeSkyscraper( d, -1,  0, 0, 3, 0);
         this.makeSkyscraper(-d-10, -3,  -8, Math.PI+2.5, 4, 0);
+
+        HealthCoinActor.create({ pawn: "HealthCoinPawn", parent: tower0, instanceName: 'healthCoin', translation: [0, 14, 0] });
 
         this.startGame();
     }
@@ -560,8 +560,9 @@ export class MyModelRoot extends ModelRoot {
     }
 
     makeSkyscraper(x, y, z, r, index, radius) {
-        TowerActor.create( { tags: radius ? ["block"] : [], parent: this.base, index, obstacle: true,
+        const tower = TowerActor.create( { tags: radius ? ["block"] : [], parent: this.base, index, obstacle: true,
             radius, translation:[x, y, z], height:y, rotation:q_axisAngle([0,1,0],r)} );
+        return tower;
     }
 
     makeBot(x, z, index) {
