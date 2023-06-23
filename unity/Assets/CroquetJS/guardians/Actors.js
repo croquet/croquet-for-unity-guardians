@@ -44,8 +44,8 @@ class HealthCoinActor extends mix(Actor).with(AM_Spatial) {
     init(...args) {
         super.init(...args);
         this.angle = 0;
-        this.deltaAngle = 0.1;
-        this.spin();
+        this.deltaAngle = 0.1; // radians per 100ms step
+        // this.spin(); $$$ temporarily disabled, to use view-side spin instead
     }
 
     spin() {

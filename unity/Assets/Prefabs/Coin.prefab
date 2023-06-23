@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axis: {x: 0, y: 1, z: 0}
-  speed: 26
+  speed: 57
 --- !u!114 &1444116237
 MonoBehaviour:
   m_ObjectHideFlags: 0
