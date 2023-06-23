@@ -51,7 +51,7 @@ TrailRenderer:
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 0
+  m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
@@ -187,6 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20bce31d4653240ad802356ff211535f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numColors: 24
+  colorPallette: {fileID: 2800000, guid: 99a25d5d96109a048b01c92508cfcb2f, type: 3}
+  materialToSetColor: {fileID: 2100000, guid: 071260b0d39ce4fcea5bec126c5b47bc, type: 2}
 --- !u!114 &4854606031193437668
 MonoBehaviour:
   m_ObjectHideFlags: 0
