@@ -399,11 +399,6 @@ class GameStateActor extends Actor {
     // get pawn() { return "GameStatePawn" } // if needed
     get gamePawnType() { return "gamestate" }
 
-    get gameEnded() { return this._gameEnded }
-    get wave() { return this._wave }
-    get totalBots() { return this._totalBots }
-    get health() { return this._health }
-
     init(options) {
         super.init(options);
 
@@ -415,31 +410,27 @@ class GameStateActor extends Actor {
     }
 
     gameStarted() {
-        this.set({
-            wave: 0,
-            totalBots: 0,
-            health: 100,
-            gameEnded: false,
-        });
+        this.wave = 0;
+        this.totalBots = 0;
+        this.health = 100;
+        this.gameEnded = false;
         this.updateStats();
     }
 
     madeBotWave({ wave, addedBots }) {
-        this.set({
-            wave,
-            totalBots: this.totalBots + addedBots
-        });
+        this.wave = wave;
+        this.totalBots += addedBots
         this.updateStats();
     }
 
     destroyedBot(onTarget) {
-        this.set({ totalBots: this.totalBots - 1 });
+        this.totalBots--;
         if (onTarget && !this.demoMode) {
-            this.set({ health: this.health - 1 });
+            this.health--;
             this.publish("stats", "health", this.health);
             if (this.health === 0) {
                 console.log("publish the endGame");
-                this.set({ gameEnded: true });
+                this.gameEnded = true;
                 this.publish("game", "endGame");
             }
         }
