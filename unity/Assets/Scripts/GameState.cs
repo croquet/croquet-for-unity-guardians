@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameState : MonoBehaviour, ICroquetDriven
 {
+    public float health;
+    
     void Awake()
     {
         Croquet.Listen(gameObject, "gameEndedSet", GameEndedSet);
@@ -38,6 +40,7 @@ public class GameState : MonoBehaviour, ICroquetDriven
     void HealthSet(float health)
     {
         Debug.Log($"HealthSet: {health}");
+        this.health = health;
     }
 
 }

@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class HUDController : MonoBehaviour
 {
+    
     public TMP_Text waveText;
     public TMP_Text healthText;
     public TMP_Text botCountText;
@@ -14,6 +15,9 @@ public class HUDController : MonoBehaviour
 
     public float logoSustain = 5.0f;
     
+    
+    private GameState gameState;
+
     void Start()
     {
         // Croquet.Subscribe("game", "gameStarted", GameStart);
@@ -30,6 +34,17 @@ public class HUDController : MonoBehaviour
         {
             Croquet.Publish("game", "undying");
         }
+        
+        if (gameState == null)
+        {
+            gameState = GameObject.FindWithTag("GameController").GetComponent<GameState>();
+            if (gameState == null)
+            {
+                return;
+            }
+        }
+        
+        SetHealth(gameState.health);
     }
 
     void GameStart()
