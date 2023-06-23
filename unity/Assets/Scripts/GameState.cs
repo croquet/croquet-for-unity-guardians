@@ -33,24 +33,24 @@ public class GameState : MonoBehaviour, ICroquetDriven
     public void GameEndedSet(bool gameEnded)
     {
         this.gameEnded = gameEnded;
-        Debug.Log($"GameEndedSet: {gameEnded}");
+        // Debug.Log($"GameEndedSet: {gameEnded}");
     }
 
     void WaveSet(float wave)
     {
         this.wave = (int)wave;
-        Debug.Log($"WaveSet: {wave}");
+        // Debug.Log($"WaveSet: {wave}");
     }
     
     void TotalBotsSet(float bots)
     {
         this.totalBots = (int)bots;
-        Debug.Log($"TotalBotsSet: {bots}");
+        // Debug.Log($"TotalBotsSet: {bots}");
     }
     
     void HealthSet(float health)
     {
-        Debug.Log($"HealthSet: {health}");
+        // Debug.Log($"HealthSet: {health}");
         this.health = health;
     }
 

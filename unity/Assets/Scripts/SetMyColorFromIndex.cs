@@ -11,7 +11,7 @@ public class SetMyColorFromIndex : MonoBehaviour, ICroquetDriven
     public void CroquetInitializationComplete()
     {
         float colorIndex = Croquet.ReadActorFloat(gameObject, "colorIndex");
-        Debug.Log($"time to set {gameObject} color from colorIndex {colorIndex}, u coordinate: {colorIndex/(float)numColors}");
+        // Debug.Log($"time to set {gameObject} color from colorIndex {colorIndex}, u coordinate: {colorIndex/(float)numColors}");
 
         materialToSetColor.color = colorPallette.GetPixelBilinear((colorIndex / (float)numColors), 0.5f);
     }
