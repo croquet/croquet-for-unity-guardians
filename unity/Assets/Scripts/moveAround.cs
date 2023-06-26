@@ -14,6 +14,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     
     private string croquetHandle;
     private CroquetAvatarComponent avatarComponent;
+    private GameState gameState;
 
     void Start()
     {
@@ -31,7 +32,18 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     {
         if (avatarComponent == null) return;
         
-        if (CroquetAvatarSystem.Instance.GetActiveAvatarComponent() == avatarComponent)
+        if (gameState == null)
+        {
+            GameObject gameStateGO = GameObject.FindWithTag("GameController");
+            if (gameStateGO != null)
+            {
+                gameState = gameStateGO.GetComponent<GameState>();
+            }
+
+            if (gameState == null) return;
+        }
+        
+        if (CroquetAvatarSystem.Instance.GetActiveAvatarComponent() == avatarComponent && !gameState.gameEnded)
         {
             CheckForMissileLaunch();
 

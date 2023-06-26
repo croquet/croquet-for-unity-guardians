@@ -40,10 +40,15 @@ public class ChangeColorByHealth : MonoBehaviour
         {
             myMaterialPropertyBlock.SetColor("_Color", Color.yellow );
         }
-        else
+        else if (gameState.health > 0)
         {
             myMaterialPropertyBlock.SetColor("_Color", Color.red );
         }
+        else
+        {
+            myMaterialPropertyBlock.SetColor("_Color", Color.black );
+        }
+        
         rendererToSetColor.SetPropertyBlock(myMaterialPropertyBlock);
     }
 }
