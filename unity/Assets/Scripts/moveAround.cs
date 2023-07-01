@@ -1,29 +1,33 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class moveAround : MonoBehaviour, ICroquetDriven
 {
+    // configured on the prefab
     public float speed = 1.0f;
     public float boostSpeedFactor = 2.0f;
     public float rotationSpeed = 10.0f;
 
     private bool positionHasBeenInitialized;
     private Terrain _terrain;
-    private float boostSpeed;
-    private float computedSpeed;
+    // private float boostSpeed;
+    // private float computedSpeed;
     
     private string croquetHandle;
     private CroquetAvatarComponent avatarComponent;
     private GameState gameState;
 
+    private float lastShootTime = 0;
+
     void Start()
     {
         _terrain = FindObjectOfType<Terrain>();
-        boostSpeed = boostSpeedFactor * speed;
-        computedSpeed = speed;
+        // boostSpeed = boostSpeedFactor * speed;
+        // computedSpeed = speed;
     }
     
-    public void CroquetInitializationComplete() {
+    public void PawnInitializationComplete() {
         croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
         avatarComponent = gameObject.GetComponent<CroquetAvatarComponent>();
     }
@@ -45,34 +49,38 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         
         if (CroquetAvatarSystem.Instance.GetActiveAvatarComponent() == avatarComponent && !gameState.gameEnded)
         {
-            CheckForMissileLaunch();
-
+            // it's the active avatar, and we're live in a game - so perhaps moving, perhaps shooting
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
-            if (positionHasBeenInitialized && Mathf.Abs(horizontal) < 0.01 && Mathf.Abs(vertical) < 0.01)
-            {
-                return;
-            }
-
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                computedSpeed = boostSpeed;
-            }
-            else
-            {
-                computedSpeed = speed;
-            }
-
-            transform.Translate(transform.forward * (computedSpeed * Time.deltaTime * vertical), Space.World);
-            transform.Rotate(Vector3.up, rotationSpeed*Time.deltaTime*horizontal);
+            float speedNow = 0;
             
-            AlignWithTerrain();
-            
-            CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
-            CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, transform.position, transform.rotation);
+            if (!positionHasBeenInitialized || Mathf.Abs(horizontal) > 0.01 || Mathf.Abs(vertical) > 0.01)
+            {
+                speedNow = speed * vertical;
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    speedNow *= boostSpeedFactor;
+                }
 
-            positionHasBeenInitialized = true;
+                // if (Time.realtimeSinceStartup - lastShootTime < 0.1f)
+                // {
+                //     speedNow = Mathf.Min(speedNow, 0); // kill any forward movement
+                // }
+
+                transform.Translate(transform.forward * (speedNow * Time.deltaTime), Space.World);
+                transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * horizontal);
+                
+                AlignWithTerrain();
+                
+                CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
+                CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, transform.position, transform.rotation);
+
+                positionHasBeenInitialized = true;
+            }
+
+            // after moving, see if we want to shoot from here
+            CheckForMissileLaunch(speedNow);
         }
         else
         {
@@ -91,13 +99,19 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation * transform.rotation, slerpFactor);
     }
 
-    void CheckForMissileLaunch()
+    void CheckForMissileLaunch(float speed)
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             Quaternion q = transform.rotation;
+            // yaw is in radians
             float yaw = Mathf.Atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * q.y * q.y - 2 * q.z * q.z);
-            Croquet.Say(gameObject, "shoot", yaw);
+            // send a message with four numbers: launch position x, y, z and yaw
+            Vector3 pos = (speed * 0.05f + 2.0f) * transform.forward + transform.position; // position in 50ms' time
+            float[] args = { pos.x, pos.y, pos.z, yaw };
+            Croquet.Say(gameObject, "shoot", args);
+
+            lastShootTime = Time.realtimeSinceStartup;
         }
     }
 
