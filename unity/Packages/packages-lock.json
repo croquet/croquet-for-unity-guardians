@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.croquet.multiplayer": {
-      "version": "https://github.com/croquet/croquet-for-unity-package.git#dist",
+      "version": "https://github.com/croquet/croquet-for-unity-package.git#dev-ballistic",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.addressables": "1.19.19",
         "com.unity.inputsystem": "1.5.0"
       },
-      "hash": "f88bd63979d775a998b9dc0613332c01735d2583"
+      "hash": "0fc2df0d9343577dbbdc489f6b8309e927d87b86"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
