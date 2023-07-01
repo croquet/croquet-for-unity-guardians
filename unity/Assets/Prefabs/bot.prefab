@@ -47,10 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d8c949960f5442e9e066e26035fb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasBeenPlaced: 0
   hasBeenMoved: 0
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 1, y: 1, z: 1}
+  desiredLag: 0.05
+  currentLag: 0
   initializeWithSceneTransform: 0
   positionDeltaEpsilon: 0.01
   rotationDeltaEpsilon: 0.01
@@ -71,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc6e6892b21b45988fca19c61afc814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectIsStatic: 0
   raiseToTerrainHeight: 1
   fixedExtraRaise: 2
   randomRaiseLower: 0
-  objectIsStatic: 0
   alignToTerrain: 0
   alignmentStrengthNorm: 1
 --- !u!114 &2431330510511371868

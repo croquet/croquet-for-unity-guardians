@@ -17,7 +17,7 @@ public class GameState : MonoBehaviour, ICroquetDriven
         Croquet.Listen(gameObject, "healthSet", HealthSet);
     }
 
-    public void CroquetInitializationComplete()
+    public void PawnInitializationComplete()
     {
         GameEndedSet(Croquet.ReadActorBool(gameObject, "gameEnded"));
         WaveSet(Croquet.ReadActorFloat(gameObject, "wave"));

@@ -9,7 +9,7 @@ public class RotateMe : MonoBehaviour, ICroquetDriven
     public float speed = Mathf.Floor(Mathf.Rad2Deg); // degrees per second
     private string croquetHandle;
     
-    public void CroquetInitializationComplete()
+    public void PawnInitializationComplete()
     {
         croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
     }
