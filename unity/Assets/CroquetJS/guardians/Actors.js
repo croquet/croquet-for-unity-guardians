@@ -175,7 +175,7 @@ BotActor.register("BotActor");
 //------------------------------------------------------------------------------------------
 
 class BollardActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
-    get pawn() { return "InstanceActor" }
+    get pawn() { return "InstancePawn" }
     get gamePawnType() { return "bollard" }
 
     get radius() { return this._radius }
@@ -212,7 +212,7 @@ class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
         super.init(options);
         this.future(8000).destroy(); // destroy after some time
         this.lastTranslation = [0,0,0];
-        this.bounceWait = this.now(); // need to bounce otherwise we might instantly bounce again
+        this.lastBounce = null; // the thing we last bounced off
         this.tick();
     }
 
@@ -228,51 +228,37 @@ class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
     }
 
     test() {
-
-        if (this.now()>=this.bounceWait) {
-            let aim;
-
-            const bot = this.parent.pingAny("bot", this.translation, 4, this);
-
-            if (bot) {
-                const d2 = v_dist2Sqr(this.translation, bot.translation);
-                if (d2 < 3.5) {
-                    bot.killMe(0.3, false);
-                    this.destroy();
-                    return;
-                }
+        const bot = this.parent.pingAny("bot", this.translation, 4, this);
+        if (bot) {
+            const d2 = v_dist2Sqr(this.translation, bot.translation);
+            if (d2 < 4) { // $$$ WAS 3.5 (but bot radius is 2, so 4 seems fair)
+                // console.log(`bot ${bot.id} hit at distance ${Math.sqrt(d2).toFixed(2)}`);
+                bot.killMe(0.3, false);
+                this.destroy();
+                return;
             }
+        }
 
-            const bollard = this.parent.pingAny("block", this.translation, 4, this);
-
-            if (bollard) {
-                const d2 = v_dist2Sqr(this.translation, bollard.translation);
+        // the blockers (tagged with "block") include all avatars
+        const blocker = this.parent.pingAny("block", this.translation, 4, this);
+        if (blocker) {
+            if (!this.lastBounce && blocker.tags.has("avatar") && blocker.colorIndex === this.colorIndex) {
+                // ignore own avatar when it's the first object we've encountered
+            } else if (blocker !== this.lastBounce) {
+                const d2 = v_dist2Sqr(this.translation, blocker.translation);
                 if (d2 < 2.5) {
-                    //console.log("bollard bounce");
-                    this.bounceWait = this.now()+20;
-                    aim = v3_sub(this.translation, bollard.translation);
-                    aim[1]=0;
-                    aim = v3_normalize(aim);
-                    if (this.go) this.go.destroy();
-
-                    this.go = this.behavior.start({name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20});
-                }
-            }
-            const avatar = this.parent.pingAny("avatar", this.translation, 4, this);
-            if (avatar) {
-                const d = v_dist2Sqr(this.translation, avatar.translation);
-                if (d < 2.5) {
-                    this.bounceWait = this.now()+20;
-                    aim = v3_sub(this.translation, avatar.translation);
+                    // console.log("bounce", blocker);
+                    this.lastBounce = blocker;
+                    let aim = v3_sub(this.translation, blocker.translation);
                     aim[1]=0;
                     aim = v3_normalize(aim);
                     if (this.go) this.go.destroy();
                     this.go = this.behavior.start({name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20});
-                    //avatar.doBounce( v3_scale(aim, -0.5) )
-                    //console.log("avatar hit!");
+                    this.ballisticVelocity = aim.map(val => val * missileSpeed);
                 }
             }
         }
+
         this.lastTranslation = this.translation;
     }
 }
@@ -300,11 +286,15 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
         this.say("doGodMode", gm);
     }
 
-    doShoot(yaw) {
-        const aim = v3_rotate([0,0,1], q_axisAngle([0,1,0], yaw)); //
-        const translation = v3_add(this.translation, v3_scale(aim, 5));
+    doShoot(argFloats) {
+        // view is now expected to set the launch location, given that the launcher
+        // can compensate for its own velocity
+        const [ x, y, z, yaw ] = argFloats;
+        const aim = v3_rotate([0,0,1], q_axisAngle([0,1,0], yaw));
+        const translation = [x, y, z]; // v3_add([x, y, z], v3_scale(aim, 5));
         const missile = MissileActor.create({parent: this.parent, translation, colorIndex: this.colorIndex});
         missile.go = missile.behavior.start({name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20});
+        missile.ballisticVelocity = aim.map(val => val * missileSpeed);
     }
 
     resetGame() { // don't go home at end of game
@@ -374,8 +364,6 @@ class MyUser extends User {
             tags: ["avatar", "block"],
             ...props
         });
-    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, colorIndex: props.colorIndex, instanceName:'tankBody'});
-    //    SimpleActor.create({pawn: "GeometryPawn", parent: this.avatar, colorIndex: props.colorIndex, instanceName:'tankTurret'});
     }
 
     saveProps() {
@@ -569,7 +557,6 @@ export class MyModelRoot extends ModelRoot {
 
     makeBot(x, z, index) {
         const bot = BotActor.create({parent: this.base, tags:["block", "bot"], index, radius: 2, translation:[x, 0.5, z]});
-        // const eye = SimpleActor.create({parent: bot, pawn:"BotEyePawn"});
         return bot;
     }
 }
