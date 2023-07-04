@@ -1453,7 +1453,7 @@ MonoBehaviour:
   croquetSessionRunning: 0
   croquetViewId: 
   loadingInProgress: 0
-  defaultSessionName: 123
+  defaultSessionName: 1
   sessionName: 0
   simulateNetworkGlitch: 0
   networkGlitchDuration: 3
