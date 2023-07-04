@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2449006538143125634}
   - component: {fileID: 2449006538143125635}
-  - component: {fileID: 248739733628763320}
   - component: {fileID: 5516058596892037429}
   - component: {fileID: 6750426062438054536}
   - component: {fileID: 4854606031193437668}
@@ -137,20 +136,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &248739733628763320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2449006538143125633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ba7f904bbc740cd8ca66afc5eb26ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  croquetActorId: 
-  croquetHandle: 
 --- !u!114 &5516058596892037429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,10 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d8c949960f5442e9e066e26035fb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasBeenPlaced: 0
   hasBeenMoved: 0
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 1, y: 1, z: 1}
+  desiredLag: 0.05
+  currentLag: 0
   initializeWithSceneTransform: 0
   positionDeltaEpsilon: 0.01
   rotationDeltaEpsilon: 0.01
@@ -221,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixins:
-  - Smoothed
+  - Ballistic2D
   staticProperties:
   - colorIndex
   watchedProperties: []

@@ -49,7 +49,7 @@ public class RaiseAlignToTerrain : MonoBehaviour
                 : 0;
         }
         
-        if (sc.hasBeenMoved)
+        if (sc.hasBeenPlaced)
         {
             Align();
             

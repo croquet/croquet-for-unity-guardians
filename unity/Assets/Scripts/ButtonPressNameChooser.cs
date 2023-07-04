@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class SessionNameChooser : MonoBehaviour
+public class ButtonPressNameChooser : SessionNameChooser
 {
     // public reference to the text to update
     public TMPro.TMP_Text sessionNameText;
@@ -23,7 +24,7 @@ public class SessionNameChooser : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
-    
+
     private static string SessionIP
     {
         get {
@@ -49,7 +50,6 @@ public class SessionNameChooser : MonoBehaviour
     public delegate void OnSessionIPChangeDelegate(string newIP);
     public static event OnSessionIPChangeDelegate OnSessionIPChange;
 
-    // Start is called before the first frame update
     void Start()
     {
         OnSessionNameChange += SessionNameChangeHandler;
@@ -58,8 +58,6 @@ public class SessionNameChooser : MonoBehaviour
         // recover the session name and IP from save data
         SessionNameValue = PlayerPrefs.GetInt("sessionNameValue");
         SessionIP = PlayerPrefs.GetString("sessionIP");
-        
-        
     }
 
     private void SessionNameChangeHandler(int newVal)
@@ -67,10 +65,10 @@ public class SessionNameChooser : MonoBehaviour
         Debug.Log("Session name Change handler");
         sessionNameText.text = newVal.ToString();
     }
-    
+
     private void SessionIPChangeHandler(string newIP)
     {
-        
+
         Debug.Log($"Session IP Change handler newIP is: {newIP}");
         sessionIPText.text = newIP;
     }

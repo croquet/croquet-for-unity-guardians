@@ -8,7 +8,7 @@ public class SetMyColorFromIndex : MonoBehaviour, ICroquetDriven
     public Texture2D colorPallette;
     public Renderer rendererToSetColor;
     
-    public void CroquetInitializationComplete()
+    public void PawnInitializationComplete()
     {
         float colorIndex = Croquet.ReadActorFloat(gameObject, "colorIndex");
 
