@@ -13,12 +13,13 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     private Terrain _terrain;
     // private float boostSpeed;
     // private float computedSpeed;
-    
+
     private string croquetHandle;
     private CroquetAvatarComponent avatarComponent;
     private GameState gameState;
 
     private float lastShootTime = 0;
+    private float waitShootTime = 0.1f; // 100ms
 
     void Start()
     {
@@ -26,16 +27,16 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         // boostSpeed = boostSpeedFactor * speed;
         // computedSpeed = speed;
     }
-    
+
     public void PawnInitializationComplete() {
         croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
         avatarComponent = gameObject.GetComponent<CroquetAvatarComponent>();
     }
-    
+
     void Update()
     {
         if (avatarComponent == null) return;
-        
+
         if (gameState == null)
         {
             GameObject gameStateGO = GameObject.FindWithTag("GameController");
@@ -46,7 +47,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
             if (gameState == null) return;
         }
-        
+
         if (CroquetAvatarSystem.Instance.GetActiveAvatarComponent() == avatarComponent && !gameState.gameEnded)
         {
             // it's the active avatar, and we're live in a game - so perhaps moving, perhaps shooting
@@ -54,7 +55,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             float vertical = Input.GetAxis("Vertical");
 
             float speedNow = 0;
-            
+
             if (!positionHasBeenInitialized || Mathf.Abs(horizontal) > 0.01 || Mathf.Abs(vertical) > 0.01)
             {
                 speedNow = speed * vertical;
@@ -63,16 +64,11 @@ public class moveAround : MonoBehaviour, ICroquetDriven
                     speedNow *= boostSpeedFactor;
                 }
 
-                // if (Time.realtimeSinceStartup - lastShootTime < 0.1f)
-                // {
-                //     speedNow = Mathf.Min(speedNow, 0); // kill any forward movement
-                // }
-
                 transform.Translate(transform.forward * (speedNow * Time.deltaTime), Space.World);
                 transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * horizontal);
-                
+
                 AlignWithTerrain();
-                
+
                 CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
                 CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, transform.position, transform.rotation);
 
@@ -93,7 +89,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         transform.position = new Vector3(transform.position.x,
             _terrain.terrainData.GetInterpolatedHeight((transform.position.x-tPos.x)/(_terrain.terrainData.size.x), (transform.position.z-tPos.z)/(_terrain.terrainData.size.z)),
             transform.position.z);
-        
+
         var slopeRotation = Quaternion.FromToRotation(transform.up, _terrain.terrainData.GetInterpolatedNormal((transform.position.x-tPos.x)/(_terrain.terrainData.size.x), (transform.position.z-tPos.z)/(_terrain.terrainData.size.z)));
         float slerpFactor = positionHasBeenInitialized ? 10.0f * Time.deltaTime : 1.0f;
         transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation * transform.rotation, slerpFactor);
@@ -101,8 +97,13 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
     void CheckForMissileLaunch(float speed)
     {
+        float now = Time.realtimeSinceStartup;
+        if (now - lastShootTime < waitShootTime) return;
+
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
+            lastShootTime = now;
+
             Quaternion q = transform.rotation;
             // yaw is in radians
             float yaw = Mathf.Atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * q.y * q.y - 2 * q.z * q.z);
@@ -110,8 +111,6 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             Vector3 pos = (speed * 0.05f + 2.0f) * transform.forward + transform.position; // position in 50ms' time
             float[] args = { pos.x, pos.y, pos.z, yaw };
             Croquet.Say(gameObject, "shoot", args);
-
-            lastShootTime = Time.realtimeSinceStartup;
         }
     }
 
