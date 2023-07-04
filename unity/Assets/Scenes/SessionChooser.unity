@@ -161,6 +161,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6035104367984173349, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104367984173349, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonPressNameChooser, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104367988260560, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104367988260560, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonPressNameChooser, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6035104367988260567, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -250,6 +270,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104368046479319, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104368046479319, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104368046479319, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: decrement
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104368046479319, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonPressNameChooser, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6035104368287994705, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
         type: 3}
@@ -315,6 +355,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104368320389902, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035104368320389902, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonPressNameChooser, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6035104368528370885, guid: a2b2bc6f4aac75d4fb746a2fbe6a1a9a,
         type: 3}
