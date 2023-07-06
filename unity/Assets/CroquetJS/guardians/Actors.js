@@ -501,11 +501,11 @@ class LobbyRelayActor extends Elected {
             this.toRelay = { changeId: ++this.changeId, views: [...this.viewIds] };
             this.say("relay-views", this.toRelay);
         }
-        console.log("relay", this.now(), "relay-views", this.toRelay);
+        // console.log("relay", this.now(), "relay-views", this.toRelay);
     }
 
     viewElected(viewId) {
-        console.log("relay", this.now(), "relay-changed", this.electedViewId);
+        // console.log("relay", this.now(), "relay-changed", this.electedViewId);
         this.say("relay-changed", viewId);
     }
 }
