@@ -833,7 +833,7 @@ RectTransform:
   m_Father: {fileID: 1916415628}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.12444448, y: 0.73333335}
+  m_AnchorMin: {x: 0.12444448, y: 0.7666667}
   m_AnchorMax: {x: 0.35222217, y: 0.93333334}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -886,7 +886,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.75
+  m_fontSize: 23.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
   appName: guardians
-  useNodeJS: 0
+  useNodeJS: 1
   croquetSessionRunning: 0
   croquetViewId: 
   loadingInProgress: 0
@@ -2335,6 +2335,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3536856508997117237, guid: 51efc794d71848b40a1fbd8d9c43cd86,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3536856508997117238, guid: 51efc794d71848b40a1fbd8d9c43cd86,
         type: 3}
       propertyPath: m_SortingOrder
@@ -2528,7 +2533,7 @@ PrefabInstance:
     - target: {fileID: 3536856509913619911, guid: 51efc794d71848b40a1fbd8d9c43cd86,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51efc794d71848b40a1fbd8d9c43cd86, type: 3}
