@@ -389,8 +389,10 @@ class GameStateActor extends Actor {
 
     init(options) {
         super.init(options);
+        this.demoMode = false;
 
         this.subscribe("game", "gameStarted", this.gameStarted); // from ModelRoot.startGame
+        this.subscribe("game", "undying", this.undying); // from user input
         this.subscribe("bots", "madeWave", this.madeBotWave); // from ModelRoot.makeWave
         this.subscribe("bots", "destroyedBot", this.destroyedBot); // from BotActor.killMe
 
@@ -404,6 +406,11 @@ class GameStateActor extends Actor {
         this.health = 100;
         this.gameEnded = false;
         this.updateStats();
+    }
+
+    undying() {
+        this.demoMode = !this.demoMode;
+        console.log("demo mode is:", this.demoMode?"on":"off");
     }
 
     madeBotWave({ wave, addedBots }) {
@@ -522,8 +529,6 @@ export class MyModelRoot extends ModelRoot {
         this.subscribe("game", "endGame", this.endGame); // from GameState.destroyedBot
         this.subscribe("game", "startGame", this.startGame); // from BotHUD button
         this.subscribe("game", "bots", this.demoBots); // from user input
-        this.subscribe("game", "undying", this.undying); // from user input
-        this.demoMode = false;
 
         const bollardScale = 3; // size of the bollard
         const bollardDistance = bollardScale*3; // distance between bollards
@@ -565,11 +570,6 @@ export class MyModelRoot extends ModelRoot {
         LobbyRelayActor.create();
 
         this.startGame();
-    }
-
-    undying() {
-        this.demoMode = !this.demoMode;
-        console.log("demo mode is:", this.demoMode?"on":"off");
     }
 
     startGame() {
