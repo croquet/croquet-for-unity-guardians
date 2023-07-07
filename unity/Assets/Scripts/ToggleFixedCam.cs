@@ -5,11 +5,11 @@ using UnityEngine;
 public class ToggleFixedCam : MonoBehaviour
 {
     private FollowCam followCam;
-    
+
     void Awake()
     {
         followCam = GetComponent<FollowCam>();
-        
+
         Croquet.Subscribe("all", "godModeChanged", SetToggleFixedCam);
     }
 
@@ -19,9 +19,9 @@ public class ToggleFixedCam : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             SetToggleFixedCam(!followCam.toggleFixedTopdownView);
-            
+
             // Switch Everyone's View
-            if (Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyDown(KeyCode.RightShift)))
+            if (Input.GetKey(KeyCode.LeftShift) || (Input.GetKey(KeyCode.RightShift)))
             {
                 Croquet.Publish("all", "godMode", followCam.toggleFixedTopdownView);
             }
