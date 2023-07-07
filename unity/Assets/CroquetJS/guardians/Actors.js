@@ -71,7 +71,7 @@ class FireballActor extends mix(Actor).with(AM_Spatial) {
     init(...args) {
         super.init(...args);
         this.timeScale = 0.00025 + Math.random()*0.00002;
-        this.future(200).destroy();
+        this.future(2000).destroy();
     }
 
 }
