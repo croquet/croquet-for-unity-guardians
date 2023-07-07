@@ -283,7 +283,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
     get colorIndex() { return this._colorIndex }
 
     doGodMode(gm) {
-        this.say("doGodMode", gm);
+        this.publish("all", "godModeChanged", gm);
     }
 
     doShoot(argFloats) {
@@ -389,8 +389,10 @@ class GameStateActor extends Actor {
 
     init(options) {
         super.init(options);
+        this.demoMode = false;
 
         this.subscribe("game", "gameStarted", this.gameStarted); // from ModelRoot.startGame
+        this.subscribe("game", "undying", this.undying); // from user input
         this.subscribe("bots", "madeWave", this.madeBotWave); // from ModelRoot.makeWave
         this.subscribe("bots", "destroyedBot", this.destroyedBot); // from BotActor.killMe
 
@@ -404,6 +406,11 @@ class GameStateActor extends Actor {
         this.health = 100;
         this.gameEnded = false;
         this.updateStats();
+    }
+
+    undying() {
+        this.demoMode = !this.demoMode;
+        console.log("demo mode is:", this.demoMode?"on":"off");
     }
 
     madeBotWave({ wave, addedBots }) {
@@ -438,6 +445,71 @@ class GameStateActor extends Actor {
 }
 GameStateActor.register('GameStateActor');
 
+//------------------------------------------------------------------------------------------
+//-- LobbyRelayActor -----------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+// Todo: make Elected into a mixin
+class Elected extends Actor {
+    init() {
+        super.init();
+        this.viewIds = new Set();
+        this.electedViewId = "";
+        this.subscribe(this.sessionId, "view-join", this.viewJoined);
+        this.subscribe(this.sessionId, "view-exit", this.viewExited);
+    }
+
+    viewJoined(viewId) {
+        this.viewIds.add(viewId);
+        this.viewsChanged();
+    }
+
+    viewExited(viewId) {
+        this.viewIds.delete(viewId);
+        this.viewsChanged();
+    }
+
+    viewsChanged() {
+        if (!this.viewIds.has(this.electedViewId)) {
+            this.electedViewId = this.viewIds.values().next().value;
+            this.viewElected(this.electedViewId);
+            // console.log(this.now(), "elected", this.electedViewId);
+        }
+    }
+
+    viewElected(viewId) {
+        this.publish(this.sessionId, "elected-view", viewId);
+    }
+}
+Elected.register("Elected");
+
+class LobbyRelayActor extends Elected {
+    get pawn() { return "LobbyRelayPawn" }
+
+    init() {
+        super.init();
+        this.beWellKnownAs("lobbyRelayActor");
+        this.changeId = 0;
+        this.toRelay = null;
+    }
+
+    viewsChanged() {
+        super.viewsChanged();
+        if (this.viewIds.size === 0) {
+            this.toRelay = null;
+        } else {
+            this.toRelay = { changeId: ++this.changeId, views: [...this.viewIds] };
+            this.say("relay-views", this.toRelay);
+        }
+        // console.log("relay", this.now(), "relay-views", this.toRelay);
+    }
+
+    viewElected(viewId) {
+        // console.log("relay", this.now(), "relay-changed", this.electedViewId);
+        this.say("relay-changed", viewId);
+    }
+}
+LobbyRelayActor.register("LobbyRelayActor");
 
 //------------------------------------------------------------------------------------------
 //-- MyModelRoot ---------------------------------------------------------------------------
@@ -457,8 +529,6 @@ export class MyModelRoot extends ModelRoot {
         this.subscribe("game", "endGame", this.endGame); // from GameState.destroyedBot
         this.subscribe("game", "startGame", this.startGame); // from BotHUD button
         this.subscribe("game", "bots", this.demoBots); // from user input
-        this.subscribe("game", "undying", this.undying); // from user input
-        this.demoMode = false;
 
         const bollardScale = 3; // size of the bollard
         const bollardDistance = bollardScale*3; // distance between bollards
@@ -497,12 +567,9 @@ export class MyModelRoot extends ModelRoot {
 
         HealthCoinActor.create({ pawn: "HealthCoinPawn", parent: tower0, instanceName: 'healthCoin', translation: [0, 14, 0] });
 
-        this.startGame();
-    }
+        LobbyRelayActor.create();
 
-    undying() {
-        this.demoMode = !this.demoMode;
-        console.log("demo mode is:", this.demoMode?"on":"off");
+        this.startGame();
     }
 
     startGame() {
