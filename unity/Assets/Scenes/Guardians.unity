@@ -2436,7 +2436,7 @@ PrefabInstance:
     - target: {fileID: 3536856508997117237, guid: 51efc794d71848b40a1fbd8d9c43cd86,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3536856508997117238, guid: 51efc794d71848b40a1fbd8d9c43cd86,
         type: 3}
@@ -2631,7 +2631,7 @@ PrefabInstance:
     - target: {fileID: 3536856509913619911, guid: 51efc794d71848b40a1fbd8d9c43cd86,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51efc794d71848b40a1fbd8d9c43cd86, type: 3}
@@ -2674,8 +2674,8 @@ RectTransform:
   m_Father: {fileID: 1163917101}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.09450861, y: 0.13849469}
-  m_AnchorMax: {x: 0.9106344, y: 0.85}
+  m_AnchorMin: {x: 0.1514914, y: 0.13849469}
+  m_AnchorMax: {x: 0.8534914, y: 0.87850535}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2727,7 +2727,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.05
+  m_fontSize: 35.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2743,7 +2743,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2930,7 +2930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1640116313
 RectTransform:
   m_ObjectHideFlags: 0
