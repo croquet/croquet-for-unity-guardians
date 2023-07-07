@@ -70,3 +70,4 @@ $RECYCLE.BIN/
 
 # Add Dev patch
 pkg-dev.patch
+dev.patch
