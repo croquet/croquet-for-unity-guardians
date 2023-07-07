@@ -283,7 +283,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
     get colorIndex() { return this._colorIndex }
 
     doGodMode(gm) {
-        this.say("doGodMode", gm);
+        this.publish("all", "godModeChanged", gm);
     }
 
     doShoot(argFloats) {
