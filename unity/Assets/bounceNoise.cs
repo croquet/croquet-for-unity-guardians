@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bounceNoise : MonoBehaviour
+public class bounceNoise : MonoBehaviour, ICroquetDriven
 {
-    private bool skippedOnce = false; 
+    private bool skippedOnce = false;
     private AudioSource bounceSound;
 
     private void Start()
@@ -13,13 +13,13 @@ public class bounceNoise : MonoBehaviour
         bounceSound = this.GetComponent<AudioSource>();
     }
 
-    void Awake()
+    public void PawnInitializationComplete()
     {
         Croquet.Listen(gameObject, "ballisticVelocitySet", PlayBounceNoise);
     }
 
     void PlayBounceNoise()
-    {
+    { Debug.Log("bounce");
         if (skippedOnce)
         {
             bounceSound.PlayOneShot(bounceSound.clip);
