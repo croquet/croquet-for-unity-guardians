@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class bounceNoise : MonoBehaviour, ICroquetDriven
 {
@@ -22,6 +23,7 @@ public class bounceNoise : MonoBehaviour, ICroquetDriven
     { Debug.Log("bounce");
         if (skippedOnce)
         {
+            bounceSound.pitch = Random.Range(0.3f, 3.0f);
             bounceSound.PlayOneShot(bounceSound.clip);
         }
 
