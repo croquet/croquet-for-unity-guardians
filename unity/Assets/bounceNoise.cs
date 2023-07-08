@@ -6,27 +6,18 @@ using Random = UnityEngine.Random;
 
 public class bounceNoise : MonoBehaviour, ICroquetDriven
 {
-    private bool skippedOnce = false;
     private AudioSource bounceSound;
 
-    private void Start()
+    private void Awake()
     {
         bounceSound = this.GetComponent<AudioSource>();
-    }
-
-    public void PawnInitializationComplete()
-    {
         Croquet.Listen(gameObject, "ballisticVelocitySet", PlayBounceNoise);
     }
 
     void PlayBounceNoise()
-    { Debug.Log("bounce");
-        if (skippedOnce)
-        {
-            bounceSound.pitch = Random.Range(0.3f, 3.0f);
-            bounceSound.PlayOneShot(bounceSound.clip);
-        }
-
-        skippedOnce = true;
+    {
+        Debug.Log("plink?");
+        bounceSound.pitch = Random.Range(0.3f, 3.0f);
+        bounceSound.PlayOneShot(bounceSound.clip);
     }
 }
