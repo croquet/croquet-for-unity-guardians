@@ -16,8 +16,8 @@ public class bounceNoise : MonoBehaviour
 
     void PlayBounceNoise()
     {
-        Debug.Log("plink?");
-        bounceSound.pitch = Random.Range(0.3f, 3.0f);
+        //Debug.Log("plink?");
+        bounceSound.pitch = Random.Range(0.8f, 1.2f);
         bounceSound.PlayOneShot(bounceSound.clip);
     }
 }
