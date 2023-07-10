@@ -446,16 +446,16 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 1, y: 1, z: 1}
-  desiredLag: 0.05
-  currentLag: 0
   initializeWithSceneTransform: 0
   positionDeltaEpsilon: 0.01
   rotationDeltaEpsilon: 0.01
   scaleDeltaEpsilon: 0.01
-  linearInterpolation: 0
+  linearInterpolation: 1
   positionLerpFactor: 0.2
-  rotationLerpFactor: 0.2
+  rotationLerpFactor: 0.1
   scaleLerpFactor: 0.2
+  desiredLag: 0.05
+  currentLag: 0
 --- !u!114 &3572632441193092942
 MonoBehaviour:
   m_ObjectHideFlags: 0
