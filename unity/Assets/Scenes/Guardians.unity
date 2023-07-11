@@ -736,7 +736,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muted: 0
-  gameMixer: {fileID: 24100000, guid: 85a7abc4e1838433f8d371dcac1b54d2, type: 2}
 --- !u!1 &557847337
 GameObject:
   m_ObjectHideFlags: 0
