@@ -6,22 +6,26 @@ using UnityEngine.Serialization;
 public class AssignFollowCamTarget : MonoBehaviour
 {
     public FollowCam followCamToUpdate;
-    
-    void Start()
+
+    void Awake()
     {
-        
+        Croquet.Subscribe("croquet", "sessionRunning", CroquetSessionRunning);
     }
 
-    // Update is called once per frame
     void Update()
     {
         CroquetAvatarComponent a = CroquetAvatarSystem.Instance.GetActiveAvatarComponent();
-        
+
         if ( a != null)
         {
             followCamToUpdate.target = a.transform;
 
             enabled = false;
         }
+    }
+
+    void CroquetSessionRunning()
+    {
+        enabled = true; // make sure we're looking for the avatar
     }
 }
