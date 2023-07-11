@@ -549,7 +549,7 @@ RectTransform:
   - {fileID: 1727382989}
   - {fileID: 1916415628}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -573,6 +573,154 @@ MonoBehaviour:
   botCountText: {fileID: 150207627}
   gameOverPanel: {fileID: 1640116312}
   gameStartObject: {fileID: 1727382988}
+--- !u!1 &547465460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 547465462}
+  - component: {fileID: 547465461}
+  - component: {fileID: 547465463}
+  m_Layer: 0
+  m_Name: SuspenseMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &547465461
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547465460}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 4748037111285488573, guid: 85a7abc4e1838433f8d371dcac1b54d2,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 2bde0189afcccd548bc34fab5e83d67c, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 0
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 100
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &547465462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547465460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 937.7317, y: 20.432564, z: -1099.4768}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &547465463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547465460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e45a37018e11b04bbae74a13b704b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DistanceMin: 20
+  DistanceMax: 250
+  pitchMin: 0.4
+  pitchMax: 1.4
+  volumeMin: 0.05
+  volumeMax: 0.65
 --- !u!1 &557847337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,7 +1225,7 @@ PrefabInstance:
     - target: {fileID: 7578248813785219814, guid: 4113e32219a1a524a9101c7b0c969d27,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7578248813785219814, guid: 4113e32219a1a524a9101c7b0c969d27,
         type: 3}
@@ -1352,7 +1500,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &778256240
 MonoBehaviour:
@@ -1441,7 +1589,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1003224077
 GameObject:
@@ -1560,14 +1708,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
   appName: guardians
-  useNodeJS: 1
-  croquetSessionRunning: 0
-  croquetViewId: 
-  loadingInProgress: 0
   defaultSessionName: 1
+  useNodeJS: 1
+  debugLoggingFlags:
+    session: 0
+    messages: 0
+    sends: 0
+    snapshot: 0
+    data: 0
+    hashing: 0
+    subscribe: 0
+    classes: 0
+    ticks: 0
+  sessionRunning: 0
   sessionName: 0
-  simulateNetworkGlitch: 0
-  networkGlitchDuration: 3
+  croquetViewId: 
+  triggerGlitchNow: 0
+  glitchDuration: 3
 --- !u!4 &1003224085
 Transform:
   m_ObjectHideFlags: 0
@@ -2469,7 +2626,7 @@ PrefabInstance:
     - target: {fileID: 3536856508997117241, guid: 51efc794d71848b40a1fbd8d9c43cd86,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3536856508997117241, guid: 51efc794d71848b40a1fbd8d9c43cd86,
         type: 3}
@@ -3113,7 +3270,7 @@ Transform:
   - {fileID: 1290361603}
   - {fileID: 1117599605}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1916415627
 GameObject:
