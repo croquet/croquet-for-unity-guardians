@@ -19,7 +19,6 @@ public class PlaySuspenseMusic : MonoBehaviour
 
     public float fadeTime = 1.0f;
 
-    private float fadeCounter = 0.0f;
     private GameObject closestDetected;
     
     
@@ -35,13 +34,11 @@ public class PlaySuspenseMusic : MonoBehaviour
 
     void PlaySuspense()
     {
-        //suspenseLoop.Stop();
         suspenseLoop.pitch = Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, pitchMax, pitchMin);
         suspenseLoop.volume = Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, volumeMax, volumeMin);
-        Debug.Log($"Playing suspense with pitch: {suspenseLoop.pitch} because of nearestDistance: {nearestBotDistanceToBase}" );
+        //Debug.Log($"Playing suspense with pitch: {suspenseLoop.pitch} because of nearestDistance: {nearestBotDistanceToBase}" );
         suspenseLoop.loop = true;
         suspenseLoop.Play();
-        fadeCounter = fadeTime;
     }
 
     private void Update()
@@ -61,8 +58,6 @@ public class PlaySuspenseMusic : MonoBehaviour
         else
         {
             nearestBotDistanceToBase = closestDetected.transform.position.magnitude;
-            fadeCounter += Time.deltaTime;
-            
             
             suspenseLoop.pitch = Mathf.SmoothDamp( suspenseLoop.pitch, Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, pitchMax, pitchMin), ref velocity, fadeTime);
 

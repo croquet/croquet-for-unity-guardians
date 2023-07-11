@@ -721,6 +721,7 @@ MonoBehaviour:
   pitchMax: 1.4
   volumeMin: 0.05
   volumeMax: 0.65
+  fadeTime: 0.5
 --- !u!1 &557847337
 GameObject:
   m_ObjectHideFlags: 0
