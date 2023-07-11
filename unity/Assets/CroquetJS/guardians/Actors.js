@@ -485,6 +485,7 @@ Elected.register("Elected");
 
 class LobbyRelayActor extends Elected {
     get pawn() { return "LobbyRelayPawn" }
+    get gamePawnType() { return "" } // will create a vanilla Pawn
 
     init() {
         super.init();
