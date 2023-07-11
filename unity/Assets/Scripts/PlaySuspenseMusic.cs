@@ -29,6 +29,8 @@ public class PlaySuspenseMusic : MonoBehaviour
         suspenseLoop = this.GetComponent<AudioSource>();
         Croquet.Subscribe("bots", "madeWave", PlaySuspense);
 
+        // play once for joining persons
+        PlaySuspense();
         //StartCoroutine(FindNearestBot());
     }
 
@@ -53,7 +55,7 @@ public class PlaySuspenseMusic : MonoBehaviour
         }
         if (closestDetected == null)
         {
-            suspenseLoop.loop = false;
+            //suspenseLoop.loop = false;
         }
         else
         {
