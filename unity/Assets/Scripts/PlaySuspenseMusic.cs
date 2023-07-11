@@ -53,11 +53,7 @@ public class PlaySuspenseMusic : MonoBehaviour
                 closestDetected = bot;
             }
         }
-        if (closestDetected == null)
-        {
-            //suspenseLoop.loop = false;
-        }
-        else
+        if (closestDetected != null)
         {
             nearestBotDistanceToBase = closestDetected.transform.position.magnitude;
             
