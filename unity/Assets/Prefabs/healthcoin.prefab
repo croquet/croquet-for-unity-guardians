@@ -450,12 +450,13 @@ MonoBehaviour:
   positionDeltaEpsilon: 0.01
   rotationDeltaEpsilon: 0.01
   scaleDeltaEpsilon: 0.01
-  linearInterpolation: 1
-  positionLerpFactor: 0.2
-  rotationLerpFactor: 0.1
+  positionSmoothTime: 0.25
+  dampedVelocity: {x: 0, y: 0, z: 0}
+  rotationLerpFactor: 0.02
   scaleLerpFactor: 0.2
   desiredLag: 0.05
   currentLag: 0
+  ballisticNudgeLerp: 0.2
 --- !u!114 &3572632441193092942
 MonoBehaviour:
   m_ObjectHideFlags: 0
