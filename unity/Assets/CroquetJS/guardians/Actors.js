@@ -351,10 +351,15 @@ class MyUser extends User {
         console.log(options);
         const base = this.wellKnownModel("ModelRoot").base;
 
+        const placementAngle = Math.random() * Math.PI * 2;
+        const placementDist = 15 + Math.random() * 30; // 15 to 45 (closest bollard is around 50 from centre)
+        // choose an orientation that isn't out along the placement spoke, in case
+        // we're near the tower and the camera behind us gets blocked
+        const yaw = placementAngle + Math.PI + (1 - Math.random() * 2) * Math.PI/2;
         const props = options.savedProps || {
             colorIndex: options.userNumber%24,
-            translation: [this.random() * 10-5, 0, this.random()*10-5],
-            rotation: q_axisAngle([0,1,0], Math.PI/2),
+            translation: [placementDist * Math.sin(placementAngle), 0, placementDist * Math.cos(placementAngle)],
+            rotation: q_axisAngle([0,1,0], yaw),
         };
 
         this.avatar = AvatarActor.create({
