@@ -83,7 +83,7 @@ In the editor's top menu, go to the `Croquet` drop-down and select `Build JS on 
 Press the play button.  Because this is the first time you have built the app, it will initiate a full webpack build of the JavaScript code - eventually writing webpack's log to the Unity console, each line prefixed with "JS builder".  You should then see console output for startup of the app - ending with "Croquet session ready", at which point the game should start to run. 
 
 # Gameplay Details
-Guardians is an instantly-joinable multiplayer game where you and your friends are defending your central spaceship from increasing large groups of evil bots bent on destroying it! 
+Guardians is an instantly-joinable multiplayer game where you and your friends are defending your central spaceship from increasingly large groups of evil bots bent on destroying it! 
 
 ## Controls
 |Input|Alt. Input|Function|
