@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class HUDController : MonoBehaviour
 {
-    
+
     public TMP_Text waveText;
     public TMP_Text healthText;
     public TMP_Text botCountText;
@@ -14,19 +14,9 @@ public class HUDController : MonoBehaviour
     public GameObject gameStartObject;
 
     // public float logoSustain = 5.0f;
-    
-    
-    private GameState gameState;
 
-    void Start()
-    {
-        // Croquet.Subscribe("game", "gameStarted", GameStart);
-        // Croquet.Subscribe("game", "endGame", Finish);
-        // Croquet.Subscribe("user", "endGame", Finish);
-        // Croquet.Subscribe("stats", "wave", SetWave);
-        // Croquet.Subscribe("stats", "health", SetHealth);
-        // Croquet.Subscribe("stats", "bots", SetBots);
-    }
+
+    private GameState gameState;
 
     void Update()
     {
@@ -34,7 +24,7 @@ public class HUDController : MonoBehaviour
         {
             Croquet.Publish("game", "undying");
         }
-        
+
         if (gameState == null)
         {
             GameObject gameStateGO = GameObject.FindWithTag("GameController");
@@ -42,7 +32,7 @@ public class HUDController : MonoBehaviour
             {
                 gameState = gameStateGO.GetComponent<GameState>();
             }
-            
+
             if (gameState == null)
             {
                 return;
@@ -52,7 +42,7 @@ public class HUDController : MonoBehaviour
         SetHealth(gameState.health);
         SetBots(gameState.totalBots);
         SetWave(gameState.wave);
-        
+
         if (gameState.gameEnded)
         {
             GameEnded();
@@ -78,7 +68,7 @@ public class HUDController : MonoBehaviour
     {
         botCountText.text = $"{bots}";
     }
-    
+
     void GameEnded()
     {
         gameOverPanel.SetActive(true);

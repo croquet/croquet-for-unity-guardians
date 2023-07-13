@@ -20,10 +20,10 @@ public class PlaySuspenseMusic : MonoBehaviour
     public float fadeTime = 1.0f;
 
     private GameObject closestDetected;
-    
-    
+
+
     private float velocity = 0.00f;
-    
+
     private void Awake()
     {
         suspenseLoop = this.GetComponent<AudioSource>();
@@ -53,17 +53,17 @@ public class PlaySuspenseMusic : MonoBehaviour
                 closestDetected = bot;
             }
         }
-        if (closestDetected == null)
-        {
-            //suspenseLoop.loop = false;
-        }
-        else
+        if (closestDetected != null)
         {
             nearestBotDistanceToBase = closestDetected.transform.position.magnitude;
-            
+
             suspenseLoop.pitch = Mathf.SmoothDamp( suspenseLoop.pitch, Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, pitchMax, pitchMin), ref velocity, fadeTime);
 
             suspenseLoop.volume = Mathf.SmoothDamp(suspenseLoop.volume, Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, volumeMax, volumeMin), ref velocity, fadeTime ); ;
+        }
+        else
+        {
+            suspenseLoop.volume = Mathf.SmoothDamp(suspenseLoop.volume, 0, ref velocity, fadeTime ); ;
         }
     }
 
@@ -72,7 +72,7 @@ public class PlaySuspenseMusic : MonoBehaviour
     //     for (;;)
     //     {
     //         GameObject closestDetected = GameObject.FindGameObjectWithTag("Enemy");
-    //     
+    //
     //         foreach (GameObject bot in GameObject.FindGameObjectsWithTag("Enemy"))
     //         {
     //             Debug.Log($"Analyzing Enemy {bot.name} with distance {bot.transform.position.magnitude}");
@@ -81,7 +81,7 @@ public class PlaySuspenseMusic : MonoBehaviour
     //                 closestDetected = bot;
     //             }
     //         }
-    //     
+    //
     //         if (closestDetected == null)
     //         {
     //             suspenseLoop.loop = false;
@@ -92,9 +92,9 @@ public class PlaySuspenseMusic : MonoBehaviour
     //             nearestBotDistanceToBase = closestDetected.transform.position.magnitude;
     //         }
     //
-    //     
+    //
     //         yield return new WaitForSeconds(3.0f);
     //     }
-    //     
+    //
     // }
 }
