@@ -1709,7 +1709,7 @@ MonoBehaviour:
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
   appName: guardians
   defaultSessionName: 32
-  useNodeJS: 1
+  useNodeJS: 0
   debugLoggingFlags:
     session: 0
     messages: 0
