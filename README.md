@@ -86,7 +86,7 @@ Press the play button.  Because this is the first time you have built the app, i
 Guardians is an instantly-joinable multiplayer game where you and your friends are defending your central spaceship from increasing large groups of evil bots bent on destroying it! 
 
 ## Controls
-||||
+|Input|Alt. Input|Function|
 |------------|-----|-------------------------------------------------------------|
 | WASD       |     | Movement                                                    |
 | Shift+WASD |     | Overdrive                                                   |
