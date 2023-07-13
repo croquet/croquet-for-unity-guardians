@@ -27,7 +27,7 @@ Note: this repository's large size is predominantly due to our including a speci
 
 ## 3.0 Load the Unity Project
 
-Make sure you have the Unity Hub installed from 
+Make sure you have the Unity Hub installed from
 
 
  > **NOTE:** For now, we **strongly recommend** using _exactly_ Unity Editor Version `2021.3.19f1` for C4U projects
@@ -80,10 +80,10 @@ In the Project Navigator, go to `Assets/Scenes` and double-click `Guardians.unit
 
 In the editor's top menu, go to the `Croquet` drop-down and select `Build JS on Play` so that it has a check-mark next to it.
 
-Press the play button.  Because this is the first time you have built the app, it will initiate a full webpack build of the JavaScript code - eventually writing webpack's log to the Unity console, each line prefixed with "JS builder".  You should then see console output for startup of the app - ending with "Croquet session ready", at which point the game should start to run. 
+Press the play button.  Because this is the first time you have built the app, it will initiate a full webpack build of the JavaScript code - eventually writing webpack's log to the Unity console, each line prefixed with "JS builder".  You should then see console output for startup of the app - ending with "Croquet session running!", at which point the game should start to run.
 
 # Gameplay Details
-Guardians is an instantly-joinable multiplayer game where you and your friends are defending your central spaceship from increasingly large groups of evil bots bent on destroying it! 
+Guardians is an instantly-joinable multiplayer game where you and your friends are defending your central spaceship from increasingly large groups of evil bots bent on destroying it!
 
 ## Controls
 |Input|Alt. Input|Function|
