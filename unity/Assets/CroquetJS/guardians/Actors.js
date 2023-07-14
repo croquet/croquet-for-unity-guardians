@@ -155,21 +155,6 @@ class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
 BotActor.register("BotActor");
 
 //------------------------------------------------------------------------------------------
-//--SimpleActor ----------------------------------------------------------------------------
-// All purpose actor for adding bits to other, smarter actors
-//------------------------------------------------------------------------------------------
-
-// class SimpleActor extends mix(Actor).with(AM_Spatial) {
-
-//     init(options) {
-//         super.init(options);
-//     }
-//     get colorIndex() { return this._colorIndex }
-
-// }
-// SimpleActor.register('SimpleActor');
-
-//------------------------------------------------------------------------------------------
 //--BollardActor, TowerActor ---------------------------------------------------------------
 // Actors that place themselves on the grid so other actors can avoid them
 //------------------------------------------------------------------------------------------
@@ -179,10 +164,6 @@ class BollardActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
     get gamePawnType() { return "bollard" }
 
     get radius() { return this._radius }
-
-    // init(options) {
-    //     super.init(options);
-    // }
 }
 BollardActor.register('BollardActor');
 
@@ -191,10 +172,6 @@ class TowerActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
     get gamePawnType() { return this._index >= 0 ? `tower${this._index}` : "" } // tower "-1" has no pawn; actor collisions only
 
     get radius() { return this._radius || 0 } // central tower isn't even assigned a radius
-
-    // init(options) {
-    //     super.init(options);
-    // }
 }
 TowerActor.register('TowerActor');
 
@@ -231,9 +208,9 @@ class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
         const bot = this.parent.pingAny("bot", this.translation, 4, this);
         if (bot) {
             const d2 = v_dist2Sqr(this.translation, bot.translation);
-            if (d2 < 4) { // $$$ WAS 3.5 (but bot radius is 2, so 4 seems fair)
-                // console.log(`bot ${bot.id} hit at distance ${Math.sqrt(d2).toFixed(2)}`);
+            if (d2 < 4) { // bot radius is 2
                 bot.killMe(0.3, false);
+                // console.log(`bot ${bot.id} hit at distance ${Math.sqrt(d2).toFixed(2)}`);
                 this.destroy();
                 return;
             }
