@@ -175,7 +175,7 @@ BotActor.register("BotActor");
 //------------------------------------------------------------------------------------------
 
 class BollardActor extends mix(Actor).with(AM_Spatial, AM_OnGrid) {
-    get pawn() { return "InstancePawn" }
+    get pawn() { return "BollardPawn" }
     get gamePawnType() { return "bollard" }
 
     get radius() { return this._radius }
@@ -365,7 +365,6 @@ class MyUser extends User {
         this.avatar = AvatarActor.create({
             parent: base,
             driver: this.userId,
-            //instanceName: 'tankTracks',
             tags: ["avatar", "block"],
             ...props
         });
@@ -571,7 +570,7 @@ export class MyModelRoot extends ModelRoot {
         this.makeSkyscraper( d, -1,  0, 0, 3, 0);
         this.makeSkyscraper(-d-10, -3,  -8, Math.PI+2.5, 4, 0);
 
-        HealthCoinActor.create({ pawn: "HealthCoinPawn", parent: tower0, instanceName: 'healthCoin', translation: [0, 14, 0] });
+        HealthCoinActor.create({ parent: tower0, translation: [0, 15, 0] });
 
         LobbyRelayActor.create();
 
@@ -618,18 +617,16 @@ export class MyModelRoot extends ModelRoot {
    }
 
     makeBollard(x, z) {
-        BollardActor.create( { tags: ["block"], instanceName:'bollard', parent: this.base,
-            obstacle:true, viewObstacle:true, perlin: true, radius:1.5, translation:[x, 0, z]} );
+        BollardActor.create( { tags: ["block"], parent: this.base, obstacle: true, radius:1.5, translation: [x, 0, z]} );
     }
 
     makeSkyscraper(x, y, z, r, index, radius) {
-        const tower = TowerActor.create( { tags: radius ? ["block"] : [], parent: this.base, index, obstacle: true,
-            radius, translation:[x, y, z], height:y, rotation:q_axisAngle([0,1,0],r)} );
+        const tower = TowerActor.create( { tags: radius ? ["block"] : [], parent: this.base, index, obstacle: true, radius, translation:[x, y, z], height:y, rotation: q_axisAngle([0,1,0],r)} );
         return tower;
     }
 
     makeBot(x, z, index) {
-        const bot = BotActor.create({parent: this.base, tags:["block", "bot"], index, radius: 2, translation:[x, 0.5, z]});
+        const bot = BotActor.create({parent: this.base, tags: ["block", "bot"], index, radius: 2, translation: [x, 0.5, z]});
         return bot;
     }
 }
