@@ -96,7 +96,7 @@ That said, the definition of what counts as "the same application" hinges on the
 
 Our initial C4U applications - including Guardians - come with two alternative ways to specify the Session Name:
 
-* **The Session Chooser scene**. Loading the scene `SessionChooser.unity` into the editor and pressing play will bring up a simple UI that allows you to select an integer (0 to 100) to act as the session's "name". Hitting the Start button in that UI then loads the Guardians scene, supplying the selected name. The Session Chooser can optionally be included in a build (see "Making Sharable Builds") below.
+* **The Session Chooser scene**. Loading the scene `SessionChooser.unity` into the editor and pressing play will bring up a simple UI that allows you to select an integer (0 to 100) to act as the session's "name". Hitting the Start button in that UI then loads the Guardians scene, supplying the selected name. The Session Chooser can optionally be included in a build (see "Making Sharable Builds" below).
 * **"Default Session Name" property**. If the Guardians scene is _not_ started by way of the Session Chooser, C4U will use whatever value is found in the **Default Session Name** property of the scene's `Croquet Bridge`.
 
 
@@ -140,10 +140,10 @@ Before building the app to deploy for a chosen platform (e.g., Windows or MacOS 
 * the Build Settings dialog's **Scenes In Build** list can either include just the Guardians scene, or in addition the Session Chooser (which, if present, must be numbered scene 0). In the latter case, on startup the user will be forced to choose which session name to use.
 * if the Session Chooser scene is not being included, ensure that the **Default Session Name** in the `Croquet Bridge` contains the alphanumeric token that you would like to use. For example, you might decide to build one version with the ID "playtest", that you distribute among your team during testing, and another with ID "presentation" that you use in presentations and distribute to the audience. Having the separate IDs means that people starting up one version cannot accidentally intrude on another.
 * the `Croquet Bridge` **Use Node JS** checkbox _must be cleared_ for anything other than a Windows build
-* all checkboxes under **Debug Logging flags** should be cleared, so there is no wasteful logging happening behind the scenes
+* all checkboxes under **Debug Logging Flags** should be cleared, so there is no wasteful logging happening behind the scenes
 * the **Wait For User Launch** checkbox must be cleared
 
-To ensure that the build will include your latest JavaScript code, you may wish to invoke `Build JS Now` on the `Croquet` drop-down (and confirm that the console messages show that the build succeeded)
+To ensure that the build will include your latest JavaScript code, you may wish to invoke `Build JS Now` on the `Croquet` drop-down (and confirm that the console messages show that the build succeeded).
 
 Hit **Build**!
 
@@ -157,11 +157,11 @@ We have found that distributing a standalone MacOS build (`.app` file) requires 
 3. Also use a terminal command (rather than the Finder) to zip the file, to ensure that the full directory structure is captured
     `tar -czf build.tgz /path/to/build.app`
 4. Distribute the resulting `.tgz` file, **along with the following instructions to recipients**
-a. download this `.tgz` file
-b. double-click the `.tgz` to unpack the `.app` file
-c. **IMPORTANT: right-click (_not_ double-click)** the `.app` file and choose "Open"
-d. in the security dialog that appears, again choose "Open"
-e. if prompted to give permission for the app to access the network, agree.
+    a. download this `.tgz` file
+    b. double-click the `.tgz` to unpack the `.app` file
+    c. **IMPORTANT: right-click (_not_ double-click)** the `.app` file and choose "Open"
+    d. in the security dialog that appears, again choose "Open"
+    e. if prompted to give permission for the app to access the network, agree.
 
 # Questions
 Please feel free to ask questions on our [discord](https://croquet.io/discord).
