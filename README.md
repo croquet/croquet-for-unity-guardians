@@ -157,10 +157,15 @@ We have found that distributing a standalone MacOS build (`.app` file) requires 
 3. Also use a terminal command (rather than the Finder) to zip the file, to ensure that the full directory structure is captured
     `tar -czf build.tgz /path/to/build.app`
 4. Distribute the resulting `.tgz` file, **along with the following instructions to recipients**
+
     a. download this `.tgz` file
+
     b. double-click the `.tgz` to unpack the `.app` file
+
     c. **IMPORTANT: right-click (_not_ double-click)** the `.app` file and choose "Open"
+
     d. in the security dialog that appears, again choose "Open"
+
     e. if prompted to give permission for the app to access the network, agree.
 
 # Questions
