@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8057081661495829234}
+  - component: {fileID: -6064770270627014686}
   - component: {fileID: 8368704273106884795}
   - component: {fileID: 8057081661495829245}
-  - component: {fileID: -6064770270627014686}
   - component: {fileID: -3773017376682265891}
   - component: {fileID: 8432858210346443430}
   m_Layer: 0
@@ -38,6 +38,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-6064770270627014686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057081661495829246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixins:
+  - Smoothed
+  - Avatar
+  staticProperties:
+  - colorIndex
+  watchedProperties: []
 --- !u!114 &8368704273106884795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,25 +86,6 @@ MonoBehaviour:
   speed: 28
   boostSpeedFactor: 1.5
   rotationSpeed: 80
---- !u!114 &-6064770270627014686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8057081661495829246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixins:
-  - Smoothed
-  - Avatar
-  staticProperties:
-  - colorIndex
-  watchedProperties:
-  - driver
 --- !u!135 &-3773017376682265891
 SphereCollider:
   m_ObjectHideFlags: 0
