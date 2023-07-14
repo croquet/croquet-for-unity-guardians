@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3505379764743690006}
-  - component: {fileID: 1031849565828527246}
+  - component: {fileID: 2174078039313175684}
   - component: {fileID: 2449929699454741355}
-  - component: {fileID: 1060302552841472978}
   m_Layer: 0
   m_Name: tower0
   m_TagString: Untagged
@@ -35,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1031849565828527246
+--- !u!114 &2174078039313175684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIsStatic: 1
   raiseToTerrainHeight: 1
-  fixedExtraRaise: 0
+  fixedExtraRaise: -0.5
   randomRaiseLower: 0
   alignToTerrain: 0
   alignmentStrengthNorm: 1
@@ -70,24 +69,6 @@ MonoBehaviour:
   staticProperties:
   - radius
   watchedProperties: []
---- !u!114 &1060302552841472978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3505379764743690005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dc6e6892b21b45988fca19c61afc814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectIsStatic: 1
-  raiseToTerrainHeight: 1
-  fixedExtraRaise: 0
-  randomRaiseLower: 2
-  alignToTerrain: 1
-  alignmentStrengthNorm: 0.1
 --- !u!1001 &3505379764089370172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,7 +89,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 125c5c33963ec4d1b905ea1785cad2b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 125c5c33963ec4d1b905ea1785cad2b1,
         type: 3}
