@@ -1723,6 +1723,7 @@ MonoBehaviour:
   sessionRunning: 0
   sessionName: 0
   croquetViewId: 
+  croquetViewCount: 0
   triggerGlitchNow: 0
   glitchDuration: 3
 --- !u!4 &1003224085
@@ -3651,7 +3652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2044467191
 RectTransform:
   m_ObjectHideFlags: 0
