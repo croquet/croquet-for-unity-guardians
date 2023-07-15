@@ -96,7 +96,10 @@ That said, the definition of what counts as "the same application" hinges on the
 
 Our initial C4U applications - including Guardians - come with two alternative ways to specify the Session Name:
 
-* **The Session Chooser scene**. Loading the scene `SessionChooser.unity` into the editor and pressing play will bring up a simple UI that allows you to select an integer (0 to 100) to act as the session's "name". Hitting the Start button in that UI then loads the Guardians scene, supplying the selected name. The Session Chooser can optionally be included in a build (see "Making Sharable Builds" below).
+* **The Session Chooser scene**. Loading the scene `SessionChooser.unity` into the editor and pressing play will bring up a simple UI that allows you to select an integer (0 to 100) to act as the session's "name". Hitting the Start button in that UI then loads the Guardians scene, supplying the selected name.  _Note: for this scene hand-off to work, the Guardians scene must have the index `1`. This can be confirmed in the `Build Settings` dialog._
+
+    The Session Chooser can optionally be included in a build (see "Making Sharable Builds" below).
+
 * **"Default Session Name" property**. If the Guardians scene is _not_ started by way of the Session Chooser, C4U will use whatever value is found in the **Default Session Name** property of the scene's `Croquet Bridge`.
 
 
