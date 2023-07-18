@@ -1,4 +1,6 @@
-# Croquet for Unity Guardians
+# Croquet for Unity: Guardians Demo
+
+<img width="782" alt="image20" src="https://github.com/croquet/croquet-for-unity-guardians/assets/123010049/12602126-a465-478b-bfeb-2ca700a1202b">
 
 This repository contains a Croquet for Unity (C4U) view of David A Smith's "Guardians" game built on Worldcore.
 
@@ -115,3 +117,11 @@ Any JS error will also be transferred to the Unity Log itself across the bridge.
 
 # Questions
 Please feel free to ask questions on our [discord](https://croquet.io/discord).
+
+# Contribution
+Contributions to the project are welcome as these projects are open source and we encourage community involvement.
+
+1. Base your `feature/my-feature-name` branch off of `develop` branch
+2. Make your changes
+3. Open a PR against the `develop` branch
+4. Discuss and Review the PR with the team
