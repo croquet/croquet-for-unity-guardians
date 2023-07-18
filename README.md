@@ -115,3 +115,11 @@ Any JS error will also be transferred to the Unity Log itself across the bridge.
 
 # Questions
 Please feel free to ask questions on our [discord](https://croquet.io/discord).
+
+# Contribution
+Contributions to the project are welcome as these projects are open source and we encourage community involvement.
+
+1. Base your `feature/my-feature-name` branch off of `develop` branch
+2. Make your changes
+3. Open a PR against the `develop` branch
+4. Discuss and Review the PR with the team
