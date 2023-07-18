@@ -1,5 +1,7 @@
 # Croquet for Unity Guardians
 
+<img width="782" alt="image20" src="https://github.com/croquet/croquet-for-unity-guardians/assets/123010049/12602126-a465-478b-bfeb-2ca700a1202b">
+
 This repository contains a Croquet for Unity (C4U) view of David A Smith's "Guardians" game built on Worldcore.
 
 The most important directories are the following:
