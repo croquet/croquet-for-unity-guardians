@@ -1,4 +1,4 @@
-# Croquet for Unity Guardians
+# Croquet for Unity: Guardians Demo
 
 <img width="782" alt="image20" src="https://github.com/croquet/croquet-for-unity-guardians/assets/123010049/12602126-a465-478b-bfeb-2ca700a1202b">
 
