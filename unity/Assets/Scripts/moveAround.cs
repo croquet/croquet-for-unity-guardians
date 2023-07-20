@@ -60,15 +60,12 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
             if (!positionHasBeenInitialized || Mathf.Abs(horizontal) > 0.01 || Mathf.Abs(vertical) > 0.01)
             {
-                
                 speedNow = speed * vertical;
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     speedNow *= boostSpeedFactor;
                 }
                 
-                
-
                 transform.Translate(transform.forward * (speedNow * Time.deltaTime), Space.World);
                 transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * horizontal);
 
@@ -124,7 +121,17 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     
     private void OnTriggerStay(Collider other)
     {
-        transform.Translate((transform.position-other.ClosestPoint(transform.position)).normalized*1.42f, Space.World);
+        Vector3 from = transform.position - other.ClosestPoint(transform.position);
+        Vector3 bounce;
+        if (from.magnitude > 0)
+        {
+            bounce = from * (3.1f / from.magnitude) * Time.fixedDeltaTime * 5.0f;
+        }
+        else
+        {
+            bounce = new Vector3(1f, 0.5f, 1f);
+        }
+        transform.Translate(bounce, Space.World);
     }
 
     
