@@ -325,7 +325,7 @@ MyUserManager.register('MyUserManager');
 class MyUser extends User {
     init(options) {
         super.init(options);
-        console.log(options);
+        // console.log(options);
         const base = this.wellKnownModel("ModelRoot").base;
 
         const placementAngle = Math.random() * Math.PI * 2;
