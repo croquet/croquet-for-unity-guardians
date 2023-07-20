@@ -47,6 +47,7 @@ public class LoadingBar : LoadingProgressDisplay
     public override void Hide()
     {
         this.gameObject.SetActive(false);
+        slider.value = lerpTargetValue = 0; // reset in case we get reused
     }
 
     IEnumerator UpdateTestProgress()
