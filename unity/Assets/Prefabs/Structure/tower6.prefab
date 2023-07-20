@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1611105579}
   - component: {fileID: 1611105578}
   - component: {fileID: -4781545097930106148}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: tower6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,6 +149,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: skyscraper_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8b02f0cca23ea43fdb7744e0ea889e18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779174206986608794, guid: 8b02f0cca23ea43fdb7744e0ea889e18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513859187771203891, guid: 8b02f0cca23ea43fdb7744e0ea889e18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b02f0cca23ea43fdb7744e0ea889e18, type: 3}

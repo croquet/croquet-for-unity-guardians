@@ -11,8 +11,6 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
     private bool positionHasBeenInitialized;
     private Terrain _terrain;
-    // private float boostSpeed;
-    // private float computedSpeed;
 
     private string croquetHandle;
     private CroquetAvatarComponent avatarComponent;
@@ -23,11 +21,11 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
     private AudioSource shotSound;
 
+    private float speedNow = 0.0f;
+
     void Start()
     {
         _terrain = FindObjectOfType<Terrain>();
-        // boostSpeed = boostSpeedFactor * speed;
-        // computedSpeed = speed;
 
         shotSound = GetComponent<AudioSource>();
     }
@@ -58,15 +56,18 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
-            float speedNow = 0;
+            speedNow = 0;
 
             if (!positionHasBeenInitialized || Mathf.Abs(horizontal) > 0.01 || Mathf.Abs(vertical) > 0.01)
             {
+                
                 speedNow = speed * vertical;
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     speedNow *= boostSpeedFactor;
                 }
+                
+                
 
                 transform.Translate(transform.forward * (speedNow * Time.deltaTime), Space.World);
                 transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * horizontal);
@@ -86,6 +87,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         {
             AlignWithTerrain();
         }
+
     }
 
     void AlignWithTerrain() {
@@ -119,9 +121,11 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             shotSound.PlayOneShot(shotSound.clip);
         }
     }
-
+    
     private void OnTriggerStay(Collider other)
     {
-        transform.Translate((transform.position-other.transform.position).normalized*1.52f, Space.World);
+        transform.Translate((transform.position-other.ClosestPoint(transform.position)).normalized*1.42f, Space.World);
     }
+
+    
 }

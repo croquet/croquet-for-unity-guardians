@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3505379764743690006}
   - component: {fileID: 2174078039313175684}
   - component: {fileID: 2449929699454741355}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: tower0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,6 +76,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3505379764743690006}
     m_Modifications:
+    - target: {fileID: -8961359253771211100, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 125c5c33963ec4d1b905ea1785cad2b1,
         type: 3}
       propertyPath: m_RootOrder
@@ -131,25 +136,90 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6577237425059042219, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -5063223942988036812, guid: 125c5c33963ec4d1b905ea1785cad2b1,
         type: 3}
       propertyPath: m_Name
       value: Leg3
+      objectReference: {fileID: 0}
+    - target: {fileID: -5063223942988036812, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2914413575082383075, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2181743766629440291, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -1063203228461421988, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 125c5c33963ec4d1b905ea1785cad2b1,
         type: 3}
       propertyPath: m_Name
       value: central_ship
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502877291743220047, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2971542036940430761, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767400413853537203, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5245042011116262203, guid: 125c5c33963ec4d1b905ea1785cad2b1,
         type: 3}
       propertyPath: m_Name
       value: Leg2
       objectReference: {fileID: 0}
+    - target: {fileID: 5245042011116262203, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5252682845850649624, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014503084441653313, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6919683763462532184, guid: 125c5c33963ec4d1b905ea1785cad2b1,
         type: 3}
       propertyPath: m_Name
       value: Leg1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919683763462532184, guid: 125c5c33963ec4d1b905ea1785cad2b1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 125c5c33963ec4d1b905ea1785cad2b1, type: 3}
