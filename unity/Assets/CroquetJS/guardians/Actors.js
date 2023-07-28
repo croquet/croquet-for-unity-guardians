@@ -608,3 +608,16 @@ export class MyModelRoot extends ModelRoot {
     }
 }
 MyModelRoot.register("MyModelRoot");
+
+//------------------------------------------------------------------------------------------
+// Lobby Worker
+//------------------------------------------------------------------------------------------
+
+const worker = new Worker(new URL('./Lobby.js', import.meta.url));
+console.log("Posting question to Lobby worker");
+worker.postMessage({
+    question: 'The Answer to the Ultimate Question of Life, The Universe, and Everything.',
+});
+worker.onmessage = ({ data: { answer } }) => {
+    console.log("Answer received from worker:", answer);
+};
