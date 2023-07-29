@@ -6,8 +6,25 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = env => ({
-    // entry : `./sources/${env.buildTarget === 'node' ? 'index-node.tmp.js' : 'index.tmp.js'}`,
-    entry : `../${env.appName}/${env.buildTarget === 'node' ? 'index-node.js' : 'index.js'}`,
+    entry: () => {
+        // if custom index-node.js exists in the app directory, use it
+        if (env.buildTarget === 'node') {
+            try {
+                const index = `../${env.appName}/index-node.js`;
+                require.resolve(index);
+                return index;
+            } catch (e) {/* fall through and try index.js next */}
+        }
+        // if custom index.js exists in the app directory, use it
+        try {
+            const index = `../${env.appName}/index.js`;
+            require.resolve(index);
+            return index;
+        } catch (e) {
+            // otherwise, use the default index.tmp.js
+            return `./sources/${env.buildTarget === 'node' ? 'index-node.tmp.js' : 'index.tmp.js'}`;
+        }
+    },
     output: {
         path: path.join(__dirname, `../../StreamingAssets/${env.appName}/`),
         pathinfo: false,
