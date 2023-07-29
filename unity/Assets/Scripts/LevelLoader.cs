@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
-    public static void LoadLevel(int level)
+    public static void StartSession()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(level);
-
-        Debug.Log($"Loading Level: {level}");
+        CroquetBridge bridge = FindObjectOfType<CroquetBridge>();
+        if (bridge != null)
+        {
+            string sessionName = PlayerPrefs.GetInt("sessionNameValue", 0).ToString();
+            bridge.SetSessionName(sessionName); // this will start the session
+        }
     }
 }
