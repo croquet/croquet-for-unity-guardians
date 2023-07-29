@@ -10,6 +10,7 @@ public class HUDController : MonoBehaviour
     public TMP_Text waveText;
     public TMP_Text healthText;
     public TMP_Text botCountText;
+    public TMP_Text lobbyText;
     public GameObject gameOverPanel;
     public GameObject gameStartObject;
 
@@ -17,6 +18,11 @@ public class HUDController : MonoBehaviour
 
 
     private GameState gameState;
+
+    void Awake()
+    {
+        Croquet.Subscribe("lobby", "status", SetLobby);
+    }
 
     void Update()
     {
@@ -67,6 +73,11 @@ public class HUDController : MonoBehaviour
     void SetBots(float bots)
     {
         botCountText.text = $"{bots}";
+    }
+
+    void SetLobby(string lobby)
+    {
+        lobbyText.text = $"Lobby: {lobby}";
     }
 
     void GameEnded()
