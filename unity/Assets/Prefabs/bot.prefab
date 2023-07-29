@@ -53,14 +53,17 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 1}
   scale: {x: 1, y: 1, z: 1}
-  initializeWithSceneTransform: 0
-  positionDeltaEpsilon: 0.01
-  rotationDeltaEpsilon: 0.01
-  scaleDeltaEpsilon: 0.01
+  positionMaxDecimals: 4
+  rotationMaxDecimals: 6
+  scaleMaxDecimals: 4
+  includeOnSceneInit: 1
   positionSmoothTime: 0.15
+  positionEpsilon: 0.01
   dampedVelocity: {x: 0, y: 0, z: 0}
-  rotationLerpFactor: 0.2
-  scaleLerpFactor: 0.2
+  rotationLerpPerFrame: 0.2
+  rotationEpsilon: 0.01
+  scaleLerpPerFrame: 0.2
+  scaleEpsilon: 0.01
   desiredLag: 0.05
   currentLag: 0
   ballisticNudgeLerp: 0.2
@@ -94,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pawnType: bot
+  defaultActorClass: 
   mixins:
   - Smoothed
   staticProperties: []

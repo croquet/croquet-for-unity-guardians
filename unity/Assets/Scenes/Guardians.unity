@@ -1843,9 +1843,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
-  appName: guardians
-  defaultSessionName: 32
   useNodeJS: 0
+  appName: guardians
+  defaultSessionName: 123
+  launchThroughMenu: 0
+  firstLevelScene: 
   debugLoggingFlags:
     session: 0
     messages: 0
@@ -1856,12 +1858,16 @@ MonoBehaviour:
     subscribe: 0
     classes: 0
     ticks: 0
-  sessionRunning: 0
-  sessionName: 0
+  croquetSessionState: stopped
+  sessionName: 
   croquetViewId: 
   croquetViewCount: 0
+  croquetActiveScene: 
+  croquetActiveSceneState: 
+  unitySceneState: preparing
   triggerGlitchNow: 0
   glitchDuration: 3
+  croquetSystems: []
 --- !u!4 &1003224085
 Transform:
   m_ObjectHideFlags: 0
