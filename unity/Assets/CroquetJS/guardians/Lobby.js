@@ -1,9 +1,9 @@
 console.log("Lobby worker loaded");
 
-globalThis.onmessage = ({ data: { question } }) => {
-    console.log("Lobby worker received:", question);
+globalThis.onmessage = ({ data: { question, n } }) => {
+    console.log("Lobby worker received:", question, n);
     console.log("Lobby worker sending answer");
     globalThis.postMessage({
-        answer: 42,
+        answer: n ? n + 1 : 42,
     });
 };
