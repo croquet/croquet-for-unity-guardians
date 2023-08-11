@@ -4,8 +4,8 @@
 // The flat world is placed on a Perlin noise generated surface in the view, but all interactions including
 // driving and collisions are computed in 2D.
 
-import { Constants, ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { InitializationManager } from "../build-tools/sources/unity-bridge";
+import { Constants, ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
+import { GameModelRoot } from "../.js-build/build-tools/sources/game-support-models";
 
 Constants.versionBump = 0; // change this to force model to be rebuilt
 
@@ -497,10 +497,10 @@ LobbyRelayActor.register("LobbyRelayActor");
 //-- MyModelRoot ---------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     static modelServices() {
-        return [MyUserManager, InitializationManager];
+        return [MyUserManager, ...super.modelServices()];
     }
 
     init(options) {
