@@ -2,22 +2,23 @@
 
 <img width="782" alt="image20" src="https://github.com/croquet/croquet-for-unity-guardians/assets/123010049/12602126-a465-478b-bfeb-2ca700a1202b">
 
-This repository contains a Croquet for Unity (C4U) view of David A Smith's "Guardians" game built on Worldcore.
+This repository contains a Croquet for Unity (C4U) view of David A. Smith's "Guardians" game built on Worldcore.
 
 The most important directories are the following:
 * `unity/` - the Unity project directory, from which you can run the game in the Unity editor or create builds for any platform Unity supports except WebGL.
 * `unity/Assets/Scenes/` - the main Guardians scene, and a SessionChooser scene (automatically included in builds) that allows a group of players to agree on a session number to join together.
 * `unity/Assets/CroquetJS/` - JavaScript source for building the Croquet side of the game. You can edit the code under this directory to change the game's behaviour.
 
+# Questions
+Please feel free to ask questions on our [discord](https://croquet.io/discord).
+
 # Setup
-To setup the project take the following steps
+To setup the project follow these steps...
 
 ## 1.0 Node Installation
 Node is a prerequisite for installing JavaScript libraries like Croquet and Worldcore, as well as facilitating webpack builds.
 
 Install node.js and the node package manager (npm) for your platform here (LTS Recommended): https://nodejs.org/en/download
-
-
 
 ## 2.0 Clone the Repo
 
@@ -40,23 +41,8 @@ In the `Unity Hub` app, select `Open => Add project from disk`, then navigate to
 
 > **Note:** During this first loading, Unity might warn that there appear to be script errors. It's fine to hit `Ignore` and continue.  It appears to be related to the project's dependencies, and is determined to be harmless.
 
-## 4.0 Install the JavaScript build tools and their dependencies
 
-### 4.1 Copy Build Tools
-In the editor's top menu, go to the `Croquet` drop-down and select `Copy JS Build Tools`. This will copy some files into `Assets/CroquetJS`, and others into the root of the repository (i.e., the parent directory of the Unity project itself).
-
-### 4.2 Install JavaScript Dependencies
-Now install the dependencies, in the repository root:
-
-```
-cd croquet-for-unity-guardians
-npm install
-```
-
-> **Note:** any time an upgrade to the Croquet Multiplayer package is done, step 4.1 and 4.2 should be repeated to ensure the latest package's build tools and dependencies are available.
-
-
-## 5.0 Set up your Croquet Developer Credentials
+## 4.0 Set up your Croquet Developer Credentials
 
 In the Project Navigator (typically at bottom left), go to `Assets/Settings` and click `CroquetSettings.asset`.  The main field that you need to set up is the **Api Key**.
 
@@ -76,8 +62,6 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 ## 6.0 Run the Game
-
-
 In the Project Navigator, go to `Assets/Scenes` and double-click `Guardians.unity`.  If a "TMP importer" dialog comes up at this point, hit the top button ("Import TMP Essentials") then close the dialog. This is just part of the standard setup for Text Mesh Pro (which is used for all the UI).
 
 In the editor's top menu, go to the `Croquet` drop-down and select `Build JS on Play` so that it has a check-mark next to it.
@@ -107,16 +91,15 @@ On both MacOS and Windows, you can choose to use an external browser such as Chr
 
 In the Guardians scene (while play is stopped), select the "Croquet" object in the scene hierarchy (typically at top left), then in that object's "Croquet Runner" component select the **Wait For User Launch** checkbox.
 
-Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app. Accessing all the JS developer tools (like console) are available via the normal means (Press SHIFT+CTRL+J on Windows or OPTION+CMD+J on macOS).
+Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Click the link in the debug.log line open it in a new browser tab.  This should complete the startup of the app. Accessing all the JS developer tools (like console) are available via the normal means (Press SHIFT+CTRL+J on Windows or OPTION+CMD+J on macOS).
 
 When you stop play in the Unity editor, the browser tab will automatically leave the Croquet session.  If you restart play, you will need to reload the tab to join the session again.
 
 ## Viewing JS Errors in Unity
-Any JS error will also be transferred to the Unity Log itself across the bridge.
+Any JS error will also be transferred to the Unity Log itself across the bridge according the JS Logging Option on the Croquet Bridge Component.
 
 
-# Questions
-Please feel free to ask questions on our [discord](https://croquet.io/discord).
+
 
 # Contribution
 Contributions to the project are welcome as these projects are open source and we encourage community involvement.
