@@ -61,7 +61,7 @@ On the Settings asset, fill in the **Path to Node** field with the path.
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-## 6.0 Run the Game
+## 5.0 Run the Game
 In the Project Navigator, go to `Assets/Scenes` and double-click `Guardians.unity`.  If a "TMP importer" dialog comes up at this point, hit the top button ("Import TMP Essentials") then close the dialog. This is just part of the standard setup for Text Mesh Pro (which is used for all the UI).
 
 In the editor's top menu, go to the `Croquet` drop-down and select `Build JS on Play` so that it has a check-mark next to it.
