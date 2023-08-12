@@ -31,7 +31,7 @@ Note: this repository's large size is predominantly due to our including a speci
 ## 3.0 Load the Unity Project
 
 Make sure you have the Unity Hub installed from
-
+https://unity.com/download
 
  > **NOTE:** For now, we **strongly recommend** using _exactly_ Unity Editor Version `2021.3.19f1` for C4U projects
 
@@ -97,6 +97,39 @@ When you stop play in the Unity editor, the browser tab will automatically leave
 
 ## Viewing JS Errors in Unity
 Any JS error will also be transferred to the Unity Log itself across the bridge according the JS Logging Option on the Croquet Bridge Component.
+
+# Making Sharable Builds
+_During Build our system should now warn about any incompatible state._
+
+Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
+
+* of course, there must be an **Api Key** present in `CroquetSettings.asset`
+* the `Croquet Bridge` **Use Node JS** checkbox _must be cleared_ for anything other than a Windows build
+* all checkboxes under **Debug Logging Flags** should be cleared, so there is no wasteful logging happening behind the scenes
+* the **Wait For User Launch** checkbox must be cleared
+
+Hit **Build**!
+
+## Supplementary information for sharing MacOS builds
+
+We have found that distributing a standalone MacOS build (`.app` file) requires some care to ensure that recipients can open it without being blocked by MacOS's security checks. One approach that we have found to work - there are doubtless others - is as follows:
+
+1. Make the build - arriving at, say, a file `build.app`
+2. In a terminal, execute the following command to replace the app's code signature
+    `codesign --deep -s - -f /path/to/build.app`
+3. Also use a terminal command (rather than the Finder) to zip the file, to ensure that the full directory structure is captured
+    `tar -czf build.tgz /path/to/build.app`
+4. Distribute the resulting `.tgz` file, **along with the following instructions to recipients**
+
+    a. download this `.tgz` file
+
+    b. double-click the `.tgz` to unpack the `.app` file
+
+    c. **IMPORTANT: right-click (_not_ double-click)** the `.app` file and choose "Open"
+
+    d. in the security dialog that appears, again choose "Open"
+
+    e. if prompted to give permission for the app to access the network, agree.
 
 
 # Contribution
