@@ -9,7 +9,7 @@ public class AssignFollowCamTarget : MonoBehaviour
 
     void Awake()
     {
-        Croquet.Subscribe("croquet", "sessionRunning", CroquetSessionRunning);
+        Croquet.Subscribe("croquet", "sceneRunning", CroquetSceneRunning);
     }
 
     void Update()
@@ -24,7 +24,7 @@ public class AssignFollowCamTarget : MonoBehaviour
         }
     }
 
-    void CroquetSessionRunning()
+    void CroquetSceneRunning()
     {
         enabled = true; // make sure we're looking for the avatar
     }

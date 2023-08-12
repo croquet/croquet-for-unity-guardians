@@ -1828,6 +1828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitForUserLaunch: 0
+  runOffline: 0
   localReflector: 
   showWebview: 0
 --- !u!114 &1003224084
@@ -1846,9 +1847,9 @@ MonoBehaviour:
   useNodeJS: 0
   appName: guardians
   defaultSessionName: 123
-  launchThroughMenu: 0
-  firstLevelScene: 
-  debugLoggingFlags:
+  launchViaMenuIntoScene: 
+  debugForceSceneRebuild: 0
+  croquetDebugLogging:
     session: 0
     messages: 0
     sends: 0
@@ -1858,6 +1859,10 @@ MonoBehaviour:
     subscribe: 0
     classes: 0
     ticks: 0
+  JSLogForwarding:
+    log: 0
+    warn: 1
+    error: 1
   croquetSessionState: stopped
   sessionName: 
   croquetViewId: 
