@@ -99,8 +99,6 @@ When you stop play in the Unity editor, the browser tab will automatically leave
 Any JS error will also be transferred to the Unity Log itself across the bridge according the JS Logging Option on the Croquet Bridge Component.
 
 
-
-
 # Contribution
 Contributions to the project are welcome as these projects are open source and we encourage community involvement.
 
