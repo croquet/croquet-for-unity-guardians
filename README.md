@@ -21,6 +21,7 @@ Node is a prerequisite for installing JavaScript libraries like Croquet and Worl
 Install node.js and the node package manager (npm) for your platform here (LTS Recommended): https://nodejs.org/en/download
 
 ## 2.0 Clone the Repo
+Install git from https://git-scm.com/downloads
 
 ```
 git clone https://github.com/croquet/croquet-for-unity-guardians.git
@@ -99,16 +100,16 @@ When you stop play in the Unity editor, the browser tab will automatically leave
 Any JS error will also be transferred to the Unity Log itself across the bridge according the JS Logging Option on the Croquet Bridge Component.
 
 # Making Sharable Builds
-_During Build our system should now warn about any incompatible state._
-
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
 
-* of course, there must be an **Api Key** present in `CroquetSettings.asset`
-* the `Croquet Bridge` **Use Node JS** checkbox _must be cleared_ for anything other than a Windows build
-* all checkboxes under **Debug Logging Flags** should be cleared, so there is no wasteful logging happening behind the scenes
-* the **Wait For User Launch** checkbox must be cleared
+* There must be an **Api Key** present in `CroquetSettings.asset`
+* on `Croquet Bridge` the **Use Node JS** checkbox _must_ be set for a Windows build, cleared otherwise
+* on `Croquet Bridge` the **Debug Force Scene Rebuild** checkbox _must_ be cleared
+* on `Croquet Runner` the **Wait For User Launch** checkbox _must_ be cleared
+* on `Croquet Runner` the **Run Offline** checkbox _must_ be cleared
+* ensuring that all checkboxes are cleared under **Debug Logging Flags** and **JS Log Forwarding** will reduce possibly resource-hungry logging
 
-Hit **Build**!
+Hit **Build**!  If any of the obligatory conditions listed above are not met, the build will be halted.  Fix the conditions and try again.
 
 ## Supplementary information for sharing MacOS builds
 
