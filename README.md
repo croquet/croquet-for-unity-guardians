@@ -92,7 +92,7 @@ On both MacOS and Windows, you can choose to use an external browser such as Chr
 
 In the Guardians scene (while play is stopped), select the "Croquet" object in the scene hierarchy (typically at top left), then in that object's "Croquet Runner" component select the **Wait For User Launch** checkbox.
 
-Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Click the link in the debug.log line open it in a new browser tab.  This should complete the startup of the app. Accessing all the JS developer tools (like console) are available via the normal means (Press SHIFT+CTRL+J on Windows or OPTION+CMD+J on macOS).
+Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Click the link in the debug.log line open it in a new browser tab.  This should complete the startup of the app. All the JS developer tools (console, breakpoints etc) offered by the browser are available for working with the code.
 
 When you stop play in the Unity editor, the browser tab will automatically leave the Croquet session.  If you restart play, you will need to reload the tab to join the session again.
 
