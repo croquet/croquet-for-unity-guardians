@@ -86,18 +86,19 @@ Guardians is an instantly-joinable multiplayer game where you and your friends a
 
 
 # Debugging Techniques
-## Using the Chrome Debugger for the JavaScript
+## Using a Web Browser to Debug the JavaScript Code
 
 On both MacOS and Windows, you can choose to use an external browser such as Chrome to run the JavaScript code.  For debugging, this is more convenient than letting the C4U bridge start up an invisible WebView.
 
-In the Guardians scene (while play is stopped), select the "Croquet" object in the scene hierarchy (typically at top left), then in that object's "Croquet Runner" component select the **Wait For User Launch** checkbox.
+In the Guardians scene (while play is stopped), select the `Croquet` object in the scene hierarchy, then in that object's `Croquet Runner` component select the **Wait For User Launch** checkbox.
 
-Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Click the link in the debug.log line open it in a new browser tab.  This should complete the startup of the app. All the JS developer tools (console, breakpoints etc) offered by the browser are available for working with the code.
+Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app. All the JS developer tools (console, breakpoints etc) offered by the browser are available for working with the code.
 
 When you stop play in the Unity editor, the browser tab will automatically leave the Croquet session.  If you restart play, you will need to reload the tab to join the session again.
 
 ## Viewing JS Errors in Unity
-Any JS error will also be transferred to the Unity Log itself across the bridge according the JS Logging Option on the Croquet Bridge Component.
+The `Croquet Bridge` component's **JS Log Forwarding** property has checkboxes that let you select which categories of console output in the JavaScript session will be transferred across the bridge and appear in the Unity console.  By default, the "warn" and "error" categories are sent.
+
 
 # Making Sharable Builds
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
