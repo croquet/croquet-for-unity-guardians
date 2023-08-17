@@ -7,11 +7,6 @@ public class LevelLoader : MonoBehaviour
 {
     public static void StartSession()
     {
-        CroquetBridge bridge = FindObjectOfType<CroquetBridge>();
-        if (bridge != null)
-        {
-            string sessionName = PlayerPrefs.GetInt("sessionNameValue", 0).ToString();
-            bridge.SetSessionName(sessionName); // this will start the session
-        }
+        Croquet.SetSessionName(sessionName); // this will start the session
     }
 }
