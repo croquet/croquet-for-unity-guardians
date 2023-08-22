@@ -21,67 +21,67 @@ MonoBehaviour:
     m_Address: missile
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: 698bad6b35f73495aaae6d8d32c65b56
     m_Address: tank
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: 9599165df10ca42f097d70ad62995c0e
     m_Address: tower1
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: fccf58472cf8548b6b013426790ab9bc
     m_Address: tower2
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: e97bbc90d46834495a46748dc97c5fda
     m_Address: tower3
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: 137d786f292be4d5ebc857335aa181a7
     m_Address: tower0
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: 6dbea482217a347379d0f5b30656cd46
     m_Address: bollard
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: f52e7c23fb16448928add805d180c296
     m_Address: bot
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: 790fa015d47d14418ab3ab790a83b28f
     m_Address: tower5
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: d4e5f622cc968497581435fbdb582057
     m_Address: tower6
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: df8e3f60934794afcaa410427accd006
     m_Address: fireball
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: be9449ea322d545e8a2e1eca85b34ad7
     m_Address: gamestate
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   - m_GUID: c315282cf47f8674d91264f6335a5e3b
     m_Address: healthcoin
     m_ReadOnly: 0
     m_SerializedLabels:
-    - guardians
+    - Guardians
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1398c81f484a44649a064676c86f132e, type: 2}
   m_SchemaSet:

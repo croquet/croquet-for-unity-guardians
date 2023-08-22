@@ -37,8 +37,8 @@ public class PlaySuspenseMusic : MonoBehaviour
     void PlaySuspense()
     {
         suspenseLoop.pitch = Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, pitchMax, pitchMin);
-        suspenseLoop.volume = Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, volumeMax, volumeMin);
-        //Debug.Log($"Playing suspense with pitch: {suspenseLoop.pitch} because of nearestDistance: {nearestBotDistanceToBase}" );
+        // When the scene starts and the player is loading, set the volume of this to 0.
+        suspenseLoop.volume = 0.0f;
         suspenseLoop.loop = true;
         suspenseLoop.Play();
     }
@@ -58,7 +58,6 @@ public class PlaySuspenseMusic : MonoBehaviour
             nearestBotDistanceToBase = closestDetected.transform.position.magnitude;
 
             suspenseLoop.pitch = Mathf.SmoothDamp( suspenseLoop.pitch, Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, pitchMax, pitchMin), ref velocity, fadeTime);
-
             suspenseLoop.volume = Mathf.SmoothDamp(suspenseLoop.volume, Utility.fit(nearestBotDistanceToBase, DistanceMin, DistanceMax, volumeMax, volumeMin), ref velocity, fadeTime ); ;
         }
         else

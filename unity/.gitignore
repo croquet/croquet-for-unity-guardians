@@ -90,6 +90,7 @@ TextMesh\ Pro.meta
 
 # Croquet-built JavaScript and support code
 /[Aa]ssets/[Ss]treaming[Aa]ssets*
+/[Aa]ssets/[Pp]ackages*
 /[Aa]ssets/CroquetJS/build-tools
 /[Aa]ssets/CroquetJS/build-tools.meta
 dist.meta

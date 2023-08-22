@@ -17,6 +17,14 @@ public class LoadingBar : LoadingProgressDisplay
 
     void Awake()
     {
+        // if a long-lived LoadingProgressDisplay has come across from another scene, delete this one
+        LoadingProgressDisplay[] loadingObjs = FindObjectsOfType<LoadingProgressDisplay>(true);
+        if (loadingObjs.Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // be ready in case Start() in some client wants to set a value here
         slider = GetComponentInChildren<Slider>();
         msgTxt = GetComponentInChildren<TextMeshProUGUI>();
@@ -47,6 +55,7 @@ public class LoadingBar : LoadingProgressDisplay
     public override void Hide()
     {
         this.gameObject.SetActive(false);
+        slider.value = lerpTargetValue = 0; // reset in case we get reused
     }
 
     IEnumerator UpdateTestProgress()

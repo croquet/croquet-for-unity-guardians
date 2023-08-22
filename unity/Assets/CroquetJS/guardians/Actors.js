@@ -4,7 +4,10 @@
 // The flat world is placed on a Perlin noise generated surface in the view, but all interactions including
 // driving and collisions are computed in 2D.
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, v3_scale, UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Constants, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
+
+Constants.versionBump = 0; // change this to force model to be rebuilt
 
 const v_dist2Sqr = function (a,b) {
     const dx = a[0] - b[0];
@@ -26,9 +29,6 @@ class BaseActor extends mix(Actor).with(AM_Spatial, AM_Grid) {
     get pawn() {return "BasePawn"}
     get gamePawnType() { return "" } // don't build a connected pawn for Unity
 
-    // init(options) {
-    //     super.init(options);
-    // }
 }
 BaseActor.register('BaseActor');
 
@@ -325,7 +325,7 @@ MyUserManager.register('MyUserManager');
 class MyUser extends User {
     init(options) {
         super.init(options);
-        console.log(options);
+        // console.log(options);
         const base = this.wellKnownModel("ModelRoot").base;
 
         const placementAngle = Math.random() * Math.PI * 2;
@@ -497,10 +497,10 @@ LobbyRelayActor.register("LobbyRelayActor");
 //-- MyModelRoot ---------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     static modelServices() {
-        return [MyUserManager];
+        return [MyUserManager, ...super.modelServices()];
     }
 
     init(options) {
