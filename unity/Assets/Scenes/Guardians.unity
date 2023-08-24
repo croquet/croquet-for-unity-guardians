@@ -1828,6 +1828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitForUserLaunch: 0
+  forceToUseNodeJS: 0
   runOffline: 0
   localReflector: 
   showWebview: 0
@@ -1844,7 +1845,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
-  useNodeJS: 0
   appName: guardians
   defaultSessionName: 123
   launchViaMenuIntoScene: 

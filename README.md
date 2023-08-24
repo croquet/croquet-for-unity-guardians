@@ -49,7 +49,7 @@ In the Project Navigator (typically at bottom left), go to `Assets/Settings` and
 
 The API Key is a token of around 40 characters that you can create for yourself at https://croquet.io/account.  It provides access to the Croquet infrastructure.
 
-The App Prefix is the way of identifying with your organization the Croquet apps that you develop and run.  The combination of this prefix and the App Name provided on the Croquet Bridge component in each scene is a full App ID - for example, `io.croquet.worldcore.guardians`.  For running the game it is fine to leave this prefix as is, but when you develop your own apps you must change the prefix so that the App ID is a globally unique identifier.  The ID must follow the Android reverse domain naming convention - i.e., each dot-separated segment must start with a letter, and only letters, digits, and underscores are allowed.
+The App Prefix is the way of identifying with your organization the Croquet apps that you develop and run.  The combination of this prefix and the App Name provided on the `Croquet Bridge` component in each scene is a full App ID - for example, `io.croquet.worldcore.guardians`.  For running the game it is fine to leave this prefix as is, but when you develop your own apps you must change the prefix so that the App ID is a globally unique identifier.  The ID must follow the Android reverse domain naming convention - i.e., each dot-separated segment must start with a letter, and only letters, digits, and underscores are allowed.
 
 **For MacOS only:** Find the Path to your Node executable, by going to a terminal and running
 ```
@@ -64,6 +64,27 @@ In the Project Navigator, go to `Assets/Scenes` and double-click `Guardians.unit
 In the editor's top menu, go to the `Croquet` drop-down and select `Build JS on Play` so that it has a check-mark next to it.
 
 Press the play button.    The first time you do so after installation, C4U will notice that you have not yet installed the JavaScript build tools from the package.  It will copy them across, and also run an `npm install` that fetches all Croquet and other dependencies that are needed.  Depending on network conditions, this could take some tens of seconds - during which, because of Unity's scheduling mechanisms, you won't see anything in the console.  Please wait for it to complete.
+
+### 6.1 Specifying a Croquet Session Name
+
+_This is an optional configurability feature, not required for you to start playing with Guardians._
+
+Croquet sessions are inherently multi-user, and this applies fully to the sessions that drive a C4U application. If you start the same application on multiple devices, you can expect that all those devices will be in the application together - for example, all cooperating in the Guardians game.
+
+That said, the definition of what counts as "the same application" hinges on the application instances agreeing on _all_ the following factors:
+
+1. **Application ID**. As mentioned in Section 5.0 above, this is a dot-separated name that in C4U is a concatenation of the **App Prefix** in the `CroquetSettings` asset and the **App Name** specified on the scene's `Croquet Bridge`. For example, `io.croquet.worldcore.guardians`.
+2. **API Key**. Also mentioned in Section 5.0, this is a developer-specific key for using the Croquet infrastructure. In C4U this is specified in `CroquetSettings`. Note: strictly, the API keys do not have to be identical; as long as they were issued _for the same developer_ they will count as being in agreement.
+3. **Session Name**. All Croquet sessions are launched with a Session Name, which in general can be any alphanumeric token - such as `helloworld`, or `123`. Given that the Application ID and API Key for a given app are unlikely to change frequently, Session Name is the most flexible way to control whether application instances will join the same session or not.
+
+Our initial C4U applications - including Guardians - come with two alternative ways to specify the Session Name:
+
+* **The Session Chooser scene**. Loading the scene `SessionChooser.unity` into the editor and pressing play will bring up a simple UI that allows you to select an integer (0 to 100) to act as the session's "name". Hitting the Start button in that UI then loads the Guardians scene, supplying the selected name.  _Note: for this scene hand-off to work, the Guardians scene must have the index `1`. This can be confirmed in the `Build Settings` dialog._
+
+    The Session Chooser can optionally be included in a build (see "Making Sharable Builds" below).
+
+* **"Default Session Name" property**. If the Guardians scene is _not_ started by way of the Session Chooser, C4U will use whatever value is found in the **Default Session Name** property of the scene's `Croquet Bridge`.
+
 
 # Gameplay Details
 Guardians is an instantly-joinable multiplayer game where you and your friends are defending your central spaceship from increasingly large groups of evil bots bent on destroying it!
@@ -95,6 +116,43 @@ When you stop play in the Unity editor, the browser tab will automatically leave
 ## Viewing JS Log Output in Unity
 The `Croquet Bridge` component's **JS Log Forwarding** property has checkboxes that let you select which categories of console output in the JavaScript session will be transferred across the bridge and appear in the Unity console.  By default, the "warn" and "error" categories are sent.
 
+[July 2023] In the near future we plan to provide a configuration setting on the Unity Croquet object, to let the developer select which log categories are transferred.
+
+# Making Sharable Builds
+
+Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
+
+* of course, there must be an **Api Key** present in `CroquetSettings.asset`
+* the Build Settings dialog's **Scenes In Build** list can either include just the Guardians scene, or in addition the Session Chooser (which, if present, must be numbered scene 0). In the latter case, on startup the user will be forced to choose which session name to use.
+* if the Session Chooser scene is not being included, ensure that the **Default Session Name** in the `Croquet Bridge` contains the alphanumeric token that you would like to use. For example, you might decide to build one version with the ID "playtest", that you distribute among your team during testing, and another with ID "presentation" that you use in presentations and distribute to the audience. Having the separate IDs means that people starting up one version cannot accidentally intrude on another.
+* the `Croquet Bridge` **Use Node JS** checkbox _must be cleared_ for anything other than a Windows build
+* all checkboxes under **Debug Logging Flags** should be cleared, so there is no wasteful logging happening behind the scenes
+* the **Wait For User Launch** checkbox must be cleared
+
+To ensure that the build will include your latest JavaScript code, you may wish to invoke `Build JS Now` on the `Croquet` drop-down (and confirm that the console messages show that the build succeeded).
+
+Hit **Build**!
+
+## Supplementary information for sharing MacOS builds
+
+We have found that distributing a standalone MacOS build (`.app` file) requires some care to ensure that recipients can open it without being blocked by MacOS's security checks. One approach that we have found to work - there are doubtless others - is as follows:
+
+1. Make the build - arriving at, say, a file `build.app`
+2. In a terminal, execute the following command to replace the app's code signature
+    `codesign --deep -s - -f /path/to/build.app`
+3. Also use a terminal command (rather than the Finder) to zip the file, to ensure that the full directory structure is captured
+    `tar -czf build.tgz /path/to/build.app`
+4. Distribute the resulting `.tgz` file, **along with the following instructions to recipients**
+
+    a. download this `.tgz` file
+
+    b. double-click the `.tgz` to unpack the `.app` file
+
+    c. **IMPORTANT: right-click (_not_ double-click)** the `.app` file and choose "Open"
+
+    d. in the security dialog that appears, again choose "Open"
+
+    e. if prompted to give permission for the app to access the network, agree.
 
 # Making Sharable Builds
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
