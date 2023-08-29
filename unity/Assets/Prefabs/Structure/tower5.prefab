@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2592508247162628411}
   - component: {fileID: 1787183955}
   - component: {fileID: 1787183954}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: tower5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,6 +169,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 236f8e6ff85de46cbac343f1389e3ee0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 236f8e6ff85de46cbac343f1389e3ee0, type: 3}

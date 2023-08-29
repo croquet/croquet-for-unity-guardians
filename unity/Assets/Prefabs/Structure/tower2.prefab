@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2254525211278830811}
   - component: {fileID: 1707819854}
   - component: {fileID: 1707819853}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: tower2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,10 +165,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 707962268589971517, guid: b119bd8d76a1c4744b329833ee53f16d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b119bd8d76a1c4744b329833ee53f16d,
         type: 3}
       propertyPath: m_Name
       value: skyscraper_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b119bd8d76a1c4744b329833ee53f16d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7405487589466974581, guid: b119bd8d76a1c4744b329833ee53f16d,
         type: 3}
@@ -179,6 +189,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513859187771203891, guid: b119bd8d76a1c4744b329833ee53f16d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b119bd8d76a1c4744b329833ee53f16d, type: 3}

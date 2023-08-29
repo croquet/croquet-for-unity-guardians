@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -574184215162354859}
   - component: {fileID: 7195548913884745576}
   - component: {fileID: 7515718715298993655}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bollard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,6 +169,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bollard
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8e52d441d39c64befbb8c388cd14482f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8e52d441d39c64befbb8c388cd14482f,
         type: 3}
