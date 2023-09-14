@@ -7,24 +7,24 @@ using UnityEngine;
 /// </summary>
 public class RaiseAlignToTerrain : MonoBehaviour
 {
-    
+
     public bool objectIsStatic = false;
 
     [HeaderAttribute("Raising")]
     public bool raiseToTerrainHeight = true;
     public float fixedExtraRaise = 0.0f;
     public float randomRaiseLower = 0.0f;
-    
-    [HeaderAttribute("Alignment")] 
+
+    [HeaderAttribute("Alignment")]
     public bool alignToTerrain = true;
     public float alignmentStrengthNorm = 1.0f;
-    
+
     private TerrainData terrainData;
     private Vector3 tPos;
     private float computedRaise;
     private CroquetSpatialComponent sc;
     private float radius;
-    
+
     void Start()
     {
         var terrain = FindObjectOfType<Terrain>();
@@ -48,26 +48,26 @@ public class RaiseAlignToTerrain : MonoBehaviour
                 ? Croquet.ReadActorFloat(gameObject, "radius")
                 : 0;
         }
-        
+
         if (sc.hasBeenPlaced)
         {
             Align();
-            
+
             if (objectIsStatic)
             {
                 // only need to run once
                 Destroy(this);
-            }            
+            }
         }
     }
-    
+
     void Align()
     {
         if (!raiseToTerrainHeight && !alignToTerrain)
         {
             return;
         }
-        
+
         Vector3 slopeNormal = terrainData.GetInterpolatedNormal((transform.position.x - tPos.x) / (terrainData.size.x),
             (transform.position.z - tPos.z) / (terrainData.size.z));
 
@@ -95,7 +95,7 @@ public class RaiseAlignToTerrain : MonoBehaviour
 
         if (objectIsStatic)
         {
-            string croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
+            int croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
             CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
         }
     }
