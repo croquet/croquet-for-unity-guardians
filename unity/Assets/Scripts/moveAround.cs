@@ -14,7 +14,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     // private float boostSpeed;
     // private float computedSpeed;
 
-    private string croquetHandle;
+    private int croquetHandle;
     private CroquetAvatarComponent avatarComponent;
     private GameState gameState;
 
@@ -115,7 +115,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             Vector3 pos = (speed * 0.05f + 2.0f) * transform.forward + transform.position; // position in 50ms' time
             float[] args = { pos.x, pos.y, pos.z, yaw };
             Croquet.Say(gameObject, "shoot", args);
-            
+
             shotSound.PlayOneShot(shotSound.clip);
         }
     }
