@@ -62,7 +62,7 @@ In the editor's top menu, go to the `Croquet` drop-down and ensure that the `Bui
 
 **IMPORTANT: During the next step the editor may appear to have frozen, possibly for some minutes. This is not a sign of failure; please be patient.**
 
-Press the Play button.  The first time you do so after installation, C4U will notice that you have not yet installed the JavaScript build tools from the package.  It will copy them across, and also run an `npm install` that fetches all Croquet and other dependencies that are needed.  *Depending on network conditions, this could take a minute or more - during which, because of Unity's scheduling mechanisms, nothing will appear in the console.*
+Press the Play button.  The first time you do so after installation, C4U will notice that you have not yet installed the JavaScript build tools from the package.  It will copy them across, and also run an `npm install` that fetches all Croquet and other dependencies that are needed.  *As noted above, depending on network conditions this could take a few minutes - during which, because of Unity's scheduling mechanisms, nothing will appear in the console.*
 
 In addition to the tools installation, because `Build JS on Play` is set C4U will run a full webpack build of the JavaScript code - eventually adding webpack's output to the console, each line prefixed with "JS builder".  The first build of the game will take the longest; on subsequent runs the build process will be faster.
 
@@ -114,7 +114,7 @@ On both MacOS and Windows, you can choose to use an external browser such as Chr
 
 In the Guardians scene (while play is stopped), select the `Croquet` object in the scene hierarchy, then in that object's `Croquet Runner` component select the **Debug Using External Session** checkbox.
 
-Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app. All the JS developer tools (console, breakpoints etc) offered by the browser are available for working with the code.
+With this option set, whenever you start playing from that scene the Unity console will include a line of the form "ready for browser to load from http://localhost:...".  Click on the line so that it appears in the text area below the console, and there click on the URL part to load it into your system's default browser.  The loading of the URL will enable the app to continue.  All the JS developer tools (console, breakpoints etc) offered by the browser are available for working with the code.
 
 When you stop play in the Unity editor, the browser tab will automatically leave the Croquet session.  If you restart play, you will need to reload the tab to join the session again.
 
@@ -125,11 +125,10 @@ The `Croquet Bridge` component's **JS Log Forwarding** property has checkboxes t
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
 
 * there must be an **Api Key** present in `CroquetSettings.asset`
-* on `Croquet Bridge` the **Debug Force Scene Rebuild** checkbox _must_ be cleared
 * on `Croquet Runner` the **Debug Using External Session** checkbox _must_ be cleared
 * on `Croquet Runner` the **Force To Use Node JS** checkbox _must_ be cleared for anything other than a Windows build
 * on `Croquet Runner` the **Run Offline** checkbox _must_ be cleared
-* ensuring that all checkboxes are cleared under **Debug Logging Flags** and **JS Log Forwarding** will reduce possibly resource-hungry logging
+* on `Croquet Bridge`, ensuring that all checkboxes are cleared under **Croquet Debug Logging** and **JS Log Forwarding** will reduce possibly resource-hungry logging
 
 Hit **Build**!  If any of the obligatory conditions listed above are not met, the build will be halted.  Fix the conditions and try again.
 
