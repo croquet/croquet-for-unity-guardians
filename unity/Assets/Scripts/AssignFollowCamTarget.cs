@@ -14,7 +14,7 @@ public class AssignFollowCamTarget : MonoBehaviour
 
     void Update()
     {
-        CroquetAvatarComponent a = CroquetAvatarSystem.Instance.GetActiveAvatarComponent();
+        CroquetDrivableComponent a = CroquetDrivableSystem.Instance.GetActiveDrivableComponent();
 
         if ( a != null)
         {

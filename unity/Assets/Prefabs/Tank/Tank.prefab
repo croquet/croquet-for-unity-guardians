@@ -54,7 +54,7 @@ MonoBehaviour:
   defaultActorClass: 
   mixins:
   - Smoothed
-  - Avatar
+  - Drivable
   staticProperties:
   - colorIndex
   watchedProperties: []

@@ -96,7 +96,7 @@ public class RaiseAlignToTerrain : MonoBehaviour
         if (objectIsStatic)
         {
             int croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
-            CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
+            CroquetSpatialSystem.Instance.DrivePawn(croquetHandle, transform.position, transform.rotation);
         }
     }
 }
