@@ -9,12 +9,24 @@ public class AssignFollowCamTarget : MonoBehaviour
 
     void Awake()
     {
-        Croquet.Subscribe("croquet", "sceneRunning", CroquetSceneRunning);
+        // in case the scene is reloaded, make sure the original camera lives on
+        // and that no duplicate camera - with duplicate subscriptions - is started up.
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("MainCamera");
+        if (objs.Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+
+            Croquet.Subscribe("croquet", "sceneRunning", CroquetSceneRunning);
+        }
     }
 
     void Update()
     {
-        CroquetAvatarComponent a = CroquetAvatarSystem.Instance.GetActiveAvatarComponent();
+        CroquetDrivableComponent a = CroquetDrivableSystem.Instance.GetActiveDrivableComponent();
 
         if ( a != null)
         {
