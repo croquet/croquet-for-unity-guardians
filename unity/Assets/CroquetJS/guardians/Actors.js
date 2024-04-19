@@ -4,7 +4,7 @@
 // The flat world is placed on a Perlin noise generated surface in the view, but all interactions including
 // driving and collisions are computed in 2D.
 
-import { Constants, Actor, mix, AM_Spatial, AM_Behavioral, v3_add, v3_sub, UserManager, User, AM_Avatar, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel";
+import { Constants, Actor, mix, AM_Spatial, AM_Behavioral, AM_Drivable, v3_add, v3_sub, UserManager, User, q_axisAngle, v3_normalize, v3_rotate, AM_Grid, AM_OnGrid } from "@croquet/worldcore-kernel";
 import { GameModelRoot } from "@croquet/game-models";
 
 Constants.versionBump = 0; // change this to force model to be rebuilt
@@ -243,10 +243,10 @@ MissileActor.register('MissileActor');
 
 //------------------------------------------------------------------------------------------
 //-- AvatarActor ---------------------------------------------------------------------------
-// This is you. Most of the control code for the avatar is in the pawn in Avatar.js.
+// This is you. Most of the control code for the avatar is on the C# side.
 //------------------------------------------------------------------------------------------
 
-class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar, AM_OnGrid) {
+class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
     get pawn() { return "AvatarPawn" }
     get gamePawnType() { return "tank" }
 

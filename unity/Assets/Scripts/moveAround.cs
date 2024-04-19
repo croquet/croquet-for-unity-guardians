@@ -15,7 +15,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     // private float computedSpeed;
 
     private int croquetHandle;
-    private CroquetAvatarComponent avatarComponent;
+    private CroquetDrivableComponent drivableComponent;
     private GameState gameState;
 
     private float lastShootTime = 0;
@@ -34,12 +34,12 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
     public void PawnInitializationComplete() {
         croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
-        avatarComponent = gameObject.GetComponent<CroquetAvatarComponent>();
+        drivableComponent = gameObject.GetComponent<CroquetDrivableComponent>();
     }
 
     void Update()
     {
-        if (avatarComponent == null) return;
+        if (drivableComponent == null) return;
 
         if (gameState == null)
         {
@@ -52,7 +52,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             if (gameState == null) return;
         }
 
-        if (CroquetAvatarSystem.Instance.GetActiveAvatarComponent() == avatarComponent && !gameState.gameEnded)
+        if (CroquetDrivableSystem.Instance.GetActiveDrivableComponent() == drivableComponent && !gameState.gameEnded)
         {
             // it's the active avatar, and we're live in a game - so perhaps moving, perhaps shooting
             float horizontal = Input.GetAxis("Horizontal");
@@ -73,8 +73,8 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
                 AlignWithTerrain();
 
-                CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, transform.position, transform.rotation);
-                CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, transform.position, transform.rotation);
+                CroquetSpatialSystem.Instance.DrivePawn(croquetHandle, transform.position, transform.rotation);
+                CroquetSpatialSystem.Instance.DriveActor(croquetHandle, false, transform.position, transform.rotation);
 
                 positionHasBeenInitialized = true;
             }

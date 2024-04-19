@@ -53,19 +53,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.17",
+      "version": "2.0.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ide.vscode": {
-      "version": "1.2.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
@@ -215,21 +208,21 @@
       "url": "https://packages.unity.com"
     },
     "io.croquet.multiplayer": {
-      "version": "https://github.com/croquet/croquet-for-unity-package.git#v0.9.0",
+      "version": "https://github.com/croquet/croquet-for-unity-package.git#v0.9.3",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.addressables": "1.19.19",
         "com.unity.inputsystem": "1.5.0"
       },
-      "hash": "9bddf70f2e43a0ef777ac04e8fcf6a15bfcc322e"
+      "hash": "bbee80e755e85fbc0ec84fe4d02682df676d650f"
     },
     "net.gree.unity-webview": {
       "version": "https://github.com/gree/unity-webview.git?path=/dist/package-nofragment",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "3647674386e3c844aa416fc744905b8286c56616"
+      "hash": "ac07c49acc27e72b2939c4be70bd5d05b1308855"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
