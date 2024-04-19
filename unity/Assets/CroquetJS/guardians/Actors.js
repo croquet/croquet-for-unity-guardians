@@ -243,7 +243,7 @@ MissileActor.register('MissileActor');
 
 //------------------------------------------------------------------------------------------
 //-- AvatarActor ---------------------------------------------------------------------------
-// This is you. Most of the control code for the avatar is in the pawn in Avatar.js.
+// This is you. Most of the control code for the avatar is on the C# side.
 //------------------------------------------------------------------------------------------
 
 class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
