@@ -14,7 +14,7 @@
     "com.unity.toolchain.macos-arm64-linux-x86_64": "1.0.1",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.1",
-    "io.croquet.multiplayer": "file:/Users/drake/Documents/Git/croquet-for-unity-package",
+    "io.croquet.multiplayer": "file:../../../croquet-for-unity-package",
     "net.gree.unity-webview": "https://github.com/gree/unity-webview.git?path=/dist/package-nofragment",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
