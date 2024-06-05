@@ -6,18 +6,19 @@ using Random = UnityEngine.Random;
 
 public class bounceNoise : MonoBehaviour
 {
-    private AudioSource bounceSound;
+    // private AudioSource bounceSound;
 
     private void Awake()
     {
-        bounceSound = this.GetComponent<AudioSource>();
+        // bounceSound = this.GetComponent<AudioSource>();
         Croquet.Listen(gameObject, "ballisticVelocitySet", PlayBounceNoise);
     }
 
     void PlayBounceNoise()
     {
+        GetComponent<SimpleAudioRequester>().RequestPlayAudio();
         //Debug.Log("plink?");
-        bounceSound.pitch = Random.Range(0.8f, 1.2f);
-        bounceSound.PlayOneShot(bounceSound.clip);
+        // bounceSound.pitch = Random.Range(0.8f, 1.2f);
+        // bounceSound.PlayOneShot(bounceSound.clip);
     }
 }

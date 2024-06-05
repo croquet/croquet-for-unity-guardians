@@ -19,6 +19,7 @@ public class ShowQRCode : MonoBehaviour
 
     public void ShowQRCodeOnScreen()
     {
+        FindObjectOfType<ShowQRForSession>().Start();
         StartCoroutine(enableQrImage());
     }
     void Start()
