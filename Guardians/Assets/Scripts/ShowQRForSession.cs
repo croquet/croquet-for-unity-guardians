@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class ShowQRForSession : MonoBehaviour
 {
-    void Start()
+    public string urlPrefix = "https://croquet.io/demolition-multi/";
+    public void Start()
     {
         ShowQRCode qrShower = GameObject.FindObjectOfType<ShowQRCode>();
         if (qrShower != null)
         {
             CroquetRunner runner = CroquetBridge.Instance.GetComponent<CroquetRunner>();
             string localReflector = PlayerPrefs.GetString("sessionIP", "");
-            int sessionNameValue = PlayerPrefs.GetInt("sessionNameValue", 1);
+            string sessionNameValue = CroquetBridge.Instance.defaultSessionName;
             string url;
             if (localReflector == "")
             {
                 Debug.Log("local reflector session ip setting empty, using live croquet network");
-                url = $"https://croquet.io/demolition-multi/?q={sessionNameValue}";
+                url = $"{urlPrefix}?room={sessionNameValue}";
             }
             else
             {

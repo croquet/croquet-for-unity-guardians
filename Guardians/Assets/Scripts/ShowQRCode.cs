@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,22 @@ public class ShowQRCode : MonoBehaviour
     {
         if (rawImage==null) rawImage = GetComponent<RawImage>();
         rawImage.texture = generateQR(urlToShow);
+    }
+
+    public void ShowQRCodeOnScreen()
+    {
+        StartCoroutine(enableQrImage());
+    }
+    void Start()
+    {
+        rawImage = GetComponent<RawImage>();
+        rawImage.enabled = false;
+    }
+    IEnumerator enableQrImage()
+    {
+        rawImage.enabled = true;
+        yield return new WaitForSeconds(5);
+        rawImage.enabled = false;
     }
 
     public Texture2D generateQR(string text)

@@ -32,7 +32,8 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         shotSound = GetComponent<AudioSource>();
     }
 
-    public void PawnInitializationComplete() {
+    public void PawnInitializationComplete()
+    {
         croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
         drivableComponent = gameObject.GetComponent<CroquetDrivableComponent>();
     }
@@ -57,7 +58,13 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             // it's the active avatar, and we're live in a game - so perhaps moving, perhaps shooting
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
-
+            if (FindObjectOfType<MobileControls>().isMobile)
+            {
+                horizontal = CustomInputManager.Instance.GetAxis("Horizontal");
+                vertical = CustomInputManager.Instance.GetAxis("Vertical");
+                // Debug.Log(" isMobile Horizontal: " + horizontal + " Vertical: " + vertical);
+            }
+            // Debug.Log("Horizontal: " + horizontal + " Vertical: " + vertical);
             float speedNow = 0;
 
             if (!positionHasBeenInitialized || Mathf.Abs(horizontal) > 0.01 || Mathf.Abs(vertical) > 0.01)
@@ -88,13 +95,14 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         }
     }
 
-    void AlignWithTerrain() {
+    void AlignWithTerrain()
+    {
         Vector3 tPos = _terrain.gameObject.transform.position;
         transform.position = new Vector3(transform.position.x,
-            _terrain.terrainData.GetInterpolatedHeight((transform.position.x-tPos.x)/(_terrain.terrainData.size.x), (transform.position.z-tPos.z)/(_terrain.terrainData.size.z)),
+            _terrain.terrainData.GetInterpolatedHeight((transform.position.x - tPos.x) / (_terrain.terrainData.size.x), (transform.position.z - tPos.z) / (_terrain.terrainData.size.z)),
             transform.position.z);
 
-        var slopeRotation = Quaternion.FromToRotation(transform.up, _terrain.terrainData.GetInterpolatedNormal((transform.position.x-tPos.x)/(_terrain.terrainData.size.x), (transform.position.z-tPos.z)/(_terrain.terrainData.size.z)));
+        var slopeRotation = Quaternion.FromToRotation(transform.up, _terrain.terrainData.GetInterpolatedNormal((transform.position.x - tPos.x) / (_terrain.terrainData.size.x), (transform.position.z - tPos.z) / (_terrain.terrainData.size.z)));
         float slerpFactor = positionHasBeenInitialized ? 10.0f * Time.deltaTime : 1.0f;
         transform.rotation = Quaternion.Slerp(transform.rotation, slopeRotation * transform.rotation, slerpFactor);
     }
@@ -103,9 +111,11 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     {
         float now = Time.realtimeSinceStartup;
         if (now - lastShootTime < waitShootTime) return;
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        hasShot isPowPow = FindObjectOfType<hasShot>();
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) || isPowPow.powPow)
         {
+            isPowPow.powPow = false;
+
             lastShootTime = now;
 
             Quaternion q = transform.rotation;
@@ -122,6 +132,6 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
     private void OnTriggerStay(Collider other)
     {
-        transform.Translate((transform.position-other.transform.position).normalized*1.52f, Space.World);
+        transform.Translate((transform.position - other.transform.position).normalized * 1.52f, Space.World);
     }
 }
