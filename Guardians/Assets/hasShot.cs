@@ -7,6 +7,6 @@ public class hasShot : MonoBehaviour
     public bool powPow = false;
     public void setPowPow(){
         powPow = true;
-        Debug.Log("Pow Pow");
+        // Debug.Log("Pow Pow");
     }
 }

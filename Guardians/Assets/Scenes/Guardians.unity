@@ -2429,6 +2429,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 63282552}
     m_Modifications:
+    - target: {fileID: 1128901917730896, guid: 621e3826a3af91d469707cf580fc75bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114431922033988820, guid: 621e3826a3af91d469707cf580fc75bb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114643641623415974, guid: 621e3826a3af91d469707cf580fc75bb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224311580566312476, guid: 621e3826a3af91d469707cf580fc75bb,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4848,6 +4862,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 63282552}
     m_Modifications:
+    - target: {fileID: 1000013900380068, guid: 7d0bcfe5ecdb4e04a8dfabfc0bd1c32d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4000012487907716, guid: 7d0bcfe5ecdb4e04a8dfabfc0bd1c32d, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -5410,6 +5428,11 @@ PrefabInstance:
         type: 3}
       propertyPath: debugForceSceneRebuild
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5552111265146463839, guid: 1e816dfed6d2248eba7d62bdd192bdb9,
+        type: 3}
+      propertyPath: showWebview
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5552111265146463839, guid: 1e816dfed6d2248eba7d62bdd192bdb9,
         type: 3}

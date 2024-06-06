@@ -30,6 +30,7 @@ public class SimpleAudioPool : MonoBehaviour
         if (availableSource != null)
         {
             AudioSource audioSource = availableSource.GetComponent<AudioSource>();
+            audioSource.enabled = true;
             audioSource.clip = clip;
             audioSource.loop = loop;
             audioSource.spatialBlend = spatial ? 1f : 0f; // 1 for 3D sound, 0 for 2D sound
