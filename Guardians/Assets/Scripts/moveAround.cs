@@ -21,7 +21,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
     private float lastShootTime = 0;
     private float waitShootTime = 0.1f; // 100ms
 
-    private AudioSource shotSound;
+    public AudioSource shotSound;
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         // boostSpeed = boostSpeedFactor * speed;
         // computedSpeed = speed;
 
-        shotSound = GetComponent<AudioSource>();
+        // shotSound = GetComponent<AudioSource>();
     }
 
     public void PawnInitializationComplete()

@@ -208,7 +208,7 @@
       "url": "https://packages.unity.com"
     },
     "io.croquet.multiplayer": {
-      "version": "file:/Users/drake/Documents/Git/croquet-for-unity-package",
+      "version": "file:../../../croquet-for-unity-package",
       "depth": 0,
       "source": "local",
       "dependencies": {
