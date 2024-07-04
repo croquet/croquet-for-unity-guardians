@@ -5,36 +5,33 @@ using UnityEngine;
 public class EnemyRandomizer : MonoBehaviour
 {
     public List<GameObject> enemies;
-    public List<int> enemyProbabilities;
+    private CroquetEntityComponent croquetEntityComponent;
 
     void Start()
     {
-        int randomValue = Random.Range(0, 10000);
+        croquetEntityComponent = GetComponent<CroquetEntityComponent>();
+        int handle = croquetEntityComponent.croquetHandle;
 
-        int cumulativeProbability = 0;
-        int chosenIndex = 0;
-
-        for (int i = 0; i < enemyProbabilities.Count; i++)
+        // Determine the index using a biased approach
+        int chosenIndex;
+        if (handle % 2 == 0)
         {
-            cumulativeProbability += enemyProbabilities[i];
-            if (randomValue < cumulativeProbability)
-            {
-                chosenIndex = i;
-                break;
-            }
+            chosenIndex = 0; // At least 50% chance for the 0 entry
+        }
+        else
+        {
+            chosenIndex = (handle / 2) % (enemies.Count - 1) + 1;
         }
 
+        // Activate only the chosen enemy
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (i != chosenIndex)
-            {
-                enemies[i].SetActive(false);
-            }
+            enemies[i].SetActive(i == chosenIndex);
         }
     }
 
     void Update()
     {
-        
+        // Add any necessary update logic here
     }
 }
