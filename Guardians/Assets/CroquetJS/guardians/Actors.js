@@ -120,34 +120,48 @@ class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
     }
 
     doFlee() {
-        // blow up at the tower
-        if ( v_mag2Sqr(this.translation) < 20 ) this.killMe(1, true);
-        // otherwise, check if we need to move around an object
-        if (!this.doomed) {
-            this.future(100).doFlee();
+        let distSqr = v_mag2Sqr(this.translation);
+        // stop avoiding collisions when we get close to the tower
+        if ( distSqr < 1000 ) {
+            // if we are close to the tower, blow up
+            if ( distSqr < 20 ) {
+                this.killMe(1, true);
+            }
+            if ( !this.doomed ) this.future(100).doFlee();
+        } else { // otherwise, check if we need to move around an object
+            if ( !this.doomed ) this.future(100).doFlee();
             const blockers = this.pingAll("block");
-            if (blockers.length===0) return;
+            if (blockers.length===0 || blockers.length>4) return;
             blockers.forEach(blocker => this.flee(blocker));
         }
     }
 
-    flee(bot) {
-        const from = v3_sub(this.translation, bot.translation);
+    flee(blocker) {
+        const from = v3_sub(this.translation, blocker.translation);
         const mag2 = v_mag2Sqr(from);
-        if (mag2 > this.radiusSqr) return;
-        if (mag2===0) {
+        let r, r2;
+        if (blocker.isAvatar) {
+            r2 = this.radiusSqr*2;
+            r = this.radius*2;
+        } else {
+            r2 = this.radiusSqr;
+            r = this.radius;
+        }
+
+        if (mag2 > r2) return;
+        // move the bot to the radius of the blocker
+        if (mag2<0.00001) {
             const a = Math.random() * 2 * Math.PI;
-            from[0] = this.radius * Math.cos(a);
+            from[0] = r * Math.cos(a);
             from[1] = 0;
-            from[2] = this.radius* Math.sin(a);
+            from[2] = r * Math.sin(a);
         } else {
             let mag = Math.sqrt(mag2);
-            if (bot.isAvatar) mag/=2;
-            from[0] = this.radius * from[0] / mag;
+            from[0] = r * from[0] / mag;
             from[1] = 0;
-            from[2] = this.radius * from[2] / mag;
+            from[2] = r * from[2] / mag;
         }
-        const translation = v3_add(this.translation, from);
+        const translation = v3_add(blocker.translation, from);
         this.set({translation});
     }
 
@@ -210,6 +224,7 @@ class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
             const d2 = v_dist2Sqr(this.translation, bot.translation);
             if (d2 < 4) { // bot radius is 2
                 bot.killMe(0.3, false);
+                this._avatar.addKill();
                 // console.log(`bot ${bot.id} hit at distance ${Math.sqrt(d2).toFixed(2)}`);
                 this.destroy();
                 return;
@@ -253,6 +268,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
     init(options) {
         super.init(options);
         this.isAvatar = true;
+        this._kills = 0;
         this.listen("shoot", this.doShoot);
         this.subscribe("all", "godMode", this.doGodMode);
     }
@@ -263,18 +279,29 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
         this.publish("all", "godModeChanged", gm);
     }
 
+    addKill() {
+        this.publish(this.id, "killset");
+        this._kills++;
+    }
+
+    get kills() { return this._kills; }
+
+    set kills(k) { this._kills = k; }
+
     doShoot(argFloats) {
         // view is now expected to set the launch location, given that the launcher
         // can compensate for its own velocity
         const [ x, y, z, yaw ] = argFloats;
         const aim = v3_rotate([0,0,1], q_axisAngle([0,1,0], yaw));
         const translation = [x, y, z]; // v3_add([x, y, z], v3_scale(aim, 5));
-        const missile = MissileActor.create({parent: this.parent, translation, colorIndex: this.colorIndex});
+        const missile = MissileActor.create({parent: this.parent, translation, colorIndex: this.colorIndex, avatar: this});
         missile.go = missile.behavior.start({name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20});
         missile.ballisticVelocity = aim.map(val => val * missileSpeed);
     }
 
     resetGame() { // don't go home at end of game
+        this.publish(this.id, "killtotal", this.kills);
+        this.kills = 0;
         // this.say("goHome");
     }
 }
