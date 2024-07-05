@@ -225,7 +225,7 @@ class MissileActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
             if (d2 < 4) { // bot radius is 2
                 bot.killMe(0.3, false);
                 this._avatar.addKill();
-                console.log(`bot ${bot.id} hit at distance ${Math.sqrt(d2).toFixed(2)}`);
+                // console.log(`bot ${bot.id} hit at distance ${Math.sqrt(d2).toFixed(2)}`);
                 this.destroy();
                 return;
             }
@@ -282,7 +282,9 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
     addKill() {
         this._kills++;
         this.publish(this.driver, "kills", this._kills );
-        // console.log("model publish kills", this._kills, ' driver=', this.driver);
+        console.log("AvatarActor.addKill() publish kills=", this._kills, ' driver=', this.driver);
+        window.metaBridge = window.metaBridge || {};
+        window.metaBridge.kills = this._kills;
     }
 
     get kills() { return this._kills; }
