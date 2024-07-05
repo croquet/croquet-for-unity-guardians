@@ -18,6 +18,9 @@ const MAX_USERS = 8;
 class LobbyRelayPawn extends Pawn {
     constructor(model) {
         super(model);
+        // this.subscribe(this.viewId,'kills', (x=> {
+        //     console.log("pawn kills", x, 'v viewId=', this.viewId);
+        // }))
         const inIFrame = window && window.parent !== window;
         if (!inIFrame) {
             console.warn("Disabling lobby (only works in an iframe, i.e. WebGL build)");

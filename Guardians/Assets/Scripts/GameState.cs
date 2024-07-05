@@ -8,6 +8,8 @@ public class GameState : MonoBehaviour, ICroquetDriven
     public bool gameEnded;
     public int totalBots;
     public int wave;
+    public int kills;
+    CroquetBridge croquetBridge;
     
     void Awake()
     {
@@ -15,6 +17,11 @@ public class GameState : MonoBehaviour, ICroquetDriven
         Croquet.Listen(gameObject, "waveSet", WaveSet);
         Croquet.Listen(gameObject, "totalBotsSet", TotalBotsSet);
         Croquet.Listen(gameObject, "healthSet", HealthSet);
+        croquetBridge = FindObjectOfType<CroquetBridge>();
+        if (croquetBridge != null) 
+        {
+            Croquet.Subscribe(croquetBridge.croquetViewId, "kills", KillsSet);
+        }
     }
 
     public void PawnInitializationComplete()
@@ -23,6 +30,7 @@ public class GameState : MonoBehaviour, ICroquetDriven
         WaveSet(Croquet.ReadActorFloat(gameObject, "wave"));
         TotalBotsSet(Croquet.ReadActorFloat(gameObject, "totalBots"));
         HealthSet(Croquet.ReadActorFloat(gameObject, "health"));
+        // KillsSet(Croquet.ReadActorFloat(croquetBridge.croquetViewId, "kills"));
     }
 
     public void StartGame()
@@ -33,7 +41,7 @@ public class GameState : MonoBehaviour, ICroquetDriven
     public void GameEndedSet(bool gameEnded)
     {
         this.gameEnded = gameEnded;
-        // Debug.Log($"GameEndedSet: {gameEnded}");
+        Debug.Log($"GameEndedSet: {gameEnded}");
     }
 
     void WaveSet(float wave)
@@ -52,6 +60,11 @@ public class GameState : MonoBehaviour, ICroquetDriven
     {
         // Debug.Log($"HealthSet: {health}");
         this.health = health;
+    }
+    void KillsSet(float kills)
+    {
+        Debug.Log($"Kills: {kills}");
+        this.kills = (int)kills;
     }
 
 }
