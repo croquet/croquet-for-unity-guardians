@@ -10,6 +10,7 @@ public class HUDController : MonoBehaviour
     public TMP_Text waveText;
     public TMP_Text healthText;
     public TMP_Text botCountText;
+    public TMP_Text killsText;
     public GameObject gameOverPanel;
     public GameObject gameStartObject;
 
@@ -42,6 +43,7 @@ public class HUDController : MonoBehaviour
         SetHealth(gameState.health);
         SetBots(gameState.totalBots);
         SetWave(gameState.wave);
+        SetKills(gameState.kills);
 
         if (gameState.gameEnded)
         {
@@ -67,6 +69,11 @@ public class HUDController : MonoBehaviour
     void SetBots(float bots)
     {
         botCountText.text = $"{bots}";
+    }
+
+    void SetKills(float kills)
+    {
+        killsText.text = $"{kills}";
     }
 
     void GameEnded()
