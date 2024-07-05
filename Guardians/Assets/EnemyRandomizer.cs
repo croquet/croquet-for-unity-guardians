@@ -10,17 +10,39 @@ public class EnemyRandomizer : MonoBehaviour
     void Start()
     {
         croquetEntityComponent = GetComponent<CroquetEntityComponent>();
-        int handle = croquetEntityComponent.croquetHandle;
 
-        // Determine the index using a biased approach
+        // Extract integer from croquetActorId
+        string actorId = croquetEntityComponent.croquetActorId;
+        int handle = int.Parse(actorId.Substring(1));
+
+        // Determine the index using the last digit
+        int lastDigit = handle % 10;
         int chosenIndex;
-        if (handle % 2 == 0)
+
+        if (lastDigit % 2 == 0)
         {
-            chosenIndex = 0; // At least 50% chance for the 0 entry
+            chosenIndex = 0; // 50% chance for the 0 entry
         }
         else
         {
-            chosenIndex = (handle / 2) % (enemies.Count - 1) + 1;
+            // Map last digit to index
+            switch (lastDigit)
+            {
+                case 1:
+                case 7:
+                    chosenIndex = 1;
+                    break;
+                case 3:
+                case 9:
+                    chosenIndex = 2;
+                    break;
+                case 5:
+                    chosenIndex = 3;
+                    break;
+                default:
+                    chosenIndex = 0; // Fallback, should not happen
+                    break;
+            }
         }
 
         // Activate only the chosen enemy
@@ -28,6 +50,7 @@ public class EnemyRandomizer : MonoBehaviour
         {
             enemies[i].SetActive(i == chosenIndex);
         }
+        Debug.Log("Chosen enemy: " + enemies[chosenIndex].name + " (handle: " + handle + ")" + " (index: " + chosenIndex + ")" + croquetEntityComponent.croquetActorId);
     }
 
     void Update()

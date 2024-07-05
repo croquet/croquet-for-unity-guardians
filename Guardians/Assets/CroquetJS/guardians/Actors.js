@@ -520,7 +520,7 @@ export class MyModelRoot extends GameModelRoot {
         this.spawnRadius = 400;
 
         // Place the bollards in a washer shape with randomness
-        this.placeBollards(75, 125, bollardDistance);
+        this.placeBollards(75, 150, bollardDistance);
 
         // Place other game elements here as needed
         const d = 290;

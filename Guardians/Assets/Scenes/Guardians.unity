@@ -800,6 +800,18 @@ MonoBehaviour:
   - {fileID: 1499271826}
   - {fileID: 77447511}
   - {fileID: 747461530}
+--- !u!114 &127994076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127994054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba883ff2f20246d5acaa7a6bd3e64e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &150207625
 GameObject:
   m_ObjectHideFlags: 0
