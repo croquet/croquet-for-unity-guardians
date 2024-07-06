@@ -20,7 +20,7 @@ public class GameState : MonoBehaviour, ICroquetDriven
         croquetBridge = FindObjectOfType<CroquetBridge>();
         if (croquetBridge != null) 
         {
-            Croquet.Subscribe(croquetBridge.croquetViewId, "killsSet", KillsSet);
+            Croquet.Subscribe(croquetBridge.croquetViewId, "kills", KillsSet);
         }
     }
 
@@ -30,7 +30,7 @@ public class GameState : MonoBehaviour, ICroquetDriven
         WaveSet(Croquet.ReadActorFloat(gameObject, "wave"));
         TotalBotsSet(Croquet.ReadActorFloat(gameObject, "totalBots"));
         HealthSet(Croquet.ReadActorFloat(gameObject, "health"));
-        KillsSet(Croquet.ReadActorFloat(gameObject, "kills"));
+        // KillsSet(Croquet.ReadActorFloat(croquetBridge.croquetViewId, "kills"));
     }
 
     public void StartGame()
@@ -63,7 +63,7 @@ public class GameState : MonoBehaviour, ICroquetDriven
     }
     void KillsSet(float kills)
     {
-        // Debug.Log($"HealthSet: {health}");
+        Debug.Log($"Kills: {kills}");
         this.kills = (int)kills;
     }
 

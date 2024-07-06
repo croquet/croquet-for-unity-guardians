@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class HUDController : MonoBehaviour
 {
@@ -11,6 +8,7 @@ public class HUDController : MonoBehaviour
     public TMP_Text healthText;
     public TMP_Text botCountText;
     public TMP_Text killsText;
+
     public GameObject gameOverPanel;
     public GameObject gameStartObject;
 

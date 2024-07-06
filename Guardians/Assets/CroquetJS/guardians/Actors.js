@@ -280,8 +280,11 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
     }
 
     addKill() {
-        this.publish(this.id, "killset");
         this._kills++;
+        this.publish(this.driver, "kills", this._kills );
+        console.log("AvatarActor.addKill() publish kills=", this._kills, ' driver=', this.driver);
+        window.metaBridge = window.metaBridge || {};
+        window.metaBridge.kills = this._kills;
     }
 
     get kills() { return this._kills; }
