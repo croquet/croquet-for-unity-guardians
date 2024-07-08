@@ -50,7 +50,7 @@ public class EnemyRandomizer : MonoBehaviour
         {
             enemies[i].SetActive(i == chosenIndex);
         }
-        Debug.Log("Chosen enemy: " + enemies[chosenIndex].name + " (handle: " + handle + ")" + " (index: " + chosenIndex + ")" + croquetEntityComponent.croquetActorId);
+        // Debug.Log("Chosen enemy: " + enemies[chosenIndex].name + " (handle: " + handle + ")" + " (index: " + chosenIndex + ")" + croquetEntityComponent.croquetActorId);
     }
 
     void Update()
