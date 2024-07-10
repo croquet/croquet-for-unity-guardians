@@ -10,12 +10,15 @@ public class SimpleAudioRequester : MonoBehaviour
     public bool spatial;
     public bool startPlaying;
 
+    private SimpleAudioPool audioPool;
+
     // Start is called before the first frame update
     void Start()
     {
         loop = false;
         priority = 0f;
         spatial = true;
+        audioPool = FindObjectOfType<SimpleAudioPool>();
         if (startPlaying)
         {
             RequestPlayAudio();
@@ -24,6 +27,19 @@ public class SimpleAudioRequester : MonoBehaviour
 
     public void RequestPlayAudio()
     {
-        FindObjectOfType<SimpleAudioPool>().RequestPlayAudio(clip, transform, loop, priority, spatial);
+        audioPool.RequestPlayAudio(gameObject, clip, transform, loop, priority, spatial);
     }
+
+    public void RequestStopAudio()
+    {
+        audioPool.StopAudio(gameObject);
+    }
+    void OnDestroy()
+    {
+        audioPool.StopAudio(gameObject);
+    }
+    void OnDisable()
+    {
+        audioPool.StopAudio(gameObject);
+    }   
 }

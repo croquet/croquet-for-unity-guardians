@@ -63,18 +63,32 @@ HealthCoinActor.register('HealthCoinActor');
 //------------------------------------------------------------------------------------------
 
 class FireballActor extends mix(Actor).with(AM_Spatial) {
+    static activeExplosions = 0;
+
     get pawn() { return "FireballPawn" }
     get gamePawnType() { return "fireball" }
 
     get onTarget() { return this._onTarget }
 
     init(...args) {
-        super.init(...args);
-        this.timeScale = 0.00025 + Math.random()*0.00002;
-        this.future(2000).destroy();
+        if (FireballActor.activeExplosions < 10) {
+            super.init(...args);
+            FireballActor.activeExplosions++;
+            this.timeScale = 0.00025 + Math.random() * 0.00002;
+            this.future(2000).destroy();
+        } else {
+            this.destroy();
+        }
     }
 
+    destroy() {
+        if (FireballActor.activeExplosions > 0) {
+            FireballActor.activeExplosions--;
+        }
+        super.destroy();
+    }
 }
+
 FireballActor.register('FireballActor');
 
 //------------------------------------------------------------------------------------------
@@ -82,31 +96,30 @@ FireballActor.register('FireballActor');
 // The bad guys - they try to get to the tower to blow it up
 //------------------------------------------------------------------------------------------
 class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
-    get pawn() { return "BotPawn" }
-    get gamePawnType() { return "bot" }
+    get pawn() { return "BotPawn"; }
+    get gamePawnType() { return "bot"; }
 
-    get index() {return this._index || 0}
+    get index() { return this._index || 0; }
 
     init(options) {
         super.init(options);
         this.radius = 5;
-        this.radiusSqr = this.radius*this.radius;
+        this.radiusSqr = this.radius * this.radius;
         this.doFlee();
-        this.go([0,0,0]);
+        this.go([0, 0, 0]);
     }
 
     go(target) {
-        // console.log(target);
         if (this.ggg) {
             this.ggg.destroy();
             this.ggg = null;
         }
         const speed = (16 + 4 * Math.random());
-        this.ggg = this.behavior.start( {name: "GotoBehavior", target, speed, noise:2, radius:1} );
+        this.ggg = this.behavior.start({ name: "GotoBehavior", target, speed, noise: 2, radius: 1 });
     }
 
-    killMe(s=0.3, onTarget) {
-        FireballActor.create({translation:this.translation, scale:[s,s,s], onTarget});
+    killMe(s = 0.3, onTarget) {
+        FireballActor.create({ translation: this.translation, scale: [s, s, s], onTarget });
         this.publish("bots", "destroyedBot", onTarget);
         this.destroy();
     }
@@ -121,18 +134,25 @@ class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
 
     doFlee() {
         let distSqr = v_mag2Sqr(this.translation);
-        // stop avoiding collisions when we get close to the tower
-        if ( distSqr < 1000 ) {
-            // if we are close to the tower, blow up
-            if ( distSqr < 20 ) {
+        if (distSqr < 1000) {
+            if (distSqr < 20) {
                 this.killMe(1, true);
             }
-            if ( !this.doomed ) this.future(100).doFlee();
-        } else { // otherwise, check if we need to move around an object
-            if ( !this.doomed ) this.future(100).doFlee();
-            const blockers = this.pingAll("block");
-            if (blockers.length===0 || blockers.length>4) return;
-            blockers.forEach(blocker => this.flee(blocker));
+            if (this.parent && typeof this.parent.pingAny === 'function') {
+                const avatar = this.parent.pingAny("avatar", this.translation, this.radius, this);
+                if (avatar) {
+                    console.log("Collision detected, teleporting avatar.");
+                    avatar.teleport();
+                }
+            }
+            if (!this.doomed) this.future(100).doFlee();
+        } else {
+            if (!this.doomed) this.future(100).doFlee();
+            if (this.parent && typeof this.parent.pingAll === 'function') {
+                const blockers = this.pingAll("block");
+                if (blockers.length === 0 || blockers.length > 4) return;
+                blockers.forEach(blocker => this.flee(blocker));
+            }
         }
     }
 
@@ -141,16 +161,15 @@ class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
         const mag2 = v_mag2Sqr(from);
         let r, r2;
         if (blocker.isAvatar) {
-            r2 = this.radiusSqr*2;
-            r = this.radius*2;
+            r2 = this.radiusSqr * 2;
+            r = this.radius * 2;
         } else {
             r2 = this.radiusSqr;
             r = this.radius;
         }
 
         if (mag2 > r2) return;
-        // move the bot to the radius of the blocker
-        if (mag2<0.00001) {
+        if (mag2 < 0.00001) {
             const a = Math.random() * 2 * Math.PI;
             from[0] = r * Math.cos(a);
             from[1] = 0;
@@ -162,9 +181,8 @@ class BotActor extends mix(Actor).with(AM_Spatial, AM_OnGrid, AM_Behavioral) {
             from[2] = r * from[2] / mag;
         }
         const translation = v3_add(blocker.translation, from);
-        this.set({translation});
+        this.set({ translation });
     }
-
 }
 BotActor.register("BotActor");
 
@@ -262,8 +280,8 @@ MissileActor.register('MissileActor');
 //------------------------------------------------------------------------------------------
 
 class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
-    get pawn() { return "AvatarPawn" }
-    get gamePawnType() { return "tank" }
+    get pawn() { return "AvatarPawn"; }
+    get gamePawnType() { return "tank"; }
 
     init(options) {
         super.init(options);
@@ -271,9 +289,10 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
         this._kills = 0;
         this.listen("shoot", this.doShoot);
         this.subscribe("all", "godMode", this.doGodMode);
+        this.subscribe(this.id, "teleport", this.onTeleport);
     }
 
-    get colorIndex() { return this._colorIndex }
+    get colorIndex() { return this._colorIndex; }
 
     doGodMode(gm) {
         this.publish("all", "godModeChanged", gm);
@@ -281,7 +300,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
 
     addKill() {
         this._kills++;
-        this.publish(this.driver, "kills", this._kills );
+        this.publish(this.driver, "kills", this._kills);
         console.log("AvatarActor.addKill() publish kills=", this._kills, ' driver=', this.driver);
         window.metaBridge = window.metaBridge || {};
         window.metaBridge.kills = this._kills;
@@ -292,20 +311,37 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
     set kills(k) { this._kills = k; }
 
     doShoot(argFloats) {
-        // view is now expected to set the launch location, given that the launcher
-        // can compensate for its own velocity
-        const [ x, y, z, yaw ] = argFloats;
-        const aim = v3_rotate([0,0,1], q_axisAngle([0,1,0], yaw));
-        const translation = [x, y, z]; // v3_add([x, y, z], v3_scale(aim, 5));
-        const missile = MissileActor.create({parent: this.parent, translation, colorIndex: this.colorIndex, avatar: this});
-        missile.go = missile.behavior.start({name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20});
+        const [x, y, z, yaw] = argFloats;
+        const aim = v3_rotate([0, 0, 1], q_axisAngle([0, 1, 0], yaw));
+        const translation = [x, y, z];
+        const missile = MissileActor.create({ parent: this.parent, translation, colorIndex: this.colorIndex, avatar: this });
+        missile.go = missile.behavior.start({ name: "GoBehavior", aim, speed: missileSpeed, tickRate: 20 });
         missile.ballisticVelocity = aim.map(val => val * missileSpeed);
     }
 
-    resetGame() { // don't go home at end of game
+    resetGame() {
         this.publish(this.id, "killtotal", this.kills);
         this.kills = 0;
-        // this.say("goHome");
+    }
+
+    teleport() {
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 300 + Math.random() * 100;
+        const x = distance * Math.cos(angle);
+        const z = distance * Math.sin(angle);
+        const translation = [x, 0, z]; // Define translation here
+        this.set({ translation });
+        this.publish(this.id, "teleport", { xyz: translation }); // Include the translation in an object with key 'xyz'
+        console.log(`Teleported to [${x.toFixed(2)}, 0, ${z.toFixed(2)}]`);
+    }
+
+    onTeleport({ xyz }) {
+        if (!Array.isArray(xyz)) {
+            console.error("Invalid teleport data:", xyz);
+            return;
+        }
+        this.set({ translation: xyz });
+        console.log(`Avatar position updated to [${xyz[0]}, ${xyz[1]}, ${xyz[2]}]`);
     }
 }
 AvatarActor.register('AvatarActor');
@@ -550,7 +586,7 @@ export class MyModelRoot extends GameModelRoot {
         this.spawnRadius = 400;
 
         // Place the bollards in a washer shape with randomness
-        this.placeBollards(75, 150, bollardDistance);
+        this.placeBollards(45, 150, bollardDistance);
 
         // Place other game elements here as needed
         const d = 290;
@@ -569,7 +605,7 @@ export class MyModelRoot extends GameModelRoot {
     }
 
     placeBollards(innerRadius, outerRadius, bollardDistance) {
-        const numBollards = 400; // Number of bollards to place
+        const numBollards = 100; // Number of bollards to place
         for (let i = 0; i < numBollards; i++) {
             const angle = Math.random() * 2 * Math.PI; // Random angle
             const radius = innerRadius + Math.random() * (outerRadius - innerRadius); // Random radius within bounds

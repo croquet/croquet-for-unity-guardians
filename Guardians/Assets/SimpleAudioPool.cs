@@ -7,6 +7,7 @@ public class SimpleAudioPool : MonoBehaviour
     public List<GameObject> audioPool = new List<GameObject>();
     public Dictionary<GameObject, bool> audioPoolDict = new Dictionary<GameObject, bool>();
     public Dictionary<GameObject, float> audioPoolPriority = new Dictionary<GameObject, float>();
+    private Dictionary<GameObject, GameObject> requesterToAudioSource = new Dictionary<GameObject, GameObject>();
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class SimpleAudioPool : MonoBehaviour
         }
     }
 
-    public void RequestPlayAudio(AudioClip clip, Transform position, bool loop, float priority, bool spatial)
+    public void RequestPlayAudio(GameObject requester, AudioClip clip, Transform position, bool loop, float priority, bool spatial)
     {
         GameObject availableSource = GetAvailableAudioSource(priority);
 
@@ -40,9 +41,10 @@ public class SimpleAudioPool : MonoBehaviour
             // Track the playing state and priority
             audioPoolDict[availableSource] = true;
             audioPoolPriority[availableSource] = priority;
+            requesterToAudioSource[requester] = availableSource;
 
             // Start a coroutine to track when the audio finishes playing
-            StartCoroutine(TrackAudioSource(availableSource));
+            StartCoroutine(TrackAudioSource(availableSource, requester));
         }
     }
 
@@ -85,7 +87,7 @@ public class SimpleAudioPool : MonoBehaviour
         return null; // No available source and no lower priority source to interrupt
     }
 
-    private IEnumerator TrackAudioSource(GameObject audioSourceObject)
+    private IEnumerator TrackAudioSource(GameObject audioSourceObject, GameObject requester)
     {
         AudioSource audioSource = audioSourceObject.GetComponent<AudioSource>();
 
@@ -101,6 +103,26 @@ public class SimpleAudioPool : MonoBehaviour
             audioPoolPriority[audioSourceObject] = 0f; // Reset priority
             audioSourceObject.transform.parent = transform; // Reset parent
             audioSourceObject.transform.localPosition = Vector3.zero; // Reset position
+            requesterToAudioSource.Remove(requester);
+        }
+    }
+
+    // Method to stop the audio for a specific requester
+    public void StopAudio(GameObject requester)
+    {
+        if (requesterToAudioSource.ContainsKey(requester))
+        {
+            GameObject audioSourceObject = requesterToAudioSource[requester];
+            AudioSource audioSource = audioSourceObject.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+                audioPoolDict[audioSourceObject] = false;
+                audioPoolPriority[audioSourceObject] = 0f;
+                audioSourceObject.transform.parent = transform;
+                audioSourceObject.transform.localPosition = Vector3.zero;
+                requesterToAudioSource.Remove(requester);
+            }
         }
     }
 }

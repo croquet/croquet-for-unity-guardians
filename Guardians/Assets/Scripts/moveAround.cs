@@ -130,8 +130,22 @@ public class moveAround : MonoBehaviour, ICroquetDriven
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        transform.Translate((transform.position - other.transform.position).normalized * 1.52f, Space.World);
+        if (other.gameObject.name.Contains("bot"))
+        {
+            float distance = UnityEngine.Random.Range(100f, 300f);
+            float angle = UnityEngine.Random.Range(0f, 360f);
+            Vector3 newPosition = new Vector3(
+                distance * Mathf.Cos(angle * Mathf.Deg2Rad),
+                transform.position.y,  // Keep the y position unchanged
+                distance * Mathf.Sin(angle * Mathf.Deg2Rad)
+            );
+            transform.position = newPosition;
+        }
+        else
+        {
+            transform.Translate((transform.position - other.transform.position).normalized * 1.52f, Space.World);
+        }
     }
 }

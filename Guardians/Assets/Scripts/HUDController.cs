@@ -68,7 +68,10 @@ public class HUDController : MonoBehaviour
     {
         botCountText.text = $"{bots}";
     }
-
+    public int GetHealth()
+    {
+        return int.Parse(healthText.text);
+    }
     void SetKills(float kills)
     {
         killsText.text = $"{kills}";
