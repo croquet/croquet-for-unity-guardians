@@ -228,16 +228,4 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality:
-    Android: 3
-    FlashPlayer: 3
-    GLES Emulation: 3
-    PS3: 3
-    Server: 0
-    Standalone: 4
-    Web: 3
-    WebGL: 0
-    Wii: 3
-    Windows Store Apps: 0
-    XBOX360: 3
-    iPhone: 3
+  m_PerPlatformDefaultQuality: {}

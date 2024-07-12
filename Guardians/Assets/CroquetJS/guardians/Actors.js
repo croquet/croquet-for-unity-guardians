@@ -287,9 +287,12 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
         super.init(options);
         this.isAvatar = true;
         this._kills = 0;
+        this.viewId = options.viewId; // Assign viewId from options
         this.listen("shoot", this.doShoot);
         this.subscribe("all", "godMode", this.doGodMode);
         this.subscribe(this.id, "teleport", this.onTeleport);
+        this.subscribe("game", "endGame", this.resetGame);
+        window.parent.postMessage({type: "thisIsWhoIAm", driverID: this.driver, viewId: this.viewId}, "*");
     }
 
     get colorIndex() { return this._colorIndex; }
@@ -304,6 +307,14 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
         console.log("AvatarActor.addKill() publish kills=", this._kills, ' driver=', this.driver);
         window.metaBridge = window.metaBridge || {};
         window.metaBridge.kills = this._kills;
+
+        const lobbyRelay = this.wellKnownModel("lobbyRelayActor");
+        console.log("lobbyRelay", lobbyRelay);
+        if (lobbyRelay) {
+            console.log("Sending kills information to lobby relay actor");
+            lobbyRelay.sendKills(this._kills);
+            window.parent.postMessage({type: "kills", viewId: this.viewId, kills: this._kills}, "*");
+        }
     }
 
     get kills() { return this._kills; }
@@ -329,9 +340,9 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
         const distance = 300 + Math.random() * 100;
         const x = distance * Math.cos(angle);
         const z = distance * Math.sin(angle);
-        const translation = [x, 0, z]; // Define translation here
+        const translation = [x, 0, z];
         this.set({ translation });
-        this.publish(this.id, "teleport", { xyz: translation }); // Include the translation in an object with key 'xyz'
+        this.publish(this.id, "teleport", { xyz: translation });
         console.log(`Teleported to [${x.toFixed(2)}, 0, ${z.toFixed(2)}]`);
     }
 
@@ -391,23 +402,21 @@ MyUserManager.register('MyUserManager');
 class MyUser extends User {
     init(options) {
         super.init(options);
-        // console.log(options);
         const base = this.wellKnownModel("ModelRoot").base;
 
         const placementAngle = Math.random() * Math.PI * 2;
-        const placementDist = 15 + Math.random() * 30; // 15 to 45 (closest bollard is around 50 from centre)
-        // choose an orientation that isn't out along the placement spoke, in case
-        // we're near the tower and the camera behind us gets blocked
-        const yaw = placementAngle + Math.PI + (1 - Math.random() * 2) * Math.PI/2;
+        const placementDist = 15 + Math.random() * 30;
+        const yaw = placementAngle + Math.PI + (1 - Math.random() * 2) * Math.PI / 2;
         const props = options.savedProps || {
-            colorIndex: options.userNumber%24,
+            colorIndex: options.userNumber % 24,
             translation: [placementDist * Math.sin(placementAngle), 0, placementDist * Math.cos(placementAngle)],
-            rotation: q_axisAngle([0,1,0], yaw),
+            rotation: q_axisAngle([0, 1, 0], yaw),
         };
 
         this.avatar = AvatarActor.create({
             parent: base,
             driver: this.userId,
+            viewId: this.viewId, // Pass viewId here
             tags: ["avatar", "block"],
             ...props
         });
@@ -475,6 +484,15 @@ class GameStateActor extends Actor {
                 console.log("publish the endGame");
                 this.gameEnded = true;
                 this.publish("game", "endGame");
+                
+                // Send end game message to lobby relay actor
+                const lobbyRelay = this.wellKnownModel("lobbyRelayActor");
+                console.log("lobbyRelay", lobbyRelay);
+                if (lobbyRelay) {
+                    console.log("Sending end game message to lobby relay actor");
+                    lobbyRelay.endGame();
+                    window.parent.postMessage({type: "endGame", sessionId: this.sessionId, kills: this._kills}, "*");
+                }
             }
         }
         this.publish("stats", "bots", this.totalBots);
@@ -549,19 +567,35 @@ class LobbyRelayActor extends Elected {
             this.toRelay = { changeId: ++this.changeId, views: [...this.viewIds] };
             this.say("relay-views", this.toRelay);
         }
-        // console.log("relay", this.now(), "relay-views", this.toRelay);
+    }
+
+    send(type, data) {
+        this.say(type, data);
     }
 
     viewElected(viewId) {
-        // console.log("relay", this.now(), "relay-changed", this.electedViewId);
         this.say("relay-changed", viewId);
+    }
+
+    endGame() {
+        console.log("LobbyRelayActor.endGame()");
+        this.say("endGame");
+    }
+
+    // Custom method to handle "kills" message
+    sendKills(kills) {
+        console.log("LobbyRelayActor.sendKills() kills=", kills);
+        this.say("kills", { kills });
     }
 }
 LobbyRelayActor.register("LobbyRelayActor");
 
+
 //------------------------------------------------------------------------------------------
 //-- MyModelRoot ---------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
+
+// MyModelRoot class in actor.js
 
 export class MyModelRoot extends GameModelRoot {
 
@@ -582,11 +616,11 @@ export class MyModelRoot extends GameModelRoot {
         const bollardDistance = bollardScale * 3; // distance between bollards
 
         this.base = BaseActor.create({gridScale: bollardScale});
-        this.maxBots = 1000;
+        this.maxBots = 500;
         this.spawnRadius = 400;
 
         // Place the bollards in a washer shape with randomness
-        this.placeBollards(45, 150, bollardDistance);
+        this.placeBollards(45, 500, bollardDistance);
 
         // Place other game elements here as needed
         const d = 290;
@@ -599,13 +633,15 @@ export class MyModelRoot extends GameModelRoot {
 
         HealthCoinActor.create({parent: tower0, translation: [0, 15, 0]});
 
-        LobbyRelayActor.create();
+        // Create the LobbyRelayActor and store it as a well-known model
+        this.lobbyRelay = LobbyRelayActor.create();
+        this.wellKnownModel('lobbyRelayActor', this.lobbyRelay);
 
         this.startGame();
     }
 
     placeBollards(innerRadius, outerRadius, bollardDistance) {
-        const numBollards = 100; // Number of bollards to place
+        const numBollards = 300; // Number of bollards to place
         for (let i = 0; i < numBollards; i++) {
             const angle = Math.random() * 2 * Math.PI; // Random angle
             const radius = innerRadius + Math.random() * (outerRadius - innerRadius); // Random radius within bounds
@@ -681,4 +717,3 @@ export class MyModelRoot extends GameModelRoot {
 }
 
 MyModelRoot.register("MyModelRoot");
-

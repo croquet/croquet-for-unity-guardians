@@ -35,7 +35,7 @@ public class SimpleAudioPool : MonoBehaviour
             audioSource.clip = clip;
             audioSource.loop = loop;
             audioSource.spatialBlend = spatial ? 1f : 0f; // 1 for 3D sound, 0 for 2D sound
-            audioSource.transform.parent = position;
+            audioSource.transform.position = position.position;
             audioSource.Play();
 
             // Track the playing state and priority
@@ -101,7 +101,7 @@ public class SimpleAudioPool : MonoBehaviour
         {
             audioPoolDict[audioSourceObject] = false;
             audioPoolPriority[audioSourceObject] = 0f; // Reset priority
-            audioSourceObject.transform.parent = transform; // Reset parent
+            audioSourceObject.transform.position = transform.position; // Reset parent
             audioSourceObject.transform.localPosition = Vector3.zero; // Reset position
             requesterToAudioSource.Remove(requester);
         }
@@ -119,7 +119,7 @@ public class SimpleAudioPool : MonoBehaviour
                 audioSource.Stop();
                 audioPoolDict[audioSourceObject] = false;
                 audioPoolPriority[audioSourceObject] = 0f;
-                audioSourceObject.transform.parent = transform;
+                audioSourceObject.transform.position = transform.position; // Reset parent
                 audioSourceObject.transform.localPosition = Vector3.zero;
                 requesterToAudioSource.Remove(requester);
             }

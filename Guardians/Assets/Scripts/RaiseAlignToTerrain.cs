@@ -30,6 +30,8 @@ public class RaiseAlignToTerrain : MonoBehaviour
         var terrain = FindObjectOfType<Terrain>();
         terrainData = terrain.terrainData;
         tPos = terrain.gameObject.transform.position;
+        if (name.Contains("Bollard") || name.Contains("tower"))
+            transform.parent = GameObject.Find("Bollards").transform;
 
         computedRaise = fixedExtraRaise + Random.Range(-randomRaiseLower, randomRaiseLower);
     }
@@ -41,7 +43,8 @@ public class RaiseAlignToTerrain : MonoBehaviour
             sc = gameObject.GetComponent<CroquetSpatialComponent>();
             if (sc == null)
             {
-                return;
+                Align();
+                Destroy(this);
             }
 
             radius = objectIsStatic

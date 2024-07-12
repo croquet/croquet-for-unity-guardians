@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class moveAround : MonoBehaviour, ICroquetDriven
 {
@@ -40,59 +43,59 @@ public class moveAround : MonoBehaviour, ICroquetDriven
 
     void Update()
     {
-        if (drivableComponent == null) return;
+            if (drivableComponent == null) return;
 
-        if (gameState == null)
-        {
-            GameObject gameStateGO = GameObject.FindWithTag("GameController");
-            if (gameStateGO != null)
+            if (gameState == null)
             {
-                gameState = gameStateGO.GetComponent<GameState>();
-            }
-
-            if (gameState == null) return;
-        }
-
-        if (CroquetDrivableSystem.Instance.GetActiveDrivableComponent() == drivableComponent && !gameState.gameEnded)
-        {
-            // it's the active avatar, and we're live in a game - so perhaps moving, perhaps shooting
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            if (FindObjectOfType<MobileControls>().isMobile)
-            {
-                horizontal = CustomInputManager.Instance.GetAxis("Horizontal");
-                vertical = CustomInputManager.Instance.GetAxis("Vertical");
-                // Debug.Log(" isMobile Horizontal: " + horizontal + " Vertical: " + vertical);
-            }
-            // Debug.Log("Horizontal: " + horizontal + " Vertical: " + vertical);
-            float speedNow = 0;
-
-            if (!positionHasBeenInitialized || Mathf.Abs(horizontal) > 0.01 || Mathf.Abs(vertical) > 0.01)
-            {
-                speedNow = speed * vertical;
-                if (Input.GetKey(KeyCode.LeftShift))
+                GameObject gameStateGO = GameObject.FindWithTag("GameController");
+                if (gameStateGO != null)
                 {
-                    speedNow *= boostSpeedFactor;
+                    gameState = gameStateGO.GetComponent<GameState>();
                 }
 
-                transform.Translate(transform.forward * (speedNow * Time.deltaTime), Space.World);
-                transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * horizontal);
-
-                AlignWithTerrain();
-
-                CroquetSpatialSystem.Instance.DrivePawn(croquetHandle, transform.position, transform.rotation);
-                CroquetSpatialSystem.Instance.DriveActor(croquetHandle, false, transform.position, transform.rotation);
-
-                positionHasBeenInitialized = true;
+                if (gameState == null) return;
             }
 
-            // after moving, see if we want to shoot from here
-            CheckForMissileLaunch(speedNow);
-        }
-        else
-        {
-            AlignWithTerrain();
-        }
+            if (CroquetDrivableSystem.Instance.GetActiveDrivableComponent() == drivableComponent && !gameState.gameEnded)
+            {
+                // it's the active avatar, and we're live in a game - so perhaps moving, perhaps shooting
+                float horizontal = Input.GetAxis("Horizontal");
+                float vertical = Input.GetAxis("Vertical");
+                if (FindObjectOfType<MobileControls>().isMobile)
+                {
+                    horizontal = CustomInputManager.Instance.GetAxis("Horizontal");
+                    vertical = CustomInputManager.Instance.GetAxis("Vertical");
+                    // Debug.Log(" isMobile Horizontal: " + horizontal + " Vertical: " + vertical);
+                }
+                // Debug.Log("Horizontal: " + horizontal + " Vertical: " + vertical);
+                float speedNow = 0;
+
+                if (!positionHasBeenInitialized || Mathf.Abs(horizontal) > 0.01 || Mathf.Abs(vertical) > 0.01)
+                {
+                    speedNow = speed * vertical;
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        speedNow *= boostSpeedFactor;
+                    }
+
+                    transform.Translate(transform.forward * (speedNow * Time.deltaTime), Space.World);
+                    transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * horizontal);
+
+                    AlignWithTerrain();
+
+                    CroquetSpatialSystem.Instance.DrivePawn(croquetHandle, transform.position, transform.rotation);
+                    CroquetSpatialSystem.Instance.DriveActor(croquetHandle, false, transform.position, transform.rotation);
+
+                    positionHasBeenInitialized = true;
+                }
+
+                // after moving, see if we want to shoot from here
+                CheckForMissileLaunch(speedNow);
+            }
+            else
+            {
+                AlignWithTerrain();
+            }
     }
 
     void AlignWithTerrain()
@@ -129,23 +132,61 @@ public class moveAround : MonoBehaviour, ICroquetDriven
             shotSound.PlayOneShot(shotSound.clip);
         }
     }
-
+    public GameObject teleportEffect;
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("OnTriggerEnter" + other.gameObject.name);
         if (other.gameObject.name.Contains("bot"))
         {
-            float distance = UnityEngine.Random.Range(100f, 300f);
-            float angle = UnityEngine.Random.Range(0f, 360f);
-            Vector3 newPosition = new Vector3(
-                distance * Mathf.Cos(angle * Mathf.Deg2Rad),
-                transform.position.y,  // Keep the y position unchanged
-                distance * Mathf.Sin(angle * Mathf.Deg2Rad)
-            );
-            transform.position = newPosition;
+            if (!isTeleporting)
+            {
+                try
+                {
+                    StopCoroutine(teleportTankz);
+                }
+                catch { }
+                teleportTankz = StartCoroutine(teleportTank());
+            }
+
         }
         else
         {
+            if (other.gameObject.name.Contains("missile") || other.gameObject.name.Contains("Terrain")) {
+                return;
+            }
             transform.Translate((transform.position - other.transform.position).normalized * 1.52f, Space.World);
         }
+    }
+    Coroutine teleportTankz;
+    bool isTeleporting = false;
+    public GameObject teleportEffectPrefab, teleportEffectPrefab2;
+    IEnumerator teleportTank()
+    {
+        isTeleporting = true;
+        teleportEffectPrefab.SetActive(true);
+        Instantiate(teleportEffect, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
+        yield return new WaitForSeconds(2f);
+        float distance = UnityEngine.Random.Range(100f, 300f);
+        float angle = UnityEngine.Random.Range(0f, 360f);
+        Vector3 newPosition = new Vector3(
+            distance * Mathf.Cos(angle * Mathf.Deg2Rad),
+            transform.position.y,  // Keep the y position unchanged
+            distance * Mathf.Sin(angle * Mathf.Deg2Rad)
+        );
+        transform.position = newPosition;
+        yield return new WaitForSeconds(.05f);
+        transform.position = newPosition;
+        yield return new WaitForSeconds(.05f);
+        transform.position = newPosition;
+        yield return new WaitForSeconds(.05f);
+        transform.position = newPosition;
+        AlignWithTerrain();
+        CroquetSpatialSystem.Instance.DrivePawn(croquetHandle, transform.position, transform.rotation);
+        CroquetSpatialSystem.Instance.DriveActor(croquetHandle, false, transform.position, transform.rotation);
+        Instantiate(teleportEffect, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity).transform.parent = transform;
+        teleportEffectPrefab.SetActive(false);
+        Instantiate(teleportEffectPrefab2, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), new Quaternion(0, -90, 0, 0));
+        yield return new WaitForSeconds(3f);
+        isTeleporting = false;
     }
 }
