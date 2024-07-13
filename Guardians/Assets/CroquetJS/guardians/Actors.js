@@ -313,7 +313,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable, AM_OnGrid) {
         if (lobbyRelay) {
             console.log("Sending kills information to lobby relay actor");
             lobbyRelay.sendKills(this._kills);
-            window.parent.postMessage({type: "kills", viewId: this.viewId, kills: this._kills}, "*");
+            window.parent.postMessage({type: "kills", viewId: this.viewId, kills: this._kills, driver:this.driver}, "*");
         }
     }
 
