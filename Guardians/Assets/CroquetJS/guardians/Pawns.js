@@ -77,7 +77,7 @@ class LobbyRelayPawn extends Pawn {
             // description += " [full]";
         const users = {
             count: this.model.viewIds.size,
-            description,    // "3 players from USA, 2 from Canada, 1 from UK"
+            description,
             color: demoMode ? "blue" : health>66 ? "green" : health>33 ? "yellow" : health>0 ? "red" : "black",
         };
 
