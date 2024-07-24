@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Foothold Lobby</title>
+    <link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <style>
+        /* Add your existing styles here */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-y: hidden;
+            box-sizing: border-box;
+        }
+        h2 {
+            font-size: large;
+        }
+        button {
+            cursor: pointer;
+        }
+
+        #intro {
+            height: 100px;
+            width: 250px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-size: cover;
+            margin-bottom: 30px;
+            margin-top: 4px;
+            font: 70px bold;
+            color: #f0493e;
+            font-family: "Butcherman";
+        }
+        #lobby {
+            display: none;
+        }
+        .in-lobby > #lobby {
+            display: block;
+        }
+        #sessions {
+            list-style: decimal inside;
+            margin: 0;
+            padding: 0;
+        }
+        #sessions > li {
+            cursor: pointer;
+            padding: 1em;
+            font-family: "Courier New", monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            transition: all 0.2s ease-in-out;
+            border-radius: 5px;
+        }
+        .blue {
+            color: blue;
+            background-color: lightskyblue;
+        }
+        .red {
+            color: crimson;
+            background-color: pink;
+        }
+        .yellow {
+            color: darkgoldenrod;
+            background-color: gold;
+        }
+        .green {
+            color: green;
+            background-color: lightgreen;
+        }
+        .black {
+            color: white;
+            background-color: darkgreen;
+        }
+        #app {
+            position: fixed;
+            top: 0;
+            left: 0;
+            border: none;
+            height: 100vh;
+            width: 100vw;
+            display: block;
+        }
+        .in-lobby > #app {
+            display: none;
+        }
+        #back-to-lobby {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 412px;
+            opacity: 0.5;
+            height: 30px;
+            line-height: 10px;
+            font-weight: bold;
+        }
+        #back-to-lobby:hover {
+            scale: 1.2;
+            opacity: 1;
+        }
+        #connect-wallet-button {
+        position: absolute;
+        right: 10px;
+        z-index: 1000;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+        .in-lobby > #back-to-lobby {
+            display: none;
+        }
+        #croquet_dock {
+            display: none;
+        }
+        .in-lobby > #croquet_dock {
+            display: block;
+        }
+
+        #games {
+            width: 75%;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            background-color: rgba(255, 255, 255, 75%);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        #games-container {
+            background: url("lobby-bg.jpg") no-repeat;
+            background-size: cover;
+            background-position: center;
+            padding: 50px;
+            height: 100%;
+        }
+
+        #host-new {
+            color: #fff;
+            background-color: #ef493e;
+            border-color: #ef493e;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: "Courier New", monospace;
+            font-weight: 700;
+            font-size: 1.3rem;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        #host-new:active {
+            background-color: #9c1b12;
+        }
+
+        p#users {
+            text-align: center;
+            margin-top: 0px;
+            font-weight: 600;
+            color: rgb(78, 78, 78);
+        }
+
+        #built-with {
+            background: url("./built-with-logo.png") no-repeat;
+            height: 40px;
+            width: 117px;
+            background-size: contain;
+            position: fixed;
+            top: 5;
+            right: 0;
+        }
+        #built-with:hover {
+            height: 45px;
+            width: 140px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #no-games {
+            font-family: "Courier New", monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #ef493e;
+            display: flex;
+            min-height: 300px;
+            margin: auto;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        #no-games.hidden {
+            display: none;
+        }
+
+        /*dialog*/
+        #host-dialog {
+            display: none;
+            border-radius: 15px;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+            outline: 0;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        #host-contents {
+            padding: 40px;
+        }
+
+        .modal-header {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            border-top-left-radius: 0.3rem;
+            border-top-right-radius: 0.3rem;
+        }
+
+        dialog::backdrop {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .host-new-title {
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .modal-footer {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .close:not(:disabled):not(.disabled) {
+            cursor: pointer;
+        }
+        .modal-header .close {
+            padding: 1rem;
+            margin: -1rem -1rem -1rem auto;
+        }
+        button.close {
+            padding: 0;
+            background-color: transparent;
+            border: 0;
+            -webkit-appearance: none;
+        }
+
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: 0.5;
+        }
+
+        .modal-title {
+            margin: 0;
+            line-height: 1.5;
+        }
+        .h5, h5 {
+            font-size: 1.25rem;
+        }
+
+        .modal-footer > :not(:last-child) {
+            margin-right: 0.25rem;
+        }
+
+        .btn-secondary {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+            border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        input {
+            width: 114px;
+            border-radius: 5px;
+            height: 36px;
+            width: 150px;
+            margin-left: 10px;
+            font-size: 20px;
+        }
+
+        #game-name {
+            font-size: 20px;
+        }
+
+        /* ===== BEGIN leaderboard CSS ===== */
+
+        .two-panes {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #leaderboard {
+            width: 25%;
+            margin-left: 1rem;
+            margin-right: auto;
+            display: block;
+            background-color: rgba(255, 255, 255, 75%);
+            border-radius: 10px;
+            padding: 30px;
+        }
+        #refresh-scores-btn {
+            position: relative;
+            width: 10px;
+            height: 10px;
+            float: right;
+            top: -20px;
+            left: 10px;
+            cursor: pointer;
+        }
+        #score-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+            table-layout: auto;
+        }
+        #score-tbody {
+            width: 100%;
+        }
+        .score-tr {
+            height: 37px;
+        }
+        .score-td {
+            text-align: center;
+        }
+        .score-tr.header {
+            background-color: #ccc;
+            border: 1px solid #999;
+            border-radius: 3px;
+            height: 45px;
+        }
+        .score-tr td {
+            border: 1px solid #999;
+        }
+        .score-rank {
+            color: black;
+        }
+        .score-rank-badge {
+            padding: 2px;
+            border-radius: 5px;
+            border: 1px solid #999;
+            background-color: #ccc;
+            margin: 0 9px;
+        }
+        .score-wallet {
+            padding: 3px;
+        }
+        .score-score {
+            padding: 3px;
+        }
+
+        /* Modals */
+        #registration-modal,
+        #game-end-modal,
+        #submit-score-modal {
+            display: none; /* Hidden by default */
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@croquet/croquet@2.0.0-9"></script>
+</head>
+<body>
+    <button id="connect-wallet-button">Connect Wallet</button>
+    <div id="lobby">
+        <div id="intro">FOOTHOLD</div>
+        <div id="games-container">
+            <button id="host-new">Host New Game</button>
+            <dialog id="host-dialog">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Host New Game</h5>
+                        <button type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true" class="host-dialog-cancel">×</span>
+                        </button>
+                    </div>
+                    <div id="host-contents">
+                        <label for="host-dialog-name" id="game-name">Game name:</label>
+                        <input type="text" id="host-dialog-name" name="game-name" placeholder="My Game" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" value="cancel" class="btn btn-secondary host-dialog-cancel">Cancel</button>
+                        <button type="submit" value="default" id="host-dialog-submit" class="btn btn-primary">Enter Game</button>
+                    </div>
+                </form>
+            </dialog>
+            <div class="two-panes">
+                <div id="games">
+                    <p id="users"></p>
+                    <ul id="sessions"></ul>
+                    <p id="no-games">No games found</p>
+                </div>
+                <div id="leaderboard">
+                    <div id="refresh-scores-btn">
+                        <div id="refresh-scores">
+                            <svg fill="#333" height="22px" width="22px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489.645 489.645" xml:space="preserve">
+                                <g>
+                                    <path d="M460.656,132.911c-58.7-122.1-212.2-166.5-331.8-104.1c-9.4,5.2-13.5,16.6-8.3,27c5.2,9.4,16.6,13.5,27,8.3
+                                    c99.9-52,227.4-14.9,276.7,86.3c65.4,134.3-19,236.7-87.4,274.6c-93.1,51.7-211.2,17.4-267.6-70.7l69.3,14.5
+                                    c10.4,2.1,21.8-4.2,23.9-15.6c2.1-10.4-4.2-21.8-15.6-23.9l-122.8-25c-20.6-2-25,16.6-23.9,22.9l15.6,123.8
+                                    c1,10.4,9.4,17.7,19.8,17.7c12.8,0,20.8-12.5,19.8-23.9l-6-50.5c57.4,70.8,170.3,131.2,307.4,68.2
+                                    C414.856,432.511,548.256,314.811,460.656,132.911z" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <table id="score-table">
+                        <tbody id="score-tbody">
+                            <tr class="score-tr header">
+                                <td class="score-td score-rank">Rank</td>
+                                <td class="score-td score-wallet">Who</td>
+                                <td class="score-td score-score">Score</td>
+                            </tr>
+                            <tr class="score-tr template" style="display: none;">
+                                <td class="score-td score-rank">
+                                    <div class="score-rank-badge">0</div>
+                                </td>
+                                <td class="score-td score-wallet">Me</td>
+                                <td class="score-td score-score">42,424</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a href="https://github.com/croquet/croquet-for-unity-guardians" target="_blank">
+                <div id="built-with"></div>
+            </a>
+        </div>
+        <!-- version number in bottom right corner -->
+        <div style="position: fixed; bottom: 0; right: 30px; padding: 5px; background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 12px;">
+            v1.0.0-5
+        </div>
+    </div>
+    <iframe id="app" src="about:blank"></iframe>
+    <button id="back-to-lobby" title="Back to Lobby">↩</button>
+
+
+    <!-- HTML for the game end modal -->
+    <div id="game-end-modal" class="modal">
+        <div class="modal-content">
+            <h2>Game Over</h2>
+            <p>Thanks for playing!</p>
+            <button id="close-modal-button">Close</button>
+        </div>
+    </div>
+
+    <!-- Submit Score Modal -->
+    <div id="submit-score-modal" class="modal">
+        <div class="modal-content">
+            <span id="modal-close-button" class="close">&times;</span>
+
+            <h2>Game Over</h2>
+
+            <p id="modal-kills">Your Score: 0</p>
+            <p>Thanks for playing!</p>
+            <button id="modal-submit-score-button">Submit Score</button>
+        </div>
+    </div>
+    <!-- webpack will insert <script src="lobby.js"> here -->
+</body>
+</html>
