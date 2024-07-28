@@ -1,4 +1,4 @@
-// import * as Croquet from "@croquet/worldcore-kernel";
+import * as Croquet from "@croquet/croquet";
 // import apiKey from "./apiKey.js";
 // import buttonFail from "./assets/Audio/ShootFail.wav";
 // import engineStart from "./assets/Audio/avatarEnter.wav";
