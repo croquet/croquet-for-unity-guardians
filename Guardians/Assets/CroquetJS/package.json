@@ -1,6 +1,6 @@
 {
-  "name": "croquet-for-unity-template",
-  "description": "Croquet for Unity Template",
+  "name": "foothold",
+  "description": "Croquet for Unity Demo with Lobby and Wallet",
   "private": true,
   "author": "Croquet Labs",
   "license": "Apache-2.0",

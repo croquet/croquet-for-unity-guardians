@@ -9,6 +9,7 @@ const fs = require('fs');
 
 module.exports = (env) => {
     const isWebGL = env.buildTarget === 'webgl';
+    const isNode = env.buildTarget === 'node';
     const webGLPath = path.join(__dirname, `../WebGLTemplates/CroquetLoader/`);
     const nonWebGLPath = path.join(__dirname, `../StreamingAssets/${env.appName}/`);
     const destination = isWebGL ? webGLPath : nonWebGLPath;
@@ -25,7 +26,7 @@ module.exports = (env) => {
         devtool: 'source-map',
         entry: () => {
             // if this is a node build, look for index-node.js in the app directory
-            if (env.buildTarget === 'node') {
+            if (isNode) {
                 try {
                     const index = `./${env.appName}/index-node.js`;
                     require.resolve(index); // throws if not found
@@ -48,8 +49,8 @@ module.exports = (env) => {
         output: {
             path: destination,
             pathinfo: false,
-            filename: env.buildTarget === 'node' ? 'node-main.js' : '[name]-[contenthash:8].js',
-            // filename: env.buildTarget === 'node' ? 'node-main.js' : '[name]_croquet.js',
+            filename: isNode ? 'node-main.js' : '[name]-[contenthash:8].js',
+            // filename: isNode ? 'node-main.js' : '[name]_croquet.js',
             chunkFilename: 'chunk-[contenthash:8].js',
             clean: !isWebGL // RemovePlugin below handles index-####.js files in WebGL
         },
@@ -63,32 +64,16 @@ module.exports = (env) => {
         resolve: {
             fallback: {
                 "crypto": false,
-                ...(isWebGL ? {
-                    "buffer": require.resolve("buffer/"),
-                    "stream": require.resolve("stream-browserify"),
-                    "assert": require.resolve("assert/"),
-                } : {})
             }
         },
         module: {
             rules: [
-                isWebGL && {
-                    test: /\.js$/,
-                    exclude: /node_modules/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env'],
-                            plugins: ['@babel/plugin-transform-modules-commonjs']
-                        }
-                    }
-                },
                 {
                     test: /\.js$/,
                     enforce: "pre",
                     use: ["source-map-loader"],
                 },
-            ].filter(x => x), // removes any undefined by the && predicate being false
+            ]
         },
         plugins: [
             isWebGL && new RemovePlugin({
@@ -122,7 +107,7 @@ module.exports = (env) => {
                 ]
             }),
             // build main html if not building for node
-            env.buildTarget !== 'node' && new HtmlWebpackPlugin({
+            !isNode && new HtmlWebpackPlugin({
                 template: isWebGL
                     ? './_Runtime/Platforms/WebGL/index.html'
                     : './_Runtime/Platforms/WebView/webview.html',
@@ -136,20 +121,17 @@ module.exports = (env) => {
                 inject: 'body',
                 chunks: ['lobby'],
             }),
-            isWebGL && new webpack.ProvidePlugin({
-                Buffer: ['buffer', 'Buffer'],
-            }),
-            isWebGL && new webpack.ProvidePlugin({
-                process: 'process/browser',
-            }),
         ].filter(x => x), // removes any undefined by the && predicate being false
-        externals: env.buildTarget !== 'node' ? [] : [
-            {
+        externals:
+            isNode ? {
                 'utf-8-validate': 'commonjs utf-8-validate',
                 bufferutil: 'commonjs bufferutil',
-            },
-        ],
-        target: env.buildTarget !== 'node' ? 'web' : 'node',
+            } :
+            isWebGL ? {
+                '@croquet/croquet': 'Croquet',
+            } : {},
+        externalsType: isWebGL && 'global',
+        target: isNode ? 'node' : 'web',
         experiments: {
             outputModule: isWebGL,
             asyncWebAssembly: true,
