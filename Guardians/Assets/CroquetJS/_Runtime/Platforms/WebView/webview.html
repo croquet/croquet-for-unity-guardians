@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>C4U Web Loader</title>
+        <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=
+">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta charset="utf-8">
+        <!-- Import the oxanium font -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;500;600;700;800;900&display=swap">
+        <style>
+            body {
+                overflow: hidden;
+                background: rgb(30, 30, 80);
+                font-family: 'Oxanium', sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+
+      <button id="start_croquet">Start Croquet</button>
+
+      <h5 style="color: white; font-size: 15px; text-align: center; margin-top: 100px;">
+        When developing from the Unity Editor, the JS code for the server needs a place to run.
+        <br/>
+        This is that place.
+      </h5>
+      <!--- stylish text: Croquet and sub parts GameModelRoot and -->
+      <h1 style="color: #007bff; font-size: 50px; text-align: center; margin-top: 100px;">
+        Croquet 4 Unity
+      </h1>
+      <h2 style="color: #007bff; font-size: 30px; text-align: center;">
+        You must <b>Refresh</b> this page <b>each</b> time you hit Play ▶️ in the Unity Editor.
+      </h2>
+      <!--- modern blue button centered left to right-->
+        <button
+          style="position:relative; left: 50%; top: 30px; transform: translateX(-50%); background: #007bff; color: white; border: none; padding: 10px 20px; font-size: 20px; cursor: pointer;"
+          onclick="reloadDelayed();"
+        >
+          <div style="display:inline; padding:0 20px;">
+            <svg style="top: 7px; position: relative;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff" height="30px" width="30px" version="1.1" id="Capa_1" viewBox="0 0 489.645 489.645" xml:space="preserve">
+              <g>
+                <path d="M460.656,132.911c-58.7-122.1-212.2-166.5-331.8-104.1c-9.4,5.2-13.5,16.6-8.3,27c5.2,9.4,16.6,13.5,27,8.3   c99.9-52,227.4-14.9,276.7,86.3c65.4,134.3-19,236.7-87.4,274.6c-93.1,51.7-211.2,17.4-267.6-70.7l69.3,14.5   c10.4,2.1,21.8-4.2,23.9-15.6c2.1-10.4-4.2-21.8-15.6-23.9l-122.8-25c-20.6-2-25,16.6-23.9,22.9l15.6,123.8   c1,10.4,9.4,17.7,19.8,17.7c12.8,0,20.8-12.5,19.8-23.9l-6-50.5c57.4,70.8,170.3,131.2,307.4,68.2   C414.856,432.511,548.256,314.811,460.656,132.911z"/>
+              </g>
+            </svg>
+          </div>
+          <span style="line-height:50px">
+            Refresh
+          </span>
+        </button>
+        <script>
+          // clear the screen for 500ms by display:none-ing the whole page and then reload the page
+          function reloadDelayed() {
+            document.body.style.display = "none";
+            setTimeout(() => {
+              location.reload();
+            }, 300);
+          }
+        </script>
+    </body>
+</html>

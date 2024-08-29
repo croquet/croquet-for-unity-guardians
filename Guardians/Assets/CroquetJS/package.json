@@ -1,0 +1,35 @@
+{
+  "name": "croquet-for-unity-template",
+  "description": "Croquet for Unity Template",
+  "private": true,
+  "author": "Croquet Labs",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.24.8",
+    "@babel/preset-env": "^7.25.3",
+    "copy-webpack-plugin": "^12.0.2",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-import-resolver-parcel": "^1.10.6",
+    "eslint-plugin-import": "^2.29.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.6.0",
+    "inspectpack": "^4.7.1",
+    "remove-files-webpack-plugin": "^1.5.0",
+    "source-map-loader": "^5.0.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "dependencies": {
+    "@croquet/game-models": "file:_Runtime/Packages/game-models",
+    "@croquet/unity-bridge": "file:_Runtime/Packages/unity-bridge",
+    "@croquet/worldcore-kernel": "^2.0.0-alpha",
+    "@croquet/worldcore-rapier": "^2.0.0-alpha",
+    "assert": "^2.1.0",
+    "babel-loader": "^9.1.3",
+    "buffer": "^6.0.3",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0"
+  }
+}

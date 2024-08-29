@@ -1,0 +1,8 @@
+{
+  "name": "@croquet/unity-bridge",
+  "version": "1.0.0",
+  "description": "Provides communication between Unity and Croquet",
+  "main": "unity-bridge.js",
+  "author": "Croquet Labs",
+  "license": "Apache-2.0"
+}

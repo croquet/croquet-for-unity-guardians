@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Unity WebGL Player | {{{ PRODUCT_NAME }}}</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <link rel="stylesheet" href="TemplateData/style.css" />
+    <style>
+      html,
+      body,
+      #unity-container,
+      #unity-canvas {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        color: black;
+      }
+      #unity-container {
+        position: relative;
+        color:black;
+      }
+      #unity-canvas {
+        width: 100%;
+        height: 100%;
+        color:black;
+      }
+      #fullscreen-button,
+      #initialize-player-button,
+      #submit-score-button {
+        position: absolute;
+        right: 10px;
+        z-index: 1000;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #fullscreen-button {
+        top: 500px;
+      }
+      #initialize-player-button {
+        top: 90px;
+        display: none;
+      }
+      #submit-score-button {
+        top: 130px;
+        display: none;
+      }
+      #registration-modal,
+      #game-end-modal,
+      #submit-score-modal {
+        display: none;
+        background: rgba(0, 0, 0, 0.8);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #registration-modal-content,
+      #game-end-modal-content,
+      .modal-content {
+        background: rgb(0, 0, 0);
+        padding: 20px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-warning"></div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
+      </div>
+      <button id="fullscreen-button" onclick="toggleFullscreen()">
+        Fullscreen
+      </button>
+    </div>
+
+    <script>
+      window.UNITY_WEBGL = true; // tell unity-bridge.js to not open websocket
+      var isMobile = false;
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+      var mobileFullscreenButton = document.querySelector("#fullscreen-button");
+
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? "block" : "none";
+        }
+        var div = document.createElement("div");
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == "error") div.style = "background: red; padding: 10px;";
+        else {
+          if (type == "warning") div.style = "background: yellow; padding: 10px;";
+          setTimeout(function () {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+        var results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          if (container.requestFullscreen) {
+            container.requestFullscreen();
+          } else if (container.webkitRequestFullscreen) {
+            container.webkitRequestFullscreen();
+          } else if (container.msRequestFullscreen) {
+            container.msRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        }
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+      var config = {
+        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+        productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+        productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+        showBanner: unityShowBanner,
+      };
+
+      var room = getUrlParameter("room") || getUrlParameter("session") || getUrlParameter("q");
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement("meta");
+        meta.name = "viewport";
+        meta.content = "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
+        document.getElementsByTagName("head")[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+        isMobile = true;
+        mobileFullscreenButton.style.display = "block";
+      } else {
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        mobileFullscreenButton.style.display = "block";
+      }
+
+      canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        })
+          .then((unityInstance) => {
+            window.unityInstance = unityInstance; // Set unityInstance globally
+            loadingBar.style.display = "none";
+            fullscreenButton.onclick = () => {
+              unityInstance.SetFullscreen(1);
+            };
+
+            if (room) {
+              unityInstance.SendMessage("Croquet", "SetSessionName", room);
+            }
+            console.log("Sending isMobile: " + isMobile);
+            window.unityInstance.SendMessage("MobileControls", "toggleControls", isMobile.toString());
+          })
+          .catch((message) => {
+            alert(message);
+          });
+      };
+
+      document.body.appendChild(script);
+
+      function sendMessageToParent(type, data) {
+        parent.postMessage({ type, ...data }, "*");
+      }
+
+      // Example usage in Unity script
+      function showSubmitScoreModal(kills) {
+        sendMessageToParent("showSubmitScoreModal", { kills });
+      }
+
+      function showEndGameModal() {
+        sendMessageToParent("showEndGameModal", {});
+      }
+
+      function onGameEnd() {
+        // Notify parent window that the game has ended
+        Croquet.publish(this.sessionId, "gameEnded", {});
+      }
+
+      // Function to handle messages from the parent window
+      window.addEventListener("message", function (event) {
+        if (event.data === "endGame") {
+          onGameEnd();
+        }
+      });
+    </script>
+  </body>
+</html>
