@@ -609,7 +609,6 @@ async function joinLobby() {
     appId: "io.croquet.foothold.lobby",
     name: "lobby",
     password: "lobby",
-    ...window.CROQUET_SESSION, // may override the parameters above if defined in HTML
     options: { BaseUrl }, // to get a different persistentId per deployment
     location: true,
     model: Lobby,
