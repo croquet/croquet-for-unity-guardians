@@ -605,10 +605,11 @@ async function joinLobby() {
     return;
   }
   lobbySession = Croquet.Session.join({
-    apiKey: "2d0fPrsWoWQFrelRWB1TftMoNJLfOk4Ni6XkQvswX3",
+    apiKey: "1dgfbPF00ilF5rBDethOikctDcOFItctaatgyKGJ9",
     appId: "io.croquet.foothold.lobby",
     name: "lobby",
     password: "lobby",
+    ...window.CROQUET_SESSION, // may override the parameters above if defined in HTML
     options: { BaseUrl }, // to get a different persistentId per deployment
     location: true,
     model: Lobby,

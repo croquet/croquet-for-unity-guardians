@@ -2191,7 +2191,7 @@ async function unityDrivenStartSession() {
     socketPortStr,
     manualStart,
   } = theGameEngineBridge;
-  
+
   console.log({ manualStart });
 
   const sceneFileName = "scene-definitions.txt";
@@ -2235,6 +2235,7 @@ async function unityDrivenStartSession() {
     apiKey,
     name,
     password,
+    ...globalThis.CROQUET_SESSION, // may override the parameters above if defined
     options,
     step: "manual",
     tps: 33, // deliberately out of phase with 50Hz ticks from Unity, aiming for decent stepping coverage in WebView sessions
